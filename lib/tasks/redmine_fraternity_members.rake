@@ -19,7 +19,7 @@ namespace :redmine do
 		# 58 - LinkedIn
 
 		User.all.each do |user|
-			unless user == User.anonymous
+			unless (user == User.anonymous || user.custom_field_value(3) == "0")
 				if !user.fraternity_member_id?
 					user.fraternity_member_id = FraternityMember.create.id
 					user.save
@@ -44,10 +44,7 @@ namespace :redmine do
 				Project.all.each do |project|
 					if project.parent_id == 6
 						if user.member_of?(project)
-							unless (user.roles_for_project(project).include?(Role.find(36)) &&
-									user.roles_for_project(project).count == 1)
-								member.active = true
-							end
+							member.active = true
 						end
 					end
 				end
