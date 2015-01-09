@@ -12,9 +12,10 @@ class CreateFraternityMembers < ActiveRecord::Migration
       t.string :phone
       t.string :address
       t.integer :graduation_year
-      t.string :bio
+      t.text :bio
       t.string :facebook
       t.string :linkedin
+      t.integer :redmine_user_id
     end
   end
 end

@@ -5,4 +5,7 @@ Redmine::Plugin.register :redmine_fraternity_members do
   version '0.0.1'
   url 'https://github.com/masweetman/redmine_fraternity_members.git'
   author_url ''
+
+menu :top_menu, :fraternity_members, { :controller => 'fraternity_members', :action => 'index' }, :caption => 'Member Directory'
+
 end

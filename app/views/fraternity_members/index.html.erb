@@ -1,0 +1,24 @@
+<h2>All Members</h2>
+
+
+<p><strong>
+<%= "Chapter" %>
+<%= "Active No." %>
+<%= "First Name" %>
+<%= "Last Name" %>
+<%= "Pledge Name" %>
+<%= "Email" %>
+<%= "Phone" %>
+</strong></p>
+
+<% @fraternity_members.each do |f| %>
+<p>
+<%= f.chapter %>
+<%= f.active_number %>
+<%= f.firstname %>
+<%= f.lastname %>
+<%= f.pledge_name %>
+<a href=mailto:<%= f.mail%>><%= f.mail %></a>
+<%= f.phone %>
+</p>
+<% end %>
