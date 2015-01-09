@@ -9,6 +9,7 @@
 <%= "Pledge Name" %>
 <%= "Email" %>
 <%= "Phone" %>
+<%= "Active?" %>
 </strong></p>
 
 <% @fraternity_members.each do |f| %>
@@ -20,5 +21,6 @@
 <%= f.pledge_name %>
 <a href=mailto:<%= f.mail%>><%= f.mail %></a>
 <%= f.phone %>
+<strong><%= f.active %></strong>
 </p>
 <% end %>

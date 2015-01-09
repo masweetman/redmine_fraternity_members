@@ -40,15 +40,14 @@ namespace :redmine do
 				member.facebook = user.custom_field_value(57)
 				member.linkedin = user.custom_field_value(58)
 				member.redmine_user_id = user.id
+				member.active = false
 				Project.all.each do |project|
 					if project.parent_id == 6
-						if member.member_of?(project)
-							unless (member.roles_for_project(project).include?(Role.find(36)) &&
-									member.roles_for_project(project).count == 1)
+						if user.member_of?(project)
+							unless (user.roles_for_project(project).include?(Role.find(36)) &&
+									user.roles_for_project(project).count == 1)
 								member.active = true
 							end
-						else
-							member.active = false
 						end
 					end
 				end
