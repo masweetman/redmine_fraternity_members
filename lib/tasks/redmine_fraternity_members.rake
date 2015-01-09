@@ -34,7 +34,7 @@ namespace :redmine do
 				member.pledge_name = user.custom_field_value(1)
 				member.big_bro = user.custom_field_value(55)
 				member.phone = user.custom_field_value(18)
-				member.address = user.custom_field_value(51).to_s + ", " + user.custom_field_value(52).to_s + ", " + user.custom_field_value(53).to_s + " " + user.custom_field_value(4).to_s
+				member.address = user.custom_field_value(4)
 				member.graduation_year = user.custom_field_value(56)
 				member.bio = user.custom_field_value(9)
 				member.facebook = user.custom_field_value(57)

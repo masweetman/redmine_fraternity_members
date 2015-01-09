@@ -2,31 +2,46 @@
 
 <p>
 <%= "Sort By:" %>
+<%= link_to "Chapter", "/directory" %>
+<%= " | " %>
 <%= link_to "First Name", "/directory?sort=firstname" %>
+<%= " | " %>
 <%= link_to "Last Name", "/directory?sort=lastname" %>
+<%= " | " %>
+<%= link_to "Pledge Name", "/directory?sort=pledge_name" %>
+<%= " | " %>
 <%= link_to "Zip Code", "/directory?sort=zip" %>
 </p>
 
-<p><strong>
-<%= "Chapter" %>
-<%= "Active No." %>
-<%= "First Name" %>
-<%= "Last Name" %>
-<%= "Pledge Name" %>
-<%= "Email" %>
-<%= "Phone" %>
-<%= "Active?" %>
-</strong></p>
+<div class="autoscroll">
+<table class="list">
+  <thead><tr>
+  <th><%= 'Chapter' %></th>
+  <th><%= 'Active No' %></th>
+  <th><%= 'Name' %></th>
+  <th><%= 'Pledge Name' %></th>
+  <th><%= 'Email' %></th>
+  <th><%= 'Phone' %></th>
+  <th><%= 'Zip Code' %></th>
+  </tr></thead>
+  <tbody>
+<% for f in @fraternity_members -%>
+  <tr>
+  	<td><%= h(f.chapter) %></td>
+  	<td><%= h(f.active_number) %></td>
+  	<td>
+	  	<a href="/users/<%= h(f.redmine_user_id) %>">
+	  		<%= h(f.firstname) %><%= " " %><%= h(f.lastname) %>
+	  	</a>
+  	</td>
+  	<td><%= h(f.pledge_name.truncate(12)) %></td>
+  	<td><%= mail_to(h(f.mail)) %></td>
+  	<td><%= h(f.phone) %></td>
+  	<td><%= h(f.address) %></td>
+  </tr>
+<% end -%>
+  </tbody>
+</table>
+</div>
 
-<% @fraternity_members.each do |f| %>
-<p>
-<%= f.chapter %>
-<%= f.active_number %>
-<%= f.firstname %>
-<%= f.lastname %>
-<%= f.pledge_name %>
-<a href=mailto:<%= f.mail%>><%= f.mail %></a>
-<%= f.phone %>
-<strong><%= f.active %></strong>
-</p>
-<% end %>
+
