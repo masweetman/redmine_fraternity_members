@@ -16,6 +16,7 @@ class CreateFraternityMembers < ActiveRecord::Migration
       t.string :facebook
       t.string :linkedin
       t.integer :redmine_user_id
+      t.boolean :active
     end
   end
 end
