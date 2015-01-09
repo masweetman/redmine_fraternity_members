@@ -3,20 +3,20 @@ namespace :redmine do
     desc "Updates the member database"
     task :update => :environment do
 
-# 80 - Middle Name
-# 1 - Pledge Name
-# 2 - Chapter
-# 3 - Active Number
-# 55 - Big Bro
-# 18 - Phone Number
-# 51 - Address
-# 52 - City
-# 53 - State
-# 4 - Zip Code
-# 56 - Graduation Year
-# 9 - Biographical
-# 57 - Facebook
-# 58 - LinkedIn
+		# 80 - Middle Name
+		# 1 - Pledge Name
+		# 2 - Chapter
+		# 3 - Active Number
+		# 55 - Big Bro
+		# 18 - Phone Number
+		# 51 - Address
+		# 52 - City
+		# 53 - State
+		# 4 - Zip Code
+		# 56 - Graduation Year
+		# 9 - Biographical
+		# 57 - Facebook
+		# 58 - LinkedIn
 
 		User.all.each do |user|
 			unless user == User.anonymous
@@ -40,6 +40,18 @@ namespace :redmine do
 				member.facebook = user.custom_field_value(57)
 				member.linkedin = user.custom_field_value(58)
 				member.redmine_user_id = user.id
+				Project.all.each do |project|
+					if project.parent_id == 6
+						if member.member_of?(project)
+							unless (member.roles_for_project(project).include?(Role.find(36)) &&
+									member.roles_for_project(project).count == 1)
+								member.active = true
+							end
+						else
+							member.active = false
+						end
+					end
+				end
 				member.save
 			end
 		end
