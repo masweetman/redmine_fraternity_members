@@ -1,5 +1,26 @@
 namespace :redmine do
   namespace :fraternity_members do
+
+    desc "initializes the member database and adds new members"
+    task :initialize => :environment do
+		User.where(fraternity_member_id: nil).each do |user|
+			unless (user == User.anonymous || !user.active?)
+				member = FraternityMember.where(chapter: user.custom_field_value(2), active_number: user.custom_field_value(3)).first
+				if member.nil?
+					user.fraternity_member_id = FraternityMember.create.id
+					user.save
+				end
+				if !member.nil?
+					if user.lastname == member.lastname
+						user.fraternity_member_id = member.id
+						user.save
+					end
+				end
+
+			end
+		end
+	end
+
     desc "Updates the member database"
     task :update => :environment do
 
@@ -18,40 +39,28 @@ namespace :redmine do
 		# 57 - Facebook
 		# 58 - LinkedIn
 
-		User.all.each do |user|
-			unless (user == User.anonymous || user.custom_field_value(3) == "0")
-				if !user.fraternity_member_id?
-					user.fraternity_member_id = FraternityMember.create.id
-					user.save
-				end
-				member = FraternityMember.find(user.fraternity_member_id)
-				member.firstname = user.firstname
-				member.middlename = user.custom_field_value(80)
-				member.lastname = user.lastname
-				member.mail = user.mail
-				member.chapter = user.custom_field_value(2)
-				member.active_number = user.custom_field_value(3)
-				member.pledge_name = user.custom_field_value(1)
-				member.big_bro = user.custom_field_value(55)
-				member.phone = user.custom_field_value(18)
-				member.address = user.custom_field_value(4)
-				member.graduation_year = user.custom_field_value(56)
-				member.bio = user.custom_field_value(9)
-				member.facebook = user.custom_field_value(57)
-				member.linkedin = user.custom_field_value(58)
-				member.redmine_user_id = user.id
-				member.active = false
-				Project.all.each do |project|
-					if project.parent_id == 6
-						if user.member_of?(project)
-							member.active = true
-						end
-					end
-				end
-				member.save
+		User.where(fraternity_member_id: 1..1000000).each do |user|
+			member = FraternityMember.find(user.fraternity_member_id)
+			member.firstname = user.firstname
+			member.middlename = user.custom_field_value(80)
+			member.lastname = user.lastname
+			member.mail = user.mail
+			member.chapter = user.custom_field_value(2)
+			member.active_number = user.custom_field_value(3)
+			member.pledge_name = user.custom_field_value(1)
+			member.big_bro = user.custom_field_value(55)
+			member.phone = user.custom_field_value(18)
+			member.address = user.custom_field_value(4)
+			member.graduation_year = user.custom_field_value(56)
+			member.bio = user.custom_field_value(9)
+			member.facebook = user.custom_field_value(57)
+			member.linkedin = user.custom_field_value(58)
+			member.active = false
+			if !user.projects.where(parent_id: 6).empty?
+				member.active = true
 			end
+			member.save
 		end
-
     end
   end
 end
