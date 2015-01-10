@@ -2,15 +2,15 @@
 
 <p>
 <%= "Sort By:" %>
-<%= link_to "Chapter", "/directory" %>
+<%= link_to "Chapter", "/redmine/directory" %>
 <%= " | " %>
-<%= link_to "First Name", "/directory?sort=firstname" %>
+<%= link_to "First Name", "/redmine/directory?sort=firstname" %>
 <%= " | " %>
-<%= link_to "Last Name", "/directory?sort=lastname" %>
+<%= link_to "Last Name", "/redmine/directory?sort=lastname" %>
 <%= " | " %>
-<%= link_to "Pledge Name", "/directory?sort=pledge_name" %>
+<%= link_to "Pledge Name", "/redmine/directory?sort=pledge_name" %>
 <%= " | " %>
-<%= link_to "Zip Code", "/directory?sort=zip" %>
+<%= link_to "Zip Code", "/redmine/directory?sort=zip" %>
 </p>
 
 <div class="autoscroll">
@@ -30,7 +30,7 @@
   	<td><%= h(f.chapter) %></td>
   	<td><%= h(f.active_number) %></td>
   	<td>
-	  	<a href="/users/<%= h(f.redmine_user_id) %>">
+	  	<a href="/redmine/users/<%= h(f.redmine_user_id) %>">
 	  		<%= h(f.firstname) %><%= " " %><%= h(f.lastname) %>
 	  	</a>
   	</td>
