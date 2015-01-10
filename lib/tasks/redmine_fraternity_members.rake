@@ -55,10 +55,7 @@ namespace :redmine do
 			member.bio = user.custom_field_value(9)
 			member.facebook = user.custom_field_value(57)
 			member.linkedin = user.custom_field_value(58)
-			member.active = false
-			if !user.projects.where(parent_id: 6).empty?
-				member.active = true
-			end
+			member.active = user.projects.where(parent_id: 6).any?
 			member.save
 		end
     end
