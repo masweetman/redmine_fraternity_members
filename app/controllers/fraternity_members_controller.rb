@@ -16,4 +16,14 @@ class FraternityMembersController < ApplicationController
     end
   end
 
+  def export
+    export_csv = 'chapter,active_number,firstname,middlename,lastname,pledge_name,mail,phone,address,graduation_year,active' + "\n"
+    for e in @fraternity_members
+      export_csv += e.chapter+','+e.active_number+','+e.firstname+','+e.middlename+','+e.lastname+','+e.pledge_name+','+e.mail+','+e.phone+','+e.address+','+e.graduation_year+','+e.active + "\n"
+    end
+
+    send_data(export_csv, :type => 'text/html', :filename => "export.csv")
+
+  end
+
 end
