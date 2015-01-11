@@ -55,6 +55,7 @@ namespace :redmine do
 			member.bio = user.custom_field_value(9)
 			member.facebook = user.custom_field_value(57)
 			member.linkedin = user.custom_field_value(58)
+			member.redmine_user_id = user.id
 			member.active = user.projects.where(parent_id: 6).any?
 			member.save
 		end
