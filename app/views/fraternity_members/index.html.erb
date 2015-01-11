@@ -30,9 +30,13 @@
   	<td><%= h(f.chapter) %></td>
   	<td><%= h(f.active_number) %></td>
   	<td>
+      <%= if (f.redmine_user_id != 0) and (f.redmine_user_id != nil) %>
 	  	<a href="/redmine/users/<%= h(f.redmine_user_id) %>">
+      <%= end %>
 	  		<%= h(f.firstname) %><%= " " %><%= h(f.lastname) %>
+      <%= if (f.redmine_user_id != 0) and (f.redmine_user_id != nil) %>
 	  	</a>
+      <%= end %>
   	</td>
   	<td><%= h(f.pledge_name.truncate(12)) %></td>
   	<td><%= mail_to(h(f.mail)) %></td>
