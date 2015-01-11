@@ -22,7 +22,7 @@ class FraternityMembersController < ApplicationController
     @fraternity_members.each do |e|
       export_csv += e.chapter.to_s+','+e.active_number.to_s+','+e.firstname.to_s+','+e.middlename.to_s+','+e.lastname.to_s+','+e.pledge_name.to_s+','+e.mail.to_s+','+e.phone.to_s+','+e.address.to_s+','+e.graduation_year.to_s+','+e.active.to_s + "\n"
     end
-    send_data(export_csv, :type => 'text/html', :filename => "export.csv")
+    send_data(export_csv, :type => 'text/csv', :filename => "export.csv")
   end
 
 end
