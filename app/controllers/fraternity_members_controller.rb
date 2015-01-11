@@ -18,7 +18,7 @@ class FraternityMembersController < ApplicationController
 
   def export
     export_csv = 'chapter,active_number,firstname,middlename,lastname,pledge_name,mail,phone,address,graduation_year,active' + "\n"
-    FraternityMember.all.each do |e|
+    @fraternity_members.each do |e|
       export_csv += e.chapter+','+e.active_number+','+e.firstname+','+e.middlename+','+e.lastname+','+e.pledge_name+','+e.mail+','+e.phone+','+e.address+','+e.graduation_year+','+e.active + "\n"
     end
 
