@@ -4,7 +4,7 @@ namespace :redmine do
     desc "initializes the member database and adds new members"
     task :initialize => :environment do
 		User.where(fraternity_member_id: nil).each do |user|
-			unless (user == User.anonymous || !user.active?)
+			unless (user == User.anonymous || !user.active? || user.custom_field_value(3) == "0")
 				member = FraternityMember.where(chapter: user.custom_field_value(2), active_number: user.custom_field_value(3)).first
 				if member.nil?
 					user.fraternity_member_id = FraternityMember.create.id
