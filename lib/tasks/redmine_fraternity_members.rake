@@ -11,7 +11,7 @@ namespace :redmine do
 					user.save
 				end
 				if !member.nil?
-					if user.lastname.downcase == member.lastname.downcase
+					if ((user.lastname.downcase == member.lastname.downcase) or (member.lastname.downcase == "unknown") or (member.lastname.downcase == ""))
 						user.fraternity_member_id = member.id
 						user.save
 					end
