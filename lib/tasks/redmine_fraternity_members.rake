@@ -46,12 +46,12 @@ namespace :redmine do
 			member.lastname = user.lastname
 			member.mail = user.mail
 			member.chapter = user.custom_field_value(2)
-			member.active_number = user.custom_field_value(3)
+			member.active_number = user.custom_field_value(3).to_i
 			member.pledge_name = user.custom_field_value(1)
 			member.big_bro = user.custom_field_value(55)
 			member.phone = user.custom_field_value(18)
 			member.address = user.custom_field_value(4)
-			member.graduation_year = user.custom_field_value(56)
+			member.graduation_year = user.custom_field_value(56).to_i
 			member.bio = user.custom_field_value(9)
 			member.facebook = user.custom_field_value(57)
 			member.linkedin = user.custom_field_value(58)
