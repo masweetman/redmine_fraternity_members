@@ -6,6 +6,9 @@ Redmine::Plugin.register :redmine_fraternity_members do
   url 'https://github.com/masweetman/redmine_fraternity_members.git'
   author_url ''
 
-menu :top_menu, :fraternity_members, { :controller => 'fraternity_members', :action => 'index'}, :caption => 'Member Directory'
+  menu :top_menu, :fraternity_members, { :controller => 'fraternity_members', :action => 'index'}, :caption => 'Member Directory'
+  settings :default => {:actives_only => ""}, :partial => 'shared/settings'
 
 end
+
+#access setting via Setting.plugin_redmine_fraternity_members[:fraternity_password]
