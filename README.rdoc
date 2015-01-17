@@ -1,1 +1,4 @@
 Manage members.
+
+Add the hook under user.save (under register_manually_by_administrator or something) in account_controller.rb:
+call_hook(:controller_users_success_creation, {:user => user })
