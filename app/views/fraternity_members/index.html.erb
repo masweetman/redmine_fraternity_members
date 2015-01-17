@@ -1,4 +1,8 @@
-<h2>All Members</h2>
+<% scope = @fraternity_members -%>
+<% principal_count = scope.count -%>
+<% principal_pages = Redmine::Pagination::Paginator.new principal_count, 100, params['page'] -%>
+
+<h2>All Members (<%= principal_count %>)</h2>
 
 <p>
 <%= "Sort By:" %>
@@ -29,8 +33,8 @@
   <th><%= 'Zip Code' %></th>
   </tr></thead>
   <tbody>
-<% for f in @fraternity_members -%>
-  <tr>
+<% for f in scope -%>
+  <tr class="<%= cycle("odd", "even") %>">
   	<td><%= h(f.chapter) %></td>
   	<td><%= h(f.active_number) %></td>
   	<td>
@@ -52,4 +56,5 @@
 </table>
 </div>
 
+<p class="pagination"><%= pagination_links_full principal_pages, principal_count, :per_page_links => false %></p>
 
