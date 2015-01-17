@@ -1,3 +1,5 @@
+require 'user_hooks'
+
 Redmine::Plugin.register :redmine_fraternity_members do
   name 'Redmine Fraternity Members'
   author 'Mike Sweetman'
