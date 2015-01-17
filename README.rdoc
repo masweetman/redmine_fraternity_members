@@ -1,4 +1,18 @@
 Manage members.
 
 Add the hook under user.save (under register_manually_by_administrator or something) in account_controller.rb:
-call_hook(:controller_users_success_creation, {:user => user })
+
+
+  def register_manually_by_administrator(user, &block)
+    # activates the member
+    call_hook(:controller_users_auto_activate, {:user => user })
+    if user.save
+      # Sends an email to the administrators
+      Mailer.account_activation_request(user).deliver
+      account_pending(user)
+      # adds the member to his chapter if not graduated yet
+      call_hook(:controller_users_add_to_chapter, {:user => user })
+    else
+      yield if block_given?
+    end
+  end
