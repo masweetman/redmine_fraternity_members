@@ -6,14 +6,16 @@ class FraternityMembersController < ApplicationController
   include CustomFieldsHelper
 
   def index
-    sort = params[:sort]
-    case sort
-    when 'firstname' then @fraternity_members = FraternityMember.where('firstname != ?', '').sort_by{|a| [a.firstname.downcase]}
-    when 'lastname' then @fraternity_members = FraternityMember.where('lastname != ?', '').sort_by{|a| [a.lastname.downcase]}
-    when 'pledge_name' then @fraternity_members = FraternityMember.where('pledge_name != ?', '').sort_by{|a| [a.pledge_name.downcase]}
-    when 'zip' then @fraternity_members = FraternityMember.where('address != ?', '').sort_by{|a| [a.address]}
-    else @fraternity_members = FraternityMember.all.sort_by{|a| [a.chapter, a.active_number]}
-    end
+    sort_init 'chapter', 'asc'
+    sort_update %w(chapter active_number lastname pledge_name mail phone address)
+
+    scope = FraternityMember
+
+    @member_count = scope.count
+    @member_pages = Paginator.new @member_count, 100, params['page']
+    @offset ||= @member_pages.offset
+    @members = scope.offset(@offset).limit(100).order(sort_clause).all
+
   end
 
   def export
