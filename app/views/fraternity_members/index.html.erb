@@ -2,7 +2,7 @@
 <% principal_count = scope.count -%>
 <% principal_pages = Redmine::Pagination::Paginator.new principal_count, 100, params['page'] -%>
 
-<h2>All Members (<%= principal_count %>)</h2>
+<h2>All Members</h2>
 
 <p>
 <%= "Sort By:" %>
@@ -16,10 +16,13 @@
 <%= " | " %>
 <%= link_to "Zip Code", "/redmine/directory?sort=zip" %>
 </p>
-<p>
-<%= "Export To:" %>
-<%= link_to "CSV", "/redmine/directory/export" %>
-</p>
+
+<% if User.current.member_of? Project.find(6) -%>
+  <p>
+  <%= "Export To:" %>
+  <%= link_to "CSV", "/redmine/directory/export" %>
+  </p>
+<% end -%>
 
 <div class="autoscroll">
 <table class="list">
