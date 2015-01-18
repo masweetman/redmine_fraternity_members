@@ -7,6 +7,8 @@ module UserPatch
 		base.class_eval do
 			unloadable
 			belongs_to :deliverable
+
+			alias_method_chain :activate, :activate_fraternity_member
 		end
 	end
 
@@ -50,6 +52,12 @@ module UserPatch
 				member.active = projects.where(parent_id: 6).any?
 				member.save
 			end
+		end
+
+		def activate_with_activate_fraternity_member
+			activate_without_activate_fraternity_member
+			self.new_fraternity_member
+			self.update_fraternity_member
 		end
 	end
 end
