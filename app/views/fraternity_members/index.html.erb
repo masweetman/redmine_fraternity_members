@@ -1,18 +1,16 @@
 <h2>All Members</h2>
 
-<% if User.current.member_of? Project.find(6) -%>
-  <p>
-  <%= "Export To:" %>
-  <%= link_to "CSV", "/redmine/directory/export" %>
-  </p>
-<% end -%>
+<p>
+<%= "Export To:" %>
+<%= link_to "CSV", directory_path + "/export" %>
+</p>
 
-<%= form_tag('/redmine/directory', :method => :get) do %>
+<%= form_tag(directory_path, :method => :get) do %>
 <fieldset>
 <label for='search'><%= 'Filter' %>:</label>
 <%= text_field_tag 'search', params[:search], :size => 30 %>
 <%= submit_tag l(:button_apply), :class => "small", :search => nil %>
-<%= link_to l(:button_clear), '/redmine/directory', :class => 'icon icon-reload' %>
+<%= link_to l(:button_clear), directory_path, :class => 'icon icon-reload' %>
 </fieldset>
 <% end %>
 &nbsp;
@@ -42,7 +40,7 @@
       <%= uname %>
       <% end -%>
   	</td>
-  	<td><%= h(f.pledge_name.truncate(12)) %></td>
+  	<td><%= h(f.pledge_name.truncate(18)) %></td>
   	<td><%= mail_to(h(f.mail)) %></td>
   	<td><%= h(f.phone) %></td>
   	<td><%= h(f.address) %></td>
