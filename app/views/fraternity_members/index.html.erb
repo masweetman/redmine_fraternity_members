@@ -7,6 +7,16 @@
   </p>
 <% end -%>
 
+<%= form_tag('/redmine/directory', :method => :get) do %>
+<fieldset>
+<label for='search'><%= 'Filter' %>:</label>
+<%= text_field_tag 'search', params[:search], :size => 30 %>
+<%= submit_tag l(:button_apply), :class => "small", :search => nil %>
+<%= link_to l(:button_clear), '/redmine/directory', :class => 'icon icon-reload' %>
+</fieldset>
+<% end %>
+&nbsp;
+
 <div class="autoscroll">
 <table class="list">
   <thead><tr>

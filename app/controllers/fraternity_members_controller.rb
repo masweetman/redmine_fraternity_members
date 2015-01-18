@@ -6,10 +6,19 @@ class FraternityMembersController < ApplicationController
   include CustomFieldsHelper
 
   def index
-    sort_init 'chapter', 'asc'
+    sort_init 'chapter, active_number', 'asc'
     sort_update %w(chapter active_number lastname pledge_name mail phone address)
 
     scope = FraternityMember
+    scope = scope.where("
+      chapter LIKE :search OR
+      active_number LIKE :search OR
+      firstname LIKE :search OR
+      lastname LIKE :search OR
+      pledge_name LIKE :search OR
+      mail LIKE :search OR
+      phone LIKE :search OR
+      address LIKE :search", :search => "#{params[:search]}%") if params[:search].present?
 
     @member_count = scope.count
     @member_pages = Paginator.new @member_count, 100, params['page']
