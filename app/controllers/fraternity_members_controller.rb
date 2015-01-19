@@ -14,14 +14,16 @@ class FraternityMembersController < ApplicationController
 
     scope = FraternityMember
     scope = scope.where("
-      chapter LIKE :search OR
+      chapter LIKE :chapter AND (
       active_number LIKE :search OR
       firstname LIKE :search OR
       lastname LIKE :search OR
       pledge_name LIKE :search OR
       mail LIKE :search OR
       phone LIKE :search OR
-      address LIKE :search", :search => "#{params[:search]}%") if params[:search].present?
+      address LIKE :search)",
+      :chapter => "#{params[:chapter]}%",
+      :search => "#{params[:search]}%") if params[:chapter].present? or params[:search].present?
 
     @member_count = scope.count
     @member_pages = Paginator.new @member_count, 100, params['page']
@@ -31,16 +33,18 @@ class FraternityMembersController < ApplicationController
   end
 
   def export
-    if params[:search].present?
+    if params[:chapter].present? or params[:search].present?
       @fraternity_members = FraternityMember.where("
-        chapter LIKE :search OR
-        active_number LIKE :search OR
-        firstname LIKE :search OR
-        lastname LIKE :search OR
-        pledge_name LIKE :search OR
-        mail LIKE :search OR
-        phone LIKE :search OR
-        address LIKE :search", :search => "#{params[:search]}%")
+      chapter LIKE :chapter AND (
+      active_number LIKE :search OR
+      firstname LIKE :search OR
+      lastname LIKE :search OR
+      pledge_name LIKE :search OR
+      mail LIKE :search OR
+      phone LIKE :search OR
+      address LIKE :search)",
+      :chapter => "#{params[:chapter]}%",
+      :search => "#{params[:search]}%")
     else
       @fraternity_members = FraternityMember.all
     end

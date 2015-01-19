@@ -2,10 +2,33 @@
 
 <%= form_tag(directory_path, :method => :get) do %>
 <fieldset>
-<label for='search'><%= 'Filter' %>:</label>
+<% options = ("<option value=''>#{ "Chapter..." }</option>" +
+         '<option value="" disabled="disabled">---</option>' +
+         '<option value="alpha">Alpha</option>' +
+         '<option value="beta">Beta</option>' +
+         '<option value="gamma">Gamma</option>' +
+         '<option value="delta">Delta</option>' +
+         '<option value="epsilon">Epsilon</option>' +
+         '<option value="zeta">Zeta</option>' +
+         '<option value="eta">Eta</option>' +
+         '<option value="theta">Theta</option>' +
+         '<option value="iota">Iota</option>' +
+         '<option value="kappa">Kappa</option>' +
+         '<option value="lambda">Lambda</option>' +
+         '<option value="mu">Mu</option>' +
+         '<option value="nu">Nu</option>' +
+         '<option value="xi">Xi</option>' +
+         '<option value="omicron">Omicron</option>' +
+         '<option value="pi">Pi</option>' +
+         '<option value="rho">Rho</option>' +
+         '<option value="sigma">Sigma</option>' +
+         '<option value="tau">Tau</option>').html_safe -%>
+<%= select_tag('chapter', options, :onchange => params[:chapter]) %>
+
+<label for='search'><%= 'Search' %>:</label>
 <%= text_field_tag 'search', params[:search], :size => 30 %>
 <%= submit_tag l(:button_apply), :class => "small", :search => nil %>
-<%= " | " %><%= link_to "Export to CSV", :controller => 'fraternity_members', :action => 'export', :search => params[:search] %><%= " | " %>
+<%= " | " %><%= link_to "Export to CSV", :controller => 'fraternity_members', :action => 'export', :chapter => params[:chapter], :search => params[:search] %><%= " | " %>
 
 <%= link_to l(:button_clear), directory_path, :class => 'icon icon-reload' %>
 </fieldset>
