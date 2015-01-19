@@ -30,7 +30,7 @@
   	<td><%= h(f.active_number) %></td>
   	<td>
       <% uname = f.firstname + " " + f.lastname -%>
-      <% ulink = "/redmine/users/" + f.redmine_user_id.to_s -%>
+      <% ulink = Redmine::Utils.relative_url_root + "/users/" + f.redmine_user_id.to_s -%>
       <% if f.redmine_user_id.to_i > 0 -%>
       <%= link_to uname, ulink if f.redmine_user_id > 0 %>
       <% else -%>
