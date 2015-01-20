@@ -52,8 +52,8 @@
   	<td><%= h(f.chapter) %></td>
   	<td><%= h(f.active_number) %></td>
   	<td>
+      <% uname = f.firstname.to_s + " " + f.lastname.to_s -%>
       <% if f.redmine_user_id.to_i > 0 -%>
-        <% uname = f.firstname.to_s + " " + f.lastname.to_s -%>
         <% ulink = user_path(User.find(f.redmine_user_id.to_i)) -%>
         <%= link_to uname, ulink if f.redmine_user_id > 0 %>
       <% else -%>
