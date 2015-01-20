@@ -8,7 +8,7 @@ module UserPatch
 			unloadable
 			belongs_to :deliverable
 
-			#alias_method_chain :save, :update_fraternity_member
+			alias_method_chain :save, :update_fraternity_member
 		end
 	end
 
