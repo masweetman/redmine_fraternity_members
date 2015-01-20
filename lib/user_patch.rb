@@ -8,23 +8,23 @@ module UserPatch
 			unloadable
 			belongs_to :deliverable
 
-			alias_method_chain :activate, :activate_fraternity_member
+			alias_method_chain :save, :update_fraternity_member
 		end
 	end
 
 	module InstanceMethods
 		def new_fraternity_member
-			if fraternity_member_id == nil
-				unless (anonymous? || !active? || custom_field_value(3) == "0")
+			if (fraternity_member_id == nil && custom_field_value(3).to_i > 0)
+				unless (anonymous? || !active?)
 					member = FraternityMember.where(chapter: custom_field_value(2), active_number: custom_field_value(3)).first
 					if member.nil?
 						self.fraternity_member_id = FraternityMember.create.id
-						self.save
+						#self.save
 					end
 					if !member.nil?
 						if ((lastname.downcase == member.lastname.downcase) or (member.lastname.downcase == "unknown") or (member.lastname.downcase == ""))
 							self.fraternity_member_id = member.id
-							self.save
+							#self.save
 						end
 					end
 				end
@@ -32,7 +32,7 @@ module UserPatch
 		end
 
 		def update_fraternity_member
-			if fraternity_member_id != nil
+			if (fraternity_member_id != nil && custom_field_value(3).to_i > 0)
 				member = FraternityMember.find(fraternity_member_id)
 				member.firstname = firstname
 				member.middlename = custom_field_value(80)
@@ -54,11 +54,29 @@ module UserPatch
 			end
 		end
 
-		def activate_with_activate_fraternity_member
-			activate_without_activate_fraternity_member
+		def save_with_update_fraternity_member
+			save_without_update_fraternity_member
+			if !active?
+		      if custom_field_value(54).downcase == Setting.plugin_redmine_fraternity_members[:fraternity_password].downcase
+		      	self.activate
+		      	Mailer.account_activated(self).deliver
+		      end
+			end
+
+			if custom_field_value(56).to_i >= Date.current.year
+			  m = Member.new(:user => self, :roles => [Role.find_by_name('Active')])
+			  if !Project.find_by_name(custom_field_value(2)).nil?
+			  	Project.find_by_name(custom_field_value(2)).members << m
+			  end
+			end
+
 			self.new_fraternity_member
+			save_without_update_fraternity_member
 			self.update_fraternity_member
+			#custom_field_value :id => 54, :value => "-"
+			
 		end
+
 	end
 end
 

@@ -5,6 +5,7 @@ namespace :redmine do
     task :initialize => :environment do
 		User.where(fraternity_member_id: nil).each do |user|
 			user.new_fraternity_member
+			user.save
 		end
 	end
 

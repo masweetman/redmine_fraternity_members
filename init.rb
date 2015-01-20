@@ -1,7 +1,4 @@
 require_dependency 'user_patch'
-require 'user_hooks'
-
-
 
 Redmine::Plugin.register :redmine_fraternity_members do
   name 'Redmine Fraternity Members'
@@ -20,5 +17,3 @@ Redmine::Plugin.register :redmine_fraternity_members do
   permission :export_member_directory, :fraternity_members => :export
 
 end
-
-#access setting via Setting.plugin_redmine_fraternity_members[:fraternity_password]
