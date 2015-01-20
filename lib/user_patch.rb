@@ -23,7 +23,7 @@ module UserPatch
 						#self.save
 					end
 					if !member.nil?
-						if ((lastname.downcase == member.lastname.downcase) or (member.lastname.downcase == "unknown") or (member.lastname.downcase == ""))
+						if member.lastname.downcase == lastname.downcase || member.lastname.downcase == ""
 							self.fraternity_member_id = member.id
 							#self.save
 						end
@@ -69,8 +69,17 @@ module UserPatch
 			save_without_update_fraternity_member
 			if !active?
 		      if custom_field_value(54).downcase == Setting.plugin_redmine_fraternity_members[:fraternity_password].downcase
-		      	self.activate
-		      	Mailer.account_activated(self).deliver
+				member = FraternityMember.where(chapter: custom_field_value(2), active_number: custom_field_value(3)).first
+				if member.nil?
+			      	self.activate
+			      	Mailer.account_activated(self).deliver
+				end
+				if !member.nil?
+					if member.lastname.downcase == lastname.downcase || member.lastname.downcase == ""
+				      	self.activate
+				      	Mailer.account_activated(self).deliver
+					end
+				end
 		      end
 			end
 
