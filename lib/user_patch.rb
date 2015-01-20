@@ -9,7 +9,7 @@ module UserPatch
 			belongs_to :deliverable
 
 			alias_method_chain :name, :pledge_name
-			alias_method_chain :save, :update_fraternity_member
+			alias_method_chain :update, :update_fraternity_member
 		end
 	end
 
@@ -17,15 +17,15 @@ module UserPatch
 		def new_fraternity_member
 			if (fraternity_member_id == nil && custom_field_value(3).to_i > 0)
 				unless (anonymous? || !active?)
-					member = FraternityMember.where(chapter: custom_field_value(2), active_number: custom_field_value(3)).first
+					member = FraternityMember.where(chapter: self.custom_field_value(2), active_number: self.custom_field_value(3)).first
 					if member.nil?
 						self.fraternity_member_id = FraternityMember.create.id
-						#self.save
+						self.save
 					end
 					if !member.nil?
-						if member.lastname.downcase == lastname.downcase || member.lastname.downcase == ""
+						if (member.lastname.downcase == lastname.downcase || member.lastname.downcase == "")
 							self.fraternity_member_id = member.id
-							#self.save
+							self.save
 						end
 					end
 				end
@@ -64,37 +64,10 @@ module UserPatch
 			end
 		end
 
-
-		def save_with_update_fraternity_member
-			save_without_update_fraternity_member
-			if !active?
-		      if custom_field_value(54).downcase == Setting.plugin_redmine_fraternity_members[:fraternity_password].downcase
-				member = FraternityMember.where(chapter: custom_field_value(2), active_number: custom_field_value(3)).first
-				if member.nil?
-			      	self.activate
-			      	Mailer.account_activated(self).deliver
-				end
-				if !member.nil?
-					if member.lastname.downcase == lastname.downcase || member.lastname.downcase == ""
-				      	self.activate
-				      	Mailer.account_activated(self).deliver
-					end
-				end
-		      end
-			end
-
-			if (projects.count == 0 && custom_field_value(56).to_i >= Date.current.year)
-			  m = Member.new(:user => self, :roles => [Role.find_by_name('Active')])
-			  if !Project.find_by_name(custom_field_value(2)).nil?
-			  	Project.find_by_name(custom_field_value(2)).members << m
-			  end
-			end
-
+		def update_with_update_fraternity_member
 			self.new_fraternity_member
-			save_without_update_fraternity_member
 			self.update_fraternity_member
-			#custom_field_value :id => 54, :value => "-"
-			
+			update_without_update_fraternity_member
 		end
 
 	end

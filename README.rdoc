@@ -1,1 +1,16 @@
 Manage members.
+
+Add hooks in account_controller.rb:
+
+        call_hook(:controller_account_before_registration, {:user => @user })
+
+        case Setting.self_registration
+        when '1'
+          register_by_email_activation(@user)
+        when '3'
+          register_automatically(@user)
+        else
+          register_manually_by_administrator(@user)
+        end
+        
+        call_hook(:controller_account_after_registration, {:user => @user })
