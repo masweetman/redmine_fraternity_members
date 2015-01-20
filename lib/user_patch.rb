@@ -8,6 +8,7 @@ module UserPatch
 			unloadable
 			belongs_to :deliverable
 
+			alias_method_chain :name, :pledge_name
 			alias_method_chain :save, :update_fraternity_member
 		end
 	end
@@ -53,6 +54,16 @@ module UserPatch
 				member.save
 			end
 		end
+
+		def name_with_pledge_name(formatter = nil)
+	   		f = self.class.name_formatter(formatter)
+	   		if self.custom_field_value(1) == ""
+	   			@name ||= eval('"' + f[:string] + '"')
+	   		else
+				@name ||= eval('"' + f[:string] + '"') + " (" + self.custom_field_value(1).truncate(12) + ")"
+			end
+		end
+
 
 		def save_with_update_fraternity_member
 			save_without_update_fraternity_member
