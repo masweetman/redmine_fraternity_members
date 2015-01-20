@@ -63,7 +63,7 @@ module UserPatch
 		      end
 			end
 
-			if custom_field_value(56).to_i >= Date.current.year
+			if (projects.count == 0 && custom_field_value(56).to_i >= Date.current.year)
 			  m = Member.new(:user => self, :roles => [Role.find_by_name('Active')])
 			  if !Project.find_by_name(custom_field_value(2)).nil?
 			  	Project.find_by_name(custom_field_value(2)).members << m
