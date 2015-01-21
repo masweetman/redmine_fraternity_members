@@ -10,7 +10,7 @@ module RedmineFraternityMembersPlugin
 			      	Setting.self_registration = '3'
 				end
 				if !member.nil?
-					if (member.lastname.downcase == user.lastname.downcase || member.lastname.downcase == "")
+					if (member.lastname.downcase == user.lastname.downcase || member.firstname.downcase == "unknown")
 				      	Setting.self_registration = '3'
 					end
 				end

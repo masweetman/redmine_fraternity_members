@@ -23,7 +23,7 @@ module UserPatch
 						self.save
 					end
 					if !member.nil?
-						if (member.lastname.downcase == lastname.downcase || member.lastname.downcase == "")
+						if (member.lastname.downcase == lastname.downcase || member.firstname.downcase == "unknown")
 							self.fraternity_member_id = member.id
 							self.save
 						end
