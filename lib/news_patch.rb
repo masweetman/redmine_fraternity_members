@@ -13,13 +13,12 @@ module NewsPatch
 	end
 
 	module InstanceMethods
-		
+
 		def recipients_with_actives
 			recipients_without_actives
 			#removes Accountants from email list
 			project.users.select {|user| user.notify_about?(self) && user.allowed_to?(:view_news, project) && user.roles_for_project(project) != [Role.find(36)]}.map(&:mail)
 			
-			User.select {|user| user.member_of?(Project.where) && user.allowed_to?(:view_news, Project.find(6)) && user.roles_for_project(Project.find(6)) != [Role.find(36)]}.map(&:mail)
 			#adds all actives as recipients of news on National Council project
 			if project.id == 6
 				actives = []
