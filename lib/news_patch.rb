@@ -16,9 +16,6 @@ module NewsPatch
 
 		def recipients_with_actives
 			recipients_without_actives
-			#removes Accountants from email list
-			project.users.select {|user| user.notify_about?(self) && user.allowed_to?(:view_news, project) && user.roles_for_project(project) != [Role.find(36)]}.map(&:mail)
-			
 			#adds all actives as recipients of news on National Council project
 			if project.id == 6
 				actives = []
@@ -31,6 +28,9 @@ module NewsPatch
 				end
 				actives = actives.map(&:mail)
 				actives
+			else
+				#removes Accountants from email list
+				project.users.select {|user| user.notify_about?(self) && user.allowed_to?(:view_news, project) && user.roles_for_project(project) != [Role.find(36)]}.map(&:mail)
 			end
 		end
 
