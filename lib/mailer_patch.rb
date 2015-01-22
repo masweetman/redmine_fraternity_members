@@ -9,7 +9,7 @@ module RedmineFraternityMembers
 		def news_to_all_actives(news)
 	#		actives = news.recipients
 	#		while actives.count > 0 do
-				mail_batch = actives.pop(99)
+	#			mail_batch = actives.pop(99)
 
 				redmine_headers 'Project' => news.project.identifier
 				@author = news.author
