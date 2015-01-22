@@ -1,5 +1,3 @@
-#require 'redmine'
-
 require 'registration_hooks'
 
 require_dependency 'user_patch'
