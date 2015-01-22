@@ -1,4 +1,4 @@
-require 'redmine'
+#require 'redmine'
 
 require 'registration_hooks'
 
