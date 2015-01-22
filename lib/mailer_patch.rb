@@ -1,16 +1,11 @@
-module MailerPatch
-	def self.included(base)
-		base.send(:include, InstanceMethods)
+module RedmineFraternityMembers
+  module Patches
 
-		base.class_eval do
-			unloadable
-			belongs_to :deliverable
+    module MailerPatch
+      module ClassMethods
+      end
 
-		end
-	end
-
-	module InstanceMethods
-	
+      module InstanceMethods
 		def news_to_all_actives(news)
 			actives = news.recipients
 			while actives.count > 0 do
@@ -25,10 +20,16 @@ module MailerPatch
 				mail(:to => ["slosweetman@gmail.com"], :subject => "[#{news.project.name}] #{l(:label_news)}: #{news.title}").deliver
 			end
 		end
-		
-	end
+      end
+
+    end
+
+  end
 end
 
-unless Mailer.included_modules.include?(MailerPatch)
-	Mailer.send(:include, MailerPatch)
+unless Mailer.included_modules.include?(RedmineFraternityMembers::Patches::MailerPatch)
+  Mailer.send(:include, RedmineFraternityMembers::Patches::MailerPatch)
 end
+	
+
+		
