@@ -1,4 +1,4 @@
-require 'mailer'
+require_dependency 'mailer'
 
 module MailerPatch
 	def self.included(base)
@@ -32,4 +32,3 @@ module MailerPatch
 	end
 end
 
-Mailer.send(:include, MailerPatch)
