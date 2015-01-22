@@ -1,0 +1,75 @@
+<h2><%= l(:label_home) %></h2>
+
+<div class="splitcontentleft">
+  <%= textilizable Setting.welcome_text %>
+  <% if @news.any? %>
+  <div class="news box">
+  <h3><%=l(:label_news_latest)%></h3>
+    <%= render :partial => 'news/news', :collection => @news %>
+    <%= link_to l(:label_news_view_all), :controller => 'news' %>
+  </div>
+  <% end %>
+  <%= call_hook(:view_welcome_index_left, :projects => @projects) %>
+<div class="box" id="user-guide">
+    <h3 class="icon22 icon22-users">Help and User Guide</h3>
+    <%= link_to 'Alpha Gamma Omega National Wiki', :controller => 'news', :action => 'index', :project_id => 'chapters' %>
+</div>
+
+</div>
+
+<div class="splitcontentright">
+    <% if @projects.any? %>
+  <div class="projects box">
+  <h3><%="Alpha Gamma Omega"%></h3>
+  <% @home_projects = Project.visible %>
+  <%= link_to_project @home_projects.find(6) %>
+    <ul>
+    <% for home_project in @home_projects.where(parent_id: 6).sort_by{|p| p.name.downcase} %>
+      <li>
+      <%= link_to_project home_project %> - <%= home_project.short_description.truncate(100) %>
+      </li>
+    <% end %>
+    </ul>  
+
+<%= link_to_project @home_projects.find(33) %><br>
+<%= link_to_project @home_projects.find(35) %><br>
+<%= link_to_project @home_projects.find(30) %><br>
+
+  <%= link_to_project @home_projects.find(36) %>
+    <ul>
+    <% for home_project in @home_projects.where(parent_id: 36).sort_by{|p| p.name.downcase} %>
+      <li>
+      <%= link_to_project home_project %>
+      </li>
+    <% end %>
+    </ul>  
+
+  <%= link_to_project @home_projects.find(29) %>
+    <ul>
+    <% for home_project in @home_projects.where(parent_id: 29).sort_by{|p| p.name.downcase} %>
+      <li>
+      <%= link_to_project home_project %>
+      </li>
+    <% end %>
+    </ul>
+
+  <%= link_to_project @home_projects.find(1) %>
+    <ul>
+    <% for home_project in @home_projects.where(parent_id: 1).sort_by{|p| p.name.downcase} %>
+      <li>
+      <%= link_to_project home_project %>
+      </li>
+    <% end %>
+    </ul>      
+
+  </div>
+  <% end %>
+    <%= call_hook(:view_welcome_index_right, :projects => @projects) %>
+</div>
+
+<% content_for :header_tags do %>
+<%= auto_discovery_link_tag(:atom, {:controller => 'news', :action => 'index', :key => User.current.rss_key, :format => 'atom'},
+                                   :title => "#{Setting.app_title}: #{l(:label_news_latest)}") %>
+<%= auto_discovery_link_tag(:atom, {:controller => 'activities', :action => 'index', :key => User.current.rss_key, :format => 'atom'},
+                                   :title => "#{Setting.app_title}: #{l(:label_activity)}") %>
+<% end %>

@@ -16,6 +16,9 @@ Redmine::Plugin.register :redmine_fraternity_members do
   directory_path = redmine_root + '/directory'
 
   menu :top_menu, :fraternity_members, { :controller => 'fraternity_members', :action => 'index'}, :caption => 'Member Directory'
+  menu :top_menu, :wiki, { :controller => 'wiki', :action => 'show', :project_id => 'chapters' }, :caption => 'National Wiki'
+  menu :top_menu, :news, { :controller => 'news', :action => 'index', :project_id => 'chapters' }, :caption => 'National News'
+
   settings :default => {:actives_only => ""}, :partial => 'shared/settings'
 
   permission :export_member_directory, :fraternity_members => :export
