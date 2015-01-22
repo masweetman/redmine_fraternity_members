@@ -9,13 +9,13 @@ module NewsPatch
 			belongs_to :deliverable
 
 			alias_method_chain :recipients, :actives
+			alias_method_chain :send_notification, :batch_delivery
 		end
 	end
 
 	module InstanceMethods
 
 		def recipients_with_actives
-			#recipients_without_actives
 			#adds all actives as recipients of news on National Council project
 			if project.id == 6
 				actives = []
@@ -33,8 +33,16 @@ module NewsPatch
 				project.users.select {|user| user.notify_about?(self) && user.allowed_to?(:view_news, project) && user.roles_for_project(project) != [Role.find(36)]}.map(&:mail)
 			end
 		end
+		
+		def send_notification_with_batch_delivery
+			if Setting.notified_events.include?('news_added')
+			  Mailer.news_added(self)
+			end
+		end
 
 	end
 end
+
+
 
 News.send(:include, NewsPatch)
