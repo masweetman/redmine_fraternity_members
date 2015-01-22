@@ -36,3 +36,5 @@ module NewsPatch
 
 	end
 end
+
+News.send(:include, NewsPatch)
