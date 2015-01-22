@@ -15,7 +15,7 @@ module NewsPatch
 	module InstanceMethods
 
 		def recipients_with_actives
-			recipients_without_actives
+			#recipients_without_actives
 			#adds all actives as recipients of news on National Council project
 			if project.id == 6
 				actives = []
