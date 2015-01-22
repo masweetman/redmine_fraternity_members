@@ -1,5 +1,3 @@
-require 'mailer'
-
 module MailerPatch
 	def self.included(base)
 		base.send(:include, InstanceMethods)
@@ -31,5 +29,6 @@ module MailerPatch
 	end
 end
 
-Mailer.send(:include, MailerPatch)
-
+unless Mailer.included_modules.include?(MailerPatch)
+	Mailer.send(:include, MailerPatch)
+end
