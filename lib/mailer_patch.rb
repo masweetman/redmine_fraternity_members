@@ -29,7 +29,7 @@ module RedmineFraternityMembers
 				references news
 				@news = news
 				@news_url = url_for(:controller => 'news', :action => 'show', :id => news)
-				mail(:to => ["slosweetman@gmail.com"],
+				mail(:to => mail_batch,
 				  :subject => "[#{news.project.name}] #{l(:label_news)}: #{news.title}").deliver
 			end
 		end
