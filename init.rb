@@ -1,7 +1,7 @@
 require 'registration_hooks'
+require_dependency 'mailer_patch'
 require_dependency 'user_patch'
 require_dependency 'news_patch'
-require_dependency 'mailer_patch'
 
 Redmine::Plugin.register :redmine_fraternity_members do
   name 'Redmine Fraternity Members'
