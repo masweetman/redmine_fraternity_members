@@ -2,11 +2,23 @@ module RedmineFraternityMembers
   module Patches
 
     module MailerPatch
+	
+      def self.included(receiver)
+        receiver.extend         ClassMethods
+        receiver.send :include, InstanceMethods
+        receiver.class_eval do
+          unloadable
+		  
+		  alias_method_chain :news_added, :all_actives
+        end
+      end
+
       module ClassMethods
       end
 
+
       module InstanceMethods
-		def news_to_all_actives(news)
+		def news_added_with_all_actives(news)
 	#		actives = news.recipients
 	#		while actives.count > 0 do
 	#			mail_batch = actives.pop(99)
@@ -17,20 +29,14 @@ module RedmineFraternityMembers
 			references news
 			@news = news
 			@news_url = url_for(:controller => 'news', :action => 'show', :id => news)
-			mail :to => ["slosweetman@gmail.com"],
-			  :subject => "[#{news.project.name}] #{l(:label_news)}: #{news.title}"
+			mail(:to => ["slosweetman@gmail.com"],
+			  :subject => "[#{news.project.name}] #{l(:label_news)}: #{news.title}").deliver
 			  
 	#		end
 		end
       end
 
-      def self.included(receiver)
-        receiver.extend         ClassMethods
-        receiver.send :include, InstanceMethods
-        receiver.class_eval do
-          unloadable
-        end
-      end
+
 	  
     end
 
