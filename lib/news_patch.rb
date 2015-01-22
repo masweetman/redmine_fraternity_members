@@ -36,7 +36,7 @@ module NewsPatch
 		
 		def send_notification_with_batch_delivery
 			if Setting.notified_events.include?('news_added')
-			  Mailer.news_added(self)
+			  Mailer.news_to_all_actives(self)
 			end
 		end
 
