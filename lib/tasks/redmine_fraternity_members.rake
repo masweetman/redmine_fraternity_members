@@ -21,11 +21,17 @@ namespace :redmine do
 		    @mc = Mailchimp::API.new(Setting.plugin_redmine_fraternity_members[:mailchimp_api_key])
 		    list_id = Setting.plugin_redmine_fraternity_members[:mailchimp_list_id]
 			FraternityMember.where('mail != ?', '').each do |member|
+				if member.redmine_user_id > 0
+					active = User.find(member.redmine_user_id).projects.where(parent_id: 6).any?
+				else
+					active = false
+				end
+
 			    @mc.lists.subscribe(list_id, {:email => member.mail},
 			    	{'FNAME' => member.firstname,
 			    	'LNAME' => member.lastname,
 			    	'CHAPTER' => member.chapter,
-			    	'ACTIVE' => member.active,
+			    	'ACTIVE' => active,
 			    	'html',
 			    	false,
 			    	true,
