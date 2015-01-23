@@ -74,7 +74,7 @@ module UserPatch
 		end
 
 		def subscribe
-			if fraternity_member_id != nil
+			if fraternity_member_id > 0
 				if !Setting.plugin_redmine_fraternity_members[:mailchimp_api_key].empty?
 				    @mc = Mailchimp::API.new(Setting.plugin_redmine_fraternity_members[:mailchimp_api_key])
 				    list_id = Setting.plugin_redmine_fraternity_members[:mailchimp_list_id]
