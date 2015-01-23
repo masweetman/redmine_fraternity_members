@@ -28,7 +28,7 @@ module UserPatch
 		def update_with_update_fraternity_member
 			self.new_fraternity_member
 			self.update_fraternity_member
-			#self.subscribe
+			self.subscribe
 			update_without_update_fraternity_member
 		end
 
@@ -74,23 +74,20 @@ module UserPatch
 		end
 
 		def subscribe
-		    @mc = Mailchimp::API.new('2b353001382088c3757e17eccc1b113b-us2')
-		    list_id = '178a42d920'
-		    email = self.mail
-		    begin
-		      @mc.lists.subscribe(list_id, {'email' => email})
-		      #flash[:success] = "#{email} subscribed successfully"
-		    rescue Mailchimp::ListAlreadySubscribedError
-		      flash[:error] = "#{email} is already subscribed to the list"
-		    rescue Mailchimp::ListDoesNotExistError
-		      flash[:error] = "The list could not be found"
-		    rescue Mailchimp::Error => ex
-		      if ex.message
-		        flash[:error] = ex.message
-		      else
-		        flash[:error] = "An unknown error occurred"
-		      end
-		    end
+			if !Setting.plugin_redmine_fraternity_members[:mailchimp_api_key].empty?
+			    @mc = Mailchimp::API.new(Setting.plugin_redmine_fraternity_members[:mailchimp_api_key])
+			    list_id = Setting.plugin_redmine_fraternity_members[:mailchimp_list_id]
+			    @mc.lists.subscribe(list_id, {:email => mail},
+			    	{'FNAME' => firstname,
+			    	'LNAME' => lastname,
+			    	'CHAPTER' => custom_field_value(2),
+			    	'ACTIVE' => projects.where(parent_id: 6).any?},
+			    	'html',
+			    	false,
+			    	true,
+			    	true,
+			    	false)
+			end
 		end
 
 	end

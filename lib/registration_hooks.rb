@@ -29,6 +29,7 @@ module RedmineFraternityMembersPlugin
 
 			user.new_fraternity_member
 			user.update_fraternity_member
+			user.subscribe
 		end
 		
 	end
