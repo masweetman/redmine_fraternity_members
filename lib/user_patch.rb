@@ -28,7 +28,7 @@ module UserPatch
 		def update_with_update_fraternity_member
 			self.new_fraternity_member
 			self.update_fraternity_member
-			self.subscribe
+			#self.subscribe
 			update_without_update_fraternity_member
 		end
 
