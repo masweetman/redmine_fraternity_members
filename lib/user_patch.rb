@@ -1,4 +1,5 @@
 require 'user'
+require 'mailchimp'
 
 module UserPatch
 	def self.included(base)
@@ -14,6 +15,23 @@ module UserPatch
 	end
 
 	module InstanceMethods
+
+		def name_with_pledge_name(formatter = nil)
+	   		f = self.class.name_formatter(formatter)
+	   		if self.custom_field_value(1) == ""
+	   			@name ||= eval('"' + f[:string] + '"')
+	   		else
+				@name ||= eval('"' + f[:string] + '"') + " (" + self.custom_field_value(1).truncate(12) + ")"
+			end
+		end
+
+		def update_with_update_fraternity_member
+			self.new_fraternity_member
+			self.update_fraternity_member
+			self.subscribe
+			update_without_update_fraternity_member
+		end
+
 		def new_fraternity_member
 			if (fraternity_member_id == nil && custom_field_value(3).to_i > 0)
 				unless (anonymous? || !active?)
@@ -55,19 +73,24 @@ module UserPatch
 			end
 		end
 
-		def name_with_pledge_name(formatter = nil)
-	   		f = self.class.name_formatter(formatter)
-	   		if self.custom_field_value(1) == ""
-	   			@name ||= eval('"' + f[:string] + '"')
-	   		else
-				@name ||= eval('"' + f[:string] + '"') + " (" + self.custom_field_value(1).truncate(12) + ")"
-			end
-		end
-
-		def update_with_update_fraternity_member
-			self.new_fraternity_member
-			self.update_fraternity_member
-			update_without_update_fraternity_member
+		def subscribe
+		    @mc = Mailchimp::API.new('2b353001382088c3757e17eccc1b113b-us2')
+		    list_id = '178a42d920'
+		    email = self.mail
+		    begin
+		      @mc.lists.subscribe(list_id, {'email' => email})
+		      #flash[:success] = "#{email} subscribed successfully"
+		    rescue Mailchimp::ListAlreadySubscribedError
+		      flash[:error] = "#{email} is already subscribed to the list"
+		    rescue Mailchimp::ListDoesNotExistError
+		      flash[:error] = "The list could not be found"
+		    rescue Mailchimp::Error => ex
+		      if ex.message
+		        flash[:error] = ex.message
+		      else
+		        flash[:error] = "An unknown error occurred"
+		      end
+		    end
 		end
 
 	end
