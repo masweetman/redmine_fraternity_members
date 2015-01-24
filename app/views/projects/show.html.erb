@@ -43,9 +43,16 @@
     <h3><%=l(:label_issue_tracking)%></h3>
     <ul>
     <% for tracker in @trackers %>
-      <li><%= link_to h(tracker.name), project_issues_path(@project, :set_filter => 1, :tracker_id => tracker.id) %>:
-          <%= l(:label_x_open_issues_abbr_on_total, :count => @open_issues_by_tracker[tracker].to_i,
-                                                    :total => @total_issues_by_tracker[tracker].to_i) %>
+      <% open = @open_issues_by_tracker[tracker].to_s  if !@open_issues_by_tracker[tracker].nil? %>
+      <% open = '0' if @open_issues_by_tracker[tracker].nil? %>
+      <% total = @total_issues_by_tracker[tracker].to_s if !@total_issues_by_tracker[tracker].nil? %>
+      <% total = '0' if @total_issues_by_tracker[tracker].nil? %>
+      <li><%= h(tracker.name) %>:
+
+        <%= link_to h('Open (' + open + ')'), project_issues_path(@project, :set_filter => 1, :tracker_id => tracker.id, :status_id => 'open') %>
+        /
+        <%= link_to h('All (' + total + ')'), project_issues_path(@project, :set_filter => 1, :tracker_id => tracker.id, :status_id => '*') %>
+
       </li>
     <% end %>
     </ul>
