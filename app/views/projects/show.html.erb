@@ -47,11 +47,14 @@
       <% open = '0' if @open_issues_by_tracker[tracker].nil? %>
       <% total = @total_issues_by_tracker[tracker].to_s if !@total_issues_by_tracker[tracker].nil? %>
       <% total = '0' if @total_issues_by_tracker[tracker].nil? %>
-      <li><%= h(tracker.name) %>:
-
-        <%= link_to h(open + ' open'), project_issues_path(@project, :set_filter => 1, :tracker_id => tracker.id) %>
-        /
-        <%= link_to h(total + ' total'), project_issues_path(@project, :set_filter => 1, :tracker_id => tracker.id, :status_id => '*') %>
+      <% if Query.where(name: tracker.name.pluralize).empty? %>
+        <li><%= h(tracker.name) %>:
+      <% else %>
+        <li><%= link_to h(tracker.name), project_issues_path(@project, :query_id => Query.find_by_name(tracker.name.pluralize).id ) %>:
+      <% end %>
+      <%= link_to h(open + ' open'), project_issues_path(@project, :set_filter => 1, :tracker_id => tracker.id) %>
+      /
+      <%= link_to h(total + ' total'), project_issues_path(@project, :set_filter => 1, :tracker_id => tracker.id, :status_id => '*') %>
 
       </li>
     <% end %>
