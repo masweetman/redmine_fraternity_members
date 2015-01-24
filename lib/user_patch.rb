@@ -49,7 +49,7 @@ module UserPatch
 		end
 
 		def update_fraternity_member
-			if (fraternity_member_id > 0 && custom_field_value(3).to_i > 0)
+			if (!fraternity_member_id.nil? && custom_field_value(3).to_i > 0)
 				member = FraternityMember.find(fraternity_member_id)
 				member.firstname = firstname
 				member.middlename = custom_field_value(80)
@@ -72,7 +72,7 @@ module UserPatch
 		end
 
 		def subscribe
-			if fraternity_member_id > 0
+			if !fraternity_member_id.nil?
 				if !Setting.plugin_redmine_fraternity_members[:mailchimp_api_key].empty?
 				    @mc = Mailchimp::API.new(Setting.plugin_redmine_fraternity_members[:mailchimp_api_key])
 				    list_id = Setting.plugin_redmine_fraternity_members[:mailchimp_list_id]
