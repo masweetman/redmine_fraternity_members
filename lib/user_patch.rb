@@ -26,6 +26,13 @@ module UserPatch
 		end
 
 		def update_with_update_fraternity_member
+			if (self.active? && self.custom_field_value(56).to_i >= Date.current.year && self.projects.empty?)
+			  m = Member.new(:user => self, :roles => [Role.find_by_name('Active')])
+			  if !Project.find_by_name(self.custom_field_value(2)).nil?
+			  	Project.find_by_name(self.custom_field_value(2)).members << m
+			  end
+			end
+
 			self.new_fraternity_member
 			self.update_fraternity_member
 			self.subscribe
