@@ -33,25 +33,23 @@ module UserPatch
 		end
 
 		def new_fraternity_member
-			if (fraternity_member_id == nil && custom_field_value(3).to_i > 0)
-				unless (anonymous? || !active?)
-					member = FraternityMember.where(chapter: self.custom_field_value(2), active_number: self.custom_field_value(3)).first
-					if member.nil?
-						self.fraternity_member_id = FraternityMember.create.id
+			if (active? && fraternity_member_id.nil? && custom_field_value(3).to_i > 0 && !anonymous?)
+				member = FraternityMember.where(chapter: self.custom_field_value(2), active_number: self.custom_field_value(3)).first
+				if member.nil?
+					self.fraternity_member_id = FraternityMember.create.id
+					self.save
+				end
+				if !member.nil?
+					if (member.lastname.downcase == lastname.downcase || member.firstname.downcase == "unknown")
+						self.fraternity_member_id = member.id
 						self.save
-					end
-					if !member.nil?
-						if (member.lastname.downcase == lastname.downcase || member.firstname.downcase == "unknown")
-							self.fraternity_member_id = member.id
-							self.save
-						end
 					end
 				end
 			end
 		end
 
 		def update_fraternity_member
-			if (fraternity_member_id != nil && custom_field_value(3).to_i > 0)
+			if (fraternity_member_id > 0 && custom_field_value(3).to_i > 0)
 				member = FraternityMember.find(fraternity_member_id)
 				member.firstname = firstname
 				member.middlename = custom_field_value(80)

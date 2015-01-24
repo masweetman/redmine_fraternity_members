@@ -20,7 +20,7 @@ module RedmineFraternityMembersPlugin
 		def controller_account_after_registration(context={})
 			Setting.self_registration = '2'
 			user = context[:user]
-			if (user.projects.count == 0 && user.custom_field_value(56).to_i >= Date.current.year)
+			if (user.active? && user.custom_field_value(56).to_i >= Date.current.year)
 			  m = Member.new(:user => user, :roles => [Role.find_by_name('Active')])
 			  if !Project.find_by_name(user.custom_field_value(2)).nil?
 			  	Project.find_by_name(user.custom_field_value(2)).members << m
