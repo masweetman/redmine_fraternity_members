@@ -49,9 +49,9 @@
       <% total = '0' if @total_issues_by_tracker[tracker].nil? %>
       <li><%= h(tracker.name) %>:
 
-        <%= link_to h('Open (' + open + ')'), project_issues_path(@project, :set_filter => 1, :tracker_id => tracker.id, :status_id => 'open') %>
+        <%= link_to h(open + ' open'), project_issues_path(@project, :set_filter => 1, :tracker_id => tracker.id) %>
         /
-        <%= link_to h('All (' + total + ')'), project_issues_path(@project, :set_filter => 1, :tracker_id => tracker.id, :status_id => '*') %>
+        <%= link_to h(total + ' total'), project_issues_path(@project, :set_filter => 1, :tracker_id => tracker.id, :status_id => '*') %>
 
       </li>
     <% end %>
