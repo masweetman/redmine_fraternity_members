@@ -12,3 +12,5 @@ Features:
 - Enables National News to be sent to all actives
 - Displays pledge names
 - Enables Shingles to be printed from Shingle Order issues.
+
+Enter the approprite details on the plugin settings page (Admin -> Plugins -> Configure)
