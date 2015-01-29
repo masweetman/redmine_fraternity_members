@@ -2,7 +2,7 @@
 
 <%= form_tag(directory_path, :method => :get) do %>
 <fieldset>
-<% chapters = FraternityMember.all.map(&:chapter).uniq.sort -%>
+<% chapters = [""] + FraternityMember.all.map(&:chapter).uniq.sort -%>
 
 Chapter:
 <%= select_tag('chapter', options_for_select(chapters, params[:chapter]), :onchange => params[:chapter]) %>
