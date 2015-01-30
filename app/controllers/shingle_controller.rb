@@ -36,7 +36,7 @@ shingle_html += '</span>
 				Member Number '
 shingle_html += shingle.custom_field_value(24).to_s + ', '
 shingle_html += shingle.project.name.to_s + ' Chapter' + '<br>Initiated on '
-shingle_html += initiation_date + '<br>at '
+shingle_html += initiation_date + ' at<br>'
 shingle_html += shingle.custom_field_value(97).to_s + '</span></i></p></div></body></html>'
 
                 send_data(shingle_html, :type => 'text/doc',
