@@ -72,12 +72,10 @@ class FraternityMembersController < ApplicationController
   private
 
   def find_role
-    Project.all.each do |project|
-      # deny access to pledges
-      if User.current.roles_for_project(project).include? Role.find(40)
-        deny_access
-        return
-      end
+    # deny access to non-members
+    unless User.current.fraternity_member_id.to_i > 0
+      deny_access
+      return
     end
   end
 
