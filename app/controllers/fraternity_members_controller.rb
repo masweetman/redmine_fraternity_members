@@ -1,7 +1,8 @@
 class FraternityMembersController < ApplicationController
   unloadable
 
-  before_filter :find_project, :authorize, :only => :export
+  before_filter :find_role, :only => :index
+  before_filter :find_council_member, :only => :export
 
   helper :sort
   include SortHelper
@@ -70,11 +71,21 @@ class FraternityMembersController < ApplicationController
 
   private
 
-  def find_project
-    Project.where(parent_id: 6).each do |project|
-      if User.current.member_of? project
-        @project = project
+  def find_role
+    Project.all.each do |project|
+      # deny access to pledges
+      if User.current.roles_for_project(project).include? Role.find(40)
+        deny_access
+        return
       end
+    end
+  end
+
+  def find_council_member
+    # only allow csv export to National Council members
+    unless User.current.member_of? Project.find(6)
+      deny_access
+      return
     end
   end
 

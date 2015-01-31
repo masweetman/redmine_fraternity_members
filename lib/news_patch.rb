@@ -22,7 +22,9 @@ module NewsPatch
 				actives = []
 				Project.where(parent_id: p_id).each do |chapter|
 					chapter.members.each do |member|
-						if !actives.include?(member.user) && member.user.roles_for_project(Project.find(6)) != [Role.find(36)]
+						if (!actives.include?(member.user) &&
+							member.user.roles_for_project(Project.find(6)) != [Role.find(36)] &&
+							member.user.roles_for_project(Project.find(6)) != [Role.find(40)])
 							actives << member.user
 						end
 					end
