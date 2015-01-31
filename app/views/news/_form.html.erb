@@ -2,7 +2,10 @@
 
 <div class="box tabular">
 <% if @project.id == 6 %>
-<strong>Note: News articles posted here will be mailed to all Alpha Gamma Omega active members, advisors, and National Council members.</strong>
+<strong>Note: News articles posted here will be mailed to all AGO active members, advisors, and National Council members.</strong>
+<% end %>
+<% if @project.id == 36 %>
+<strong>Note: News articles posted here will be mailed to all AGO Alumni Organization members.</strong>
 <% end %>
 <p><%= f.text_field :title, :required => true, :size => 60 %></p>
 <p><%= f.text_area :summary, :cols => 60, :rows => 2 %></p>
