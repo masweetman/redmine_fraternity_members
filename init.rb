@@ -2,8 +2,6 @@ require_dependency 'registration_patch'
 require_dependency 'user_patch'
 require_dependency 'news_patch'
 require_dependency 'mailer_patch'
-require_dependency 'wiki_controller_patch'
-require_dependency 'news_controller_patch'
 
 Redmine::Plugin.register :redmine_fraternity_members do
   name 'Redmine Fraternity Members'
@@ -22,15 +20,6 @@ Redmine::Plugin.register :redmine_fraternity_members do
 
   settings :default => {:actives_only => ""}, :partial => 'shared/settings'
 
-  #permission :export_member_directory, :fraternity_members => :export
-
-  project_module :fraternity_members_only do
-    permission :view_member_directory, {
-      :fraternity_members => :index
-    }
-    permission :export_member_directory, {
-      :fraternity_members => [:index, :export]
-    }
-  end
+  permission :export_member_directory, :fraternity_members => :export
 
 end

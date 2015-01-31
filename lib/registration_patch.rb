@@ -19,26 +19,14 @@ module RegistrationPatch
 			      	auto_register = true
 				end
 				if !member.nil?
-					if (member.lastname.downcase == user.lastname.downcase || member.firstname.downcase == 'unknown')
+					if (member.lastname.downcase == user.lastname.downcase || member.firstname.downcase == "unknown")
 				      	auto_register = true
 					end
 				end
-			elsif (user.custom_field_value(101).to_s == 'pledge' && user.custom_field_value(3).to_s == '0')
-				auto_register = true
 		    end
 
 		    if auto_register
 		    	register_automatically(user)
-
-				if (user.custom_field_value(56).to_i >= Date.current.year && !Project.find_by_name(user.custom_field_value(2)).nil?)
-					if user.custom_field_value(101).to_s == 'Active'
-					  m = Member.new(:user => user, :roles => [Role.find_by_name('Active')])
-					  Project.find_by_name(user.custom_field_value(2)).members << m
-					elsif user.custom_field_value(101).to_s == 'pledge'
-					  m = Member.new(:user => user, :roles => [Role.find_by_name('pledge')])
-					  Project.find_by_name(user.custom_field_value(2)).members << m
-					end
-				end
 
 				user.new_fraternity_member
 				user.update_fraternity_member
