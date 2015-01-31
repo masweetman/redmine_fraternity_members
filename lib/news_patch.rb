@@ -17,9 +17,10 @@ module NewsPatch
 
 		def recipients_with_actives
 			#adds all actives as recipients of news on National Council project
-			if project.id == 6
+			if project.id == 6 || project.id == 36
+				p_id = project.id
 				actives = []
-				Project.where(parent_id: 6).each do |chapter|
+				Project.where(parent_id: p_id).each do |chapter|
 					chapter.members.each do |member|
 						if !actives.include?(member.user) && member.user.roles_for_project(Project.find(6)) != [Role.find(36)]
 							actives << member.user
