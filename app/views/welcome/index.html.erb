@@ -12,7 +12,7 @@
   <%= call_hook(:view_welcome_index_left, :projects => @projects) %>
 <div class="box" id="user-guide">
     <h3 class="icon22 icon22-users">Help and User Guide</h3>
-    <%= link_to 'Alpha Gamma Omega National Wiki', :controller => 'news', :action => 'index', :project_id => 'chapters' %>
+    <%= link_to 'Alpha Gamma Omega National Wiki', :controller => 'wiki', :action => 'show', :project_id => 'chapters', :id => 'wiki' %>
 </div>
 
 </div>
