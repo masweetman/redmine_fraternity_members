@@ -10,8 +10,11 @@ Chapter:
 <label for='search'><%= 'Search' %>:</label>
 <%= text_field_tag 'search', params[:search], :size => 30 %>
 <%= submit_tag l(:button_apply), :class => "small", :search => nil %>
-<%= " | " %><%= link_to "Export to CSV", :controller => 'fraternity_members', :action => 'export', :chapter => params[:chapter], :search => params[:search] %><%= " | " %>
-
+<%= " | " %>
+<%= link_to "Export to CSV", :controller => 'fraternity_members', :action => 'export', :chapter => params[:chapter], :search => params[:search] %>
+<%= " | " %>
+<%= link_to "Export Google Contacts", :controller => 'fraternity_members', :action => 'export_google_contacts', :chapter => params[:chapter], :search => params[:search] %>
+<%= " | " %>
 <%= link_to l(:button_clear), directory_path, :class => 'icon icon-reload' %>
 </fieldset>
 <% end %>
