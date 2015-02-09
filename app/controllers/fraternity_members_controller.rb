@@ -70,16 +70,16 @@ class FraternityMembersController < ApplicationController
         full_name = e.firstname.to_s+' \''+e.pledge_name.to_s.truncate(18)+'\' '+e.lastname.to_s
       end
 
-      export_csv << '"'+e.chapter.to_s+'"'+','+
-                    '"'+e.active_number.to_s+'"'+','+
-                    '"'+full_name.squish+'"'+','+
-                    '"'+e.firstname.to_s+'"'+','+
-                    '"'+e.middlename.to_s+'"'+','+
-                    '"'+e.lastname.to_s+'"'+','+
-                    '"'+e.pledge_name.to_s+'"'+','+
-                    '"'+e.mail.to_s+'"'+','+
-                    '"'+e.phone.to_s+'"'+','+
-                    '"'+e.address.to_s+'"'+','+
+      export_csv << '"'+e.chapter.to_s.gsub(',','')+'"'+','+
+                    '"'+e.active_number.to_s.gsub(',','')+'"'+','+
+                    '"'+full_name.squish.gsub(',','')+'"'+','+
+                    '"'+e.firstname.to_s.gsub(',','')+'"'+','+
+                    '"'+e.middlename.to_s.gsub(',','')+'"'+','+
+                    '"'+e.lastname.to_s.gsub(',','')+'"'+','+
+                    '"'+e.pledge_name.to_s.gsub(',','')+'"'+','+
+                    '"'+e.mail.to_s.gsub(',','')+'"'+','+
+                    '"'+e.phone.to_s.gsub(',','')+'"'+','+
+                    '"'+e.address.to_s.gsub(',','')+'"'+','+
                     '"'+e.graduation_year.to_s+'"'+','+
                     '"'+e.active.to_s+'"'+"\n"
     end
