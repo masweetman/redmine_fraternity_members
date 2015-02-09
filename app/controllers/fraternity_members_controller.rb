@@ -51,10 +51,28 @@ class FraternityMembersController < ApplicationController
 
     @fraternity_members = @fraternity_members.sort_by{|a| [a.chapter, a.active_number]}
 
-    export_csv = 'chapter,active_number,firstname,middlename,lastname,pledge_name,mail,phone,address,graduation_year,active' + "\n"
+    fallback = { 
+      'Š'=>'S', 'š'=>'s', 'Ð'=>'Dj','Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A',
+      'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E', 'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I',
+      'Ï'=>'I', 'Ñ'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O', 'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U', 'Ú'=>'U',
+      'Û'=>'U', 'Ü'=>'U', 'Ý'=>'Y', 'Þ'=>'B', 'ß'=>'Ss','à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'a',
+      'å'=>'a', 'æ'=>'a', 'ç'=>'c', 'è'=>'e', 'é'=>'e', 'ê'=>'e', 'ë'=>'e', 'ì'=>'i', 'í'=>'i', 'î'=>'i',
+      'ï'=>'i', 'ð'=>'o', 'ñ'=>'n', 'ò'=>'o', 'ó'=>'o', 'ô'=>'o', 'õ'=>'o', 'ö'=>'o', 'ø'=>'o', 'ù'=>'u',
+      'ú'=>'u', 'û'=>'u', 'ý'=>'y', 'ý'=>'y', 'þ'=>'b', 'ÿ'=>'y', 'ƒ'=>'f'
+      }
+
+    export_csv = 'Chapter,Active No,Name,firstname,middlename,lastname,pledge_name,E-mail Address,Home Phone,Home Address,Graduation Year,Current Active?' + "\n"
     @fraternity_members.each do |e|
-      export_csv += '"'+e.chapter.to_s+'"'+','+
+      
+      if e.pledge_name.to_s == ""
+        full_name = e.firstname.to_s+' '+e.lastname.to_s
+      else
+        full_name = e.firstname.to_s+' \''+e.pledge_name.to_s.truncate(18)+'\' '+e.lastname.to_s
+      end
+
+      export_csv << '"'+e.chapter.to_s+'"'+','+
                     '"'+e.active_number.to_s+'"'+','+
+                    '"'+full_name.squish+'"'+','+
                     '"'+e.firstname.to_s+'"'+','+
                     '"'+e.middlename.to_s+'"'+','+
                     '"'+e.lastname.to_s+'"'+','+
@@ -65,7 +83,10 @@ class FraternityMembersController < ApplicationController
                     '"'+e.graduation_year.to_s+'"'+','+
                     '"'+e.active.to_s+'"'+"\n"
     end
-    send_data(export_csv, :type => 'text/csv', :filename => "export.csv")
+    
+    send_data(export_csv.encode('us-ascii',:fallback => fallback),
+      :type => 'text/csv; charset=utf-8; header=present',
+      :filename => "export.csv")
   end
 
   private
