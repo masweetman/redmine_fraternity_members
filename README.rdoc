@@ -8,7 +8,6 @@ rake redmine:plugins:migrate RAILS_ENV=production
 
 Features:
 - Syncs user database with Member Directory
-- Syncs users with Mailchimp (using the mailchimp-api gem)
 - Enables National News to be sent to all actives
 - Displays pledge names
 - Enables Shingles to be printed from Shingle Order issues.

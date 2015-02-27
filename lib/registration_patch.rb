@@ -30,7 +30,6 @@ module RegistrationPatch
 
 				user.new_fraternity_member
 				user.update_fraternity_member
-				user.subscribe
 		    else
 		    	register_manually_by_administrator_without_auto(user)
 		    end

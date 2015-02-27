@@ -1,5 +1,4 @@
 require 'user'
-require 'mailchimp'
 
 module UserPatch
 	def self.included(base)
@@ -35,7 +34,6 @@ module UserPatch
 
 			self.new_fraternity_member
 			self.update_fraternity_member
-			self.subscribe
 			update_without_update_fraternity_member
 		end
 
@@ -75,25 +73,6 @@ module UserPatch
 				member.redmine_user_id = id
 				member.active = projects.where(parent_id: 6).any?
 				member.save
-			end
-		end
-
-		def subscribe
-			if !fraternity_member_id.nil?
-				if !Setting.plugin_redmine_fraternity_members[:mailchimp_api_key].empty?
-				    @mc = Mailchimp::API.new(Setting.plugin_redmine_fraternity_members[:mailchimp_api_key])
-				    list_id = Setting.plugin_redmine_fraternity_members[:mailchimp_list_id]
-				    @mc.lists.subscribe(list_id, {:email => mail},
-				    	{'FNAME' => firstname,
-				    	'LNAME' => lastname,
-				    	'CHAPTER' => custom_field_value(2),
-				    	'ACTIVE' => projects.where(parent_id: 6).any?},
-				    	'html',
-				    	false,
-				    	true,
-				    	true,
-				    	false)
-				end
 			end
 		end
 
