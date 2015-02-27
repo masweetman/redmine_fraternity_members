@@ -1,3 +1,5 @@
+require 'user_hooks'
+
 require_dependency 'registration_patch'
 require_dependency 'user_patch'
 require_dependency 'news_patch'

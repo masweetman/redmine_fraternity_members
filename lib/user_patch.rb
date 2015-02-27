@@ -9,7 +9,6 @@ module UserPatch
 			belongs_to :deliverable
 
 			alias_method_chain :name, :pledge_name
-			alias_method_chain :update, :update_fraternity_member
 		end
 	end
 
@@ -22,19 +21,6 @@ module UserPatch
 	   		else
 				@name ||= eval('"' + f[:string] + '"') + " (" + self.custom_field_value(1).truncate(12) + ")"
 			end
-		end
-
-		def update_with_update_fraternity_member
-			if (self.active? && self.custom_field_value(56).to_i >= Date.current.year && self.projects.empty?)
-			  m = Member.new(:user => self, :roles => [Role.find_by_name('Active')])
-			  if !Project.find_by_name(self.custom_field_value(2)).nil?
-			  	Project.find_by_name(self.custom_field_value(2)).members << m
-			  end
-			end
-
-			self.new_fraternity_member
-			self.update_fraternity_member
-			update_without_update_fraternity_member
 		end
 
 		def new_fraternity_member
