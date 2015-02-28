@@ -1,7 +1,8 @@
 class FraternityMembersController < ApplicationController
-  unloadable
+  #unloadable
 
   before_filter :find_project, :authorize, :only => [:export, :export_google_contacts]
+  #before_filter :sanitize_page_params
 
   helper :sort
   include SortHelper
@@ -30,6 +31,22 @@ class FraternityMembersController < ApplicationController
     @offset ||= @member_pages.offset
     @members = scope.offset(@offset).limit(100).order(sort_clause).all
 
+  end
+
+  def edit
+    @fraternity_member = FraternityMember.find(params[:id])
+  end
+
+  def update
+    @fraternity_member = FraternityMember.find(params[:id])
+    #(render_403; return false) unless @fraternity_member.editable_by?(User.current)
+    @fraternity_member.safe_attributes = params[:fraternity_member]
+    if @fraternity_member.save
+      flash[:notice] = l(:notice_successful_update)
+      redirect_to fraternity_members_path
+    else
+      render :action => 'edit'
+    end
   end
 
   def export
@@ -136,6 +153,14 @@ class FraternityMembersController < ApplicationController
         @project = project
       end
     end
+  end
+
+  #def sanitize_page_params
+  #  params[:active_number] = params[:active_number].to_i
+  #end
+
+  def fraternity_member_params
+    params.require(:fraternity_member).permit(:chapter)
   end
 
 end

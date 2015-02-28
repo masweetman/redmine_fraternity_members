@@ -30,6 +30,7 @@ Chapter:
   <%= sort_header_tag('mail', :caption => 'Email') %>
   <%= sort_header_tag('phone', :caption => 'Phone') %>
   <%= sort_header_tag('address', :caption => 'Zip Code') %>
+  <th></th>
   </tr></thead>
   <tbody>
 <% for f in @members -%>
@@ -49,6 +50,9 @@ Chapter:
   	<td><%= mail_to(h(f.mail)) %></td>
   	<td><%= h(f.phone) %></td>
   	<td><%= h(f.address) %></td>
+    <td>
+      <%= link_to 'Edit', edit_fraternity_member_path(f) %>
+    </td>
   </tr>
 <% end -%>
   </tbody>

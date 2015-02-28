@@ -1,0 +1,18 @@
+<h1>Editing fraternity_member</h1>
+ 
+<%= labelled_form_for :fraternity_member, @fraternity_member, 
+                             :url => {:action => 'update', :id => @fraternity_member}, 
+                             :html => { :multipart => true, :method => :put, :id => "fraternity_member_form" } do |f|  %>
+ 
+  <p>
+    <%= f.label :chapter %><br>
+    <%= f.text_field :chapter %>
+  </p>
+ 
+  <p>
+    <%= f.submit %>
+  </p>
+ 
+<% end %>
+ 
+<%= link_to 'Back', fraternity_members_path %>

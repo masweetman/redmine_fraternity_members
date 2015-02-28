@@ -1,3 +1,4 @@
 class FraternityMember < ActiveRecord::Base
-  unloadable
+	include Redmine::SafeAttributes
+	safe_attributes 'chapter'
 end
