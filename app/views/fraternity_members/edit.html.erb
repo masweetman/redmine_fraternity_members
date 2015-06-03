@@ -3,10 +3,15 @@
 <%= labelled_form_for :fraternity_member, @fraternity_member, 
                              :url => {:action => 'update', :id => @fraternity_member}, 
                              :html => { :multipart => true, :method => :put, :id => "fraternity_member_form" } do |f|  %>
- 
+
   <p>
-    <%= f.label :chapter %><br>
-    <%= f.text_field :chapter %>
+    <%= f.text_field :firstname %><br>
+    <%= f.text_field :middlename %><br>
+    <%= f.text_field :lastname %><br>
+    <%= f.text_field :mail %><br>
+    <%= f.text_field :chapter %><br>
+    <%= f.text_field :active_number %><br>
+    <%= f.text_field :pledge_name %><br>
   </p>
  
   <p>

@@ -2,3 +2,7 @@
 en:
   # my_label: "My label"
   field_password_confirmation: Confirm Password
+  field_middlename: Middle Name
+  field_chapter: Chapter
+  field_active_number: Active Number
+  field_pledge_name: Pledge Name
