@@ -1,8 +1,7 @@
 class FraternityMembersController < ApplicationController
   #unloadable
 
-  before_filter :find_project, :authorize, :only => [:export, :export_google_contacts]
-  #before_filter :sanitize_page_params
+  before_filter :find_project, :authorize, :only => [:export, :export_google_contacts, :edit, :update]
 
   helper :sort
   include SortHelper
@@ -154,10 +153,6 @@ class FraternityMembersController < ApplicationController
       end
     end
   end
-
-  #def sanitize_page_params
-  #  params[:active_number] = params[:active_number].to_i
-  #end
 
   def fraternity_member_params
     params.require(:fraternity_member).permit(:chapter)
