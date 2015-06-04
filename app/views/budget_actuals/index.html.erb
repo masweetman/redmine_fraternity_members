@@ -1,5 +1,9 @@
 <p>
-<%= link_to 'Download Latest Budget', :controller => 'issues', :action => 'show', :id => @latestBudget.id %> | 
+<% if @latestBudget.nil? then -%>
+  (No current budget available) | 
+<% else -%>
+  <%= link_to 'View Latest Budget', :controller => 'issues', :action => 'show', :id => @latestBudget.id %> | 
+<% end -%>
 <%= link_to 'Upload New Budget', :controller => 'issues', :action => 'new', :project_id => @project.name %>
 </p>
 
