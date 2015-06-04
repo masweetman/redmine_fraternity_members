@@ -27,9 +27,8 @@ class BudgetActualsController < ApplicationController
 				   budgetCategories.include?(e.custom_field_value(98)) then
 					if @annualExpenses[e.custom_field_value(98)].nil?
 				   		@annualExpenses[e.custom_field_value(98)] = []
-					else
-						@annualExpenses[e.custom_field_value(98)][i] = @annualExpenses[e.custom_field_value(98)][i].to_f + e.custom_field_value(31).to_f
 					end
+					@annualExpenses[e.custom_field_value(98)][i] = @annualExpenses[e.custom_field_value(98)][i].to_f + e.custom_field_value(31).to_f
 				end
 			end
 		end
