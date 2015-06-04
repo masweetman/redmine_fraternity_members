@@ -4,7 +4,11 @@
 <% else -%>
   <%= link_to 'View Latest Budget', :controller => 'issues', :action => 'show', :id => @latestBudget.id %> | 
 <% end -%>
-<%= link_to 'Upload New Budget', :controller => 'issues', :action => 'new', :project_id => @project.name %>
+<%= link_to 'Upload New Budget', :controller => 'issues', :action => 'new', :project_id => @project.name, :tracker_id => 19 %>
+</p>
+<p>
+<%= link_to 'Report a New Deposit', :controller => 'issues', :action => 'new', :project_id => @project.name, :tracker_id => 21 %> | 
+<%= link_to 'Report a New Expense', :controller => 'issues', :action => 'new', :project_id => @project.name, :tracker_id => 22 %>
 </p>
 
 <p>
