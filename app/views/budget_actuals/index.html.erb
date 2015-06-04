@@ -4,11 +4,13 @@
 <% else -%>
   <%= link_to 'View Latest Budget', :controller => 'issues', :action => 'show', :id => @latestBudget.id %> | 
 <% end -%>
-<%= link_to 'Upload New Budget', :controller => 'issues', :action => 'new', :project_id => @project.name, :tracker_id => 19 %>
+<%= link_to 'Upload New Budget', :controller => 'issues', :action => 'new', :project_id => @project.name, :tracker_id => 19 %> | 
+<%= link_to 'Download the Budget Template', :controller => 'wiki', :action => 'show', :project_id => Project.find(6), :id => 'Downloads' %>
 </p>
 <p>
 <%= link_to 'Report a New Deposit', :controller => 'issues', :action => 'new', :project_id => @project.name, :tracker_id => 21 %> | 
-<%= link_to 'Report a New Expense', :controller => 'issues', :action => 'new', :project_id => @project.name, :tracker_id => 22 %>
+<%= link_to 'Report a New Expense', :controller => 'issues', :action => 'new', :project_id => @project.name, :tracker_id => 22 %> |
+<a href="https://chaseonline.chase.com" target="_blank">Chase Online Banking</a>
 </p>
 
 <p>
@@ -24,7 +26,9 @@
   </tr></thead>
   <tbody>
   <tr class="<%= cycle("odd", "even") %>">
-    <td width=250 style="text-align: left"><strong>Total Deposits</strong></td>
+    <td width=250 style="text-align: left">
+      <%= link_to 'Total Deposits', project_issues_path(@project, :query_id => Query.find_by_name('Deposits')) %>
+    </td>
     <% for j in 0..11 -%>
       <% i = 11 - j -%>
       <td><strong><%= number_with_delimiter(@annualDeposits[i].to_f.round, :delimiter => ',') %></strong></td>
@@ -42,18 +46,36 @@
   <th>Budget Category</th>
   <% for j in 0..11 -%>
     <% i = 11 - j -%>
-    <th><%= @dateStrings[i] %></th>
+    <th>
+
+      <%= link_to @dateStrings[i], project_issues_path(@project, :set_filter => 1,
+        :f=>[:status_id, :tracker_id, :cf_28, ""],
+        :op=>{:status_id=>"*", :tracker_id=>"=", :cf_28=>"><"},
+        :v=>{:tracker_id=>["22"], :cf_28=>[@dates[i].beginning_of_month, @dates[i].end_of_month]},
+        :c => [:cf_27,:tracker,:cf_98,:cf_31,:cf_28,:cf_26,:status,:cf_93,:assigned_to]
+        ) %>
+
+    </th>
   <% end -%>
   </tr></thead>
   <tbody>
 <% totalExpenses = [] -%>
 <% for c in @annualExpenses -%>
   <tr class="<%= cycle("odd", "even") %>">
-    <td width=250 style="text-align: left"><strong><%= c.first %></strong></td>
+    <td width=250 style="text-align: left">
+
+      <%= link_to c[0], project_issues_path(@project, :set_filter => 1,
+      :tracker_id => 22,
+      :status_id => '*',
+      :cf_98 => c[0],
+      :c => [:cf_27,:tracker,:cf_98,:cf_31,:cf_28,:cf_26,:status,:cf_93,:assigned_to]
+      ) %>
+
+    </td>
     <% for j in 0..11 -%>
       <% i = 11 - j -%>
-      <td><%= number_with_delimiter(c.second[i].to_f.round, :delimiter => ',') %></td>
-      <% totalExpenses[i] = totalExpenses[i].to_f + c.second[i].to_f -%>
+      <td><%= number_with_delimiter(c[1][i].to_f.round, :delimiter => ',') %></td>
+      <% totalExpenses[i] = totalExpenses[i].to_f + c[1][i].to_f -%>
     <% end -%>
   </tr>
 <% end -%>
@@ -81,7 +103,7 @@
   </tr></thead>
   <tbody>
   <tr class="<%= cycle("odd", "even") %>">
-    <td width=250 style="text-align: left"><strong>Net Cash Flow</strong></td>
+    <td width=250 style="text-align: left">Net Cash Flow</td>
     <% for j in 0..11 -%>
       <% i = 11 - j -%>
       <td><strong><%= number_with_delimiter((@annualDeposits[i].to_f.round - totalExpenses[i].round), :delimiter => ',') %></strong></td>
