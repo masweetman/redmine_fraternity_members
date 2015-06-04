@@ -7,12 +7,35 @@
 <%= link_to 'Upload New Budget', :controller => 'issues', :action => 'new', :project_id => @project.name %>
 </p>
 
+<p>
 <h2>Actual Revenue</h2>
 
-<h2>Actual Expenses</h2>
 <table class="list">
   <thead><tr>
-  <th>Category</th>
+  <th></th>
+  <% for j in 0..11 -%>
+    <% i = 11 - j -%>
+    <th><%= @dateStrings[i] %></th>
+  <% end -%>
+  </tr></thead>
+  <tbody>
+  <tr class="<%= cycle("odd", "even") %>">
+    <td width=250 style="text-align: left"><strong>Total Deposits</strong></td>
+    <% for j in 0..11 -%>
+      <% i = 11 - j -%>
+      <td><strong><%= number_with_delimiter(@annualDeposits[i].to_f.round, :delimiter => ',') %></strong></td>
+    <% end -%>
+  </tr>
+  </tbody>
+</table>
+</p>
+
+<p>
+<h2>Actual Expenses</h2>
+
+<table class="list">
+  <thead><tr>
+  <th>Budget Category</th>
   <% for j in 0..11 -%>
     <% i = 11 - j -%>
     <th><%= @dateStrings[i] %></th>
@@ -39,3 +62,27 @@
   </tr>
   </tbody>
 </table>
+</p>
+
+<p>
+<h2>Net Cash Flow</h2>
+
+<table class="list">
+  <thead><tr>
+  <th></th>
+  <% for j in 0..11 -%>
+    <% i = 11 - j -%>
+    <th><%= @dateStrings[i] %></th>
+  <% end -%>
+  </tr></thead>
+  <tbody>
+  <tr class="<%= cycle("odd", "even") %>">
+    <td width=250 style="text-align: left"><strong>Net Cash Flow</strong></td>
+    <% for j in 0..11 -%>
+      <% i = 11 - j -%>
+      <td><strong><%= number_with_delimiter((@annualDeposits[i].to_f.round - totalExpenses[i].round), :delimiter => ',') %></strong></td>
+    <% end -%>
+  </tr>
+  </tbody>
+</table>
+</p>
