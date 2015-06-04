@@ -1,35 +1,42 @@
-<table style="width:450px" class="list">
+<table class="list">
   <thead><tr>
   <th>Category</th>
   <th><%= @date1String %></th>
   <th><%= @date2String %></th>
   <th><%= @date3String %></th>
+  <th><%= @date4String %></th>
+  <th><%= @date5String %></th>
+  <th><%= @date6String %></th>
+  <th><%= @date7String %></th>
+  <th><%= @date8String %></th>
+  <th><%= @date9String %></th>
+  <th><%= @date10String %></th>
+  <th><%= @date11String %></th>
+  <th><%= @date12String %></th>
   </tr></thead>
   <tbody>
 
-<% totalDate1 = 0 -%>
-<% totalDate2 = 0 -%>
-<% totalDate3 = 0 -%>
+<% totals = [] -%>
 
-<% for c in @quarterExpenses -%>
+<% for c in @annualExpenses -%>
   <tr class="<%= cycle("odd", "even") %>">
     <td width=250 style="text-align: left"><strong><%= c.first %></strong></td>
-    <td><%= number_with_delimiter(c.second.first.round, :delimiter => ',') %></td>
-    <td><%= number_with_delimiter(c.second.second.round, :delimiter => ',') %></td>
-    <td><%= number_with_delimiter(c.second.third.round, :delimiter => ',') %></td>
-  </tr>
 
-  <% totalDate1 = totalDate1 + c.second.first -%>
-  <% totalDate2 = totalDate2 + c.second.second -%>
-  <% totalDate3 = totalDate3 + c.second.third -%>
+    <% for i in 0..11 -%>
+      <td><%= number_with_delimiter(c.second[i].round, :delimiter => ',') %></td>
+      <% totals[i] = totals[i].to_f + c.second[i] -%>
+    <% end -%>
+
+  </tr>
 
 <% end -%>
 
   <tr class="<%= cycle("odd", "even") %>">
   	<td width=250 style="text-align: left"><strong>Total</strong></td>
-    <td><strong><%= number_with_delimiter(totalDate1.round, :delimiter => ',') %></strong></td>
-    <td><strong><%= number_with_delimiter(totalDate2.round, :delimiter => ',') %></strong></td>
-    <td><strong><%= number_with_delimiter(totalDate3.round, :delimiter => ',') %></strong></td>
+
+    <% for i in 0..11 -%>
+      <td><strong><%= number_with_delimiter(totals[i].round, :delimiter => ',') %></strong></td>
+    <% end -%>
   </tr>
   </tbody>
 </table>
