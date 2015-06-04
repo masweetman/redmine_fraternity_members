@@ -9,7 +9,7 @@ class BudgetActualsController < ApplicationController
 	def index
 		budgetCategories = CustomField.find(98).possible_values
 		@project = Project.find(params[:id])
-		@expenses = @project.issues.where('tracker_id = ? AND created_on > ?', 22, Date.today - 1.year)
+		@expenses = @project.issues.where('tracker_id = ? AND status_id <> ? AND created_on > ?', 22, 6, Date.today - 1.year)
 		@deposits = @project.issues.where('tracker_id = ? AND created_on > ?', 21, Date.today - 1.year)
 		@latestBudget = @project.issues.where(:tracker_id => 19).last
 
