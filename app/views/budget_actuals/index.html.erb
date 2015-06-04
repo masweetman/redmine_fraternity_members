@@ -1,41 +1,36 @@
+<p>
+<%= link_to 'Download Latest Budget', :controller => 'issues', :action => 'show', :id => @latestBudget.id %> | 
+<%= link_to 'Upload New Budget', :controller => 'issues', :action => 'new', :project_id => @project.name %>
+</p>
+
+<h2>Actual Revenue</h2>
+
+<h2>Actual Expenses</h2>
 <table class="list">
   <thead><tr>
   <th>Category</th>
-  <th><%= @date1String %></th>
-  <th><%= @date2String %></th>
-  <th><%= @date3String %></th>
-  <th><%= @date4String %></th>
-  <th><%= @date5String %></th>
-  <th><%= @date6String %></th>
-  <th><%= @date7String %></th>
-  <th><%= @date8String %></th>
-  <th><%= @date9String %></th>
-  <th><%= @date10String %></th>
-  <th><%= @date11String %></th>
-  <th><%= @date12String %></th>
+  <% for j in 0..11 -%>
+    <% i = 11 - j -%>
+    <th><%= @dateStrings[i] %></th>
+  <% end -%>
   </tr></thead>
   <tbody>
-
-<% totals = [] -%>
-
+<% totalExpenses = [] -%>
 <% for c in @annualExpenses -%>
   <tr class="<%= cycle("odd", "even") %>">
     <td width=250 style="text-align: left"><strong><%= c.first %></strong></td>
-
-    <% for i in 0..11 -%>
-      <td><%= number_with_delimiter(c.second[i].round, :delimiter => ',') %></td>
-      <% totals[i] = totals[i].to_f + c.second[i] -%>
+    <% for j in 0..11 -%>
+      <% i = 11 - j -%>
+      <td><%= number_with_delimiter(c.second[i].to_f.round, :delimiter => ',') %></td>
+      <% totalExpenses[i] = totalExpenses[i].to_f + c.second[i].to_f -%>
     <% end -%>
-
   </tr>
-
 <% end -%>
-
   <tr class="<%= cycle("odd", "even") %>">
   	<td width=250 style="text-align: left"><strong>Total</strong></td>
-
-    <% for i in 0..11 -%>
-      <td><strong><%= number_with_delimiter(totals[i].round, :delimiter => ',') %></strong></td>
+      <% for j in 0..11 -%>
+        <% i = 11 - j -%>
+      <td><strong><%= number_with_delimiter(totalExpenses[i].round, :delimiter => ',') %></strong></td>
     <% end -%>
   </tr>
   </tbody>

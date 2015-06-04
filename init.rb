@@ -25,6 +25,6 @@ Redmine::Plugin.register :redmine_fraternity_members do
   menu :top_menu, :fraternity_members, { :controller => 'fraternity_members', :action => 'index' }, :caption => 'Member Directory'
   menu :top_menu, :wiki, { :controller => 'wiki', :action => 'show', :project_id => 'chapters', :id => 'wiki' }, :caption => 'National Wiki'
   menu :top_menu, :news, { :controller => 'news', :action => 'index', :project_id => 'chapters' }, :caption => 'National News'
-  menu :project_menu, :budget_actuals, { :controller => 'budget_actuals', :action => 'index' }, :caption => 'Budget Actuals', :after => :activity
+  menu :project_menu, :budget_actuals, { :controller => 'budget_actuals', :action => 'index' }, :caption => 'Budget', :after => :activity
 
 end
