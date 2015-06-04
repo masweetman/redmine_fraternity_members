@@ -1,1 +1,30 @@
-Hello!
+<% month1 = Date.today.month -%>
+<% month2 = Date.today.month - 1 -%>
+<% month3 = Date.today.month - 2 -%>
+
+<% month1 = Date.parse(Date.today.year.to_s + "-" + month1.to_s + "-1").strftime('%b') -%>
+<% month2 = Date.parse(Date.today.year.to_s + "-" + month2.to_s + "-1").strftime('%b') -%>
+<% month3 = Date.parse(Date.today.year.to_s + "-" + month3.to_s + "-1").strftime('%b') -%>
+
+<table class="list">
+  <thead><tr>
+  <th>Category</th>
+  <th><%= month3 %></th>
+  <th><%= month2 %></th>
+  <th><%= month1 %></th>
+  </tr></thead>
+  <tbody>
+  <tr class="<%= cycle("odd", "even") %>">
+    <td><strong>Total</strong></td>
+    <td>val1</td>
+    <td>val2</td>
+    <td>val3</td>
+  </tr>
+  <tr class="<%= cycle("odd", "even") %>">
+  	<td><strong>cat1</strong></td>
+    <td>val4</td>
+    <td>val5</td>
+    <td>val6</td>
+  </tr>
+  </tbody>
+</table>
