@@ -1,4 +1,5 @@
 class BudgetActualsController < ApplicationController
+
 	#unloadable
 
 	helper :sort
@@ -46,5 +47,64 @@ class BudgetActualsController < ApplicationController
 		end
 		@annualExpenses = @annualExpenses.sort
 	end
+
+  def export
+  	index
+
+    export_csv = 'Actual Revenue' + "\n"
+    export_csv << '"'+''+'"'+','
+    for j in 0..11
+    	i = 11 - j
+    	export_csv << '"'+@dateStrings[i].to_s+'"'+','
+    end
+    export_csv << "\n"
+    export_csv << '"'+'Total Deposits'+'"'+','
+    for j in 0..11
+    	i = 11 - j
+    	export_csv << '"'+@annualDeposits[i].to_f.round.to_s+'"'+','
+    end
+    export_csv << "\n" + "\n"
+
+    export_csv << 'Actual Expenses' + "\n"
+    export_csv << '"'+''+'"'+','
+        for j in 0..11
+    	i = 11 - j
+    	export_csv << '"'+@dateStrings[i].to_s+'"'+','
+    end
+    export_csv << "\n"
+    totalExpenses = []
+    for c in @annualExpenses
+    	export_csv << '"'+c[0]+'"'+','
+    	for j in 0..11
+    		i = 11 - j
+    		export_csv << '"'+c[1][i].to_f.round.to_s+'"'+','
+    		totalExpenses[i] = totalExpenses[i].to_f + c[1][i].to_f
+    	end
+    	export_csv << "\n"
+    end
+    export_csv << '"'+'Total'+'"'+','
+    for j in 0..11
+    	i = 11 - j
+    	export_csv << '"'+totalExpenses[i].round.to_s+'"'+','
+    end
+    export_csv << "\n" + "\n"
+
+    export_csv << 'Net Cash Flow' + "\n"
+    export_csv << '"'+''+'"'+','
+        for j in 0..11
+    	i = 11 - j
+    	export_csv << '"'+@dateStrings[i].to_s+'"'+','
+    end
+    export_csv << "\n"
+    export_csv << '"'+'Net Cash Flow'+'"'+','
+    for j in 0..11
+    	i = 11 - j
+    	export_csv << '"'+(@annualDeposits[i].to_f.round - totalExpenses[i].round).to_s+'"'+','
+    end
+    
+    send_data(export_csv,
+      :type => 'text/csv; charset=utf-8; header=present',
+      :filename => @project.name + "_budget_actuals_" + Date.today.to_s + ".csv")
+  end
 
 end

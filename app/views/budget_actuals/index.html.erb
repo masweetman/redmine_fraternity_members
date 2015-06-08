@@ -12,6 +12,9 @@
 <%= link_to 'Report a New Expense', :controller => 'issues', :action => 'new', :project_id => @project.name, :tracker_id => 22 %> |
 <a href="https://chaseonline.chase.com" target="_blank">Chase Online Banking</a>
 </p>
+<p>
+<%= link_to "Export Actuals to CSV", :controller => 'budget_actuals', :action => 'export' %>
+</p>
 
 <p>
 <h2>Actual Revenue</h2>
