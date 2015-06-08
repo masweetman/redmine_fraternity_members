@@ -20,7 +20,7 @@ Redmine::Plugin.register :redmine_fraternity_members do
 
   permission :export_member_directory, :fraternity_members => [:export, :export_google_contacts]
   permission :edit_fraternity_members, :fraternity_members => [:edit, :update]
-  permission :budget_actuals, { :budget_actuals => :index }, :public => true
+  permission :view_budget_actuals, { :budget_actuals => :index }
 
   menu :top_menu, :fraternity_members, { :controller => 'fraternity_members', :action => 'index' }, :caption => 'Member Directory'
   menu :top_menu, :wiki, { :controller => 'wiki', :action => 'show', :project_id => 'chapters', :id => 'wiki' }, :caption => 'National Wiki'
