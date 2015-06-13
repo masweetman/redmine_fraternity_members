@@ -12,7 +12,7 @@
           <%= link_to_project_deposit_issues_on_date(@project, d[0]) %>
         </td>
         <td>
-          <%= number_with_delimiter(d[1].round, :delimiter => ',') %>
+          <%= number_with_delimiter(d[1], :delimiter => ',') %>
         </td>
     </tr>
   <% end -%>
