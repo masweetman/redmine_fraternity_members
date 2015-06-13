@@ -1,53 +1,76 @@
+<% totalRevenue = [0,0,0,0,0,0,0,0,0,0,0,0] -%>
+<% totalExpenses = [0,0,0,0,0,0,0,0,0,0,0,0] -%>
+
 <p>
 <% if @latestBudget.nil? then -%>
   (No current budget available) | 
 <% else -%>
   <%= link_to 'View Latest Budget', :controller => 'issues', :action => 'show', :id => @latestBudget.id %> | 
 <% end -%>
-<%= link_to 'Upload New Budget', :controller => 'issues', :action => 'new', :project_id => @project.name, :tracker_id => 19 %> | 
+<%= link_to 'Upload New Budget', :controller => 'issues', :action => 'new', :project_id => @project.identifier, :tracker_id => 19 %> | 
 <%= link_to 'Download the Budget Template', :controller => 'wiki', :action => 'show', :project_id => Project.find(6), :id => 'Downloads' %>
 </p>
 <p>
-<%= link_to 'List all deposits', :controller => 'deposits', :action => 'index' %> |
-<%= link_to 'Report a New Deposit', :controller => 'issues', :action => 'new', :project_id => @project.name, :tracker_id => 21 %> | 
-<%= link_to 'Report a New Expense', :controller => 'issues', :action => 'new', :project_id => @project.name, :tracker_id => 22 %> |
+<%= link_to 'List All Deposits', :controller => 'deposits', :action => 'index' %> |
+<%= link_to 'Report a New Deposit', :controller => 'issues', :action => 'new', :project_id => @project.identifier, :tracker_id => 26 %> | 
+<%= link_to 'Report a New Expense', :controller => 'issues', :action => 'new', :project_id => @project.identifier, :tracker_id => 22 %> |
 <a href="https://chaseonline.chase.com" target="_blank">Chase Online Banking</a>
-</p>
-<p>
-<%= link_to 'Export Actuals to CSV', :controller => 'budget_actuals', :action => 'export' %>
 </p>
 
 <p>
-<h2><%= link_to 'Actual Revenue', :controller => 'deposits', :action => 'index' %></h2>
+<h2>Actual Revenue</h2>
+
+<% if !@annualRevenue.empty? -%>
 
 <table class="list">
   <thead><tr>
-  <th></th>
+  <th>Account</th>
   <% for j in 0..11 -%>
     <% i = 11 - j -%>
-    <th><%= @dateStrings[i] %></th>
+    <th>
+
+      <%= link_to @dateStrings[i], :controller => 'deposits', :action => 'index' %>
+
+    </th>
   <% end -%>
   </tr></thead>
   <tbody>
+<% for c in @annualRevenue -%>
   <tr class="<%= cycle("odd", "even") %>">
     <td width=250 style="text-align: left">
-      <%= link_to 'Total Deposits', project_issues_path(@project, :query_id => Query.find_by_name('Deposits')) %>
+
+      <%= link_to_project_deposit_issues_by_account(@project, c[0], c[1][12]) %>
+
     </td>
     <% for j in 0..11 -%>
       <% i = 11 - j -%>
-      <td><strong><%= number_with_delimiter(@annualDeposits[i].to_f.round, :delimiter => ',') %></strong></td>
+      <td><%= number_with_delimiter(c[1][i].to_f.round, :delimiter => ',') %></td>
+      <% totalRevenue[i] = totalRevenue[i].to_f + c[1][i].to_f -%>
+    <% end -%>
+  </tr>
+<% end -%>
+  <tr class="<%= cycle("odd", "even") %>">
+    <td width=250 style="text-align: left"><strong>Total Revenue</strong></td>
+      <% for j in 0..11 -%>
+        <% i = 11 - j -%>
+      <td><strong><%= number_with_delimiter(totalRevenue[i].round, :delimiter => ',') %></strong></td>
     <% end -%>
   </tr>
   </tbody>
 </table>
-</p>
+
+<% else -%>
+  (no revenue reported yet)
+<% end -%>
 
 <p>
 <h2>Actual Expenses</h2>
 
+<% if !@annualExpenses.empty? -%>
+
 <table class="list">
   <thead><tr>
-  <th>Budget Category</th>
+  <th>Account</th>
   <% for j in 0..11 -%>
     <% i = 11 - j -%>
     <th>
@@ -63,7 +86,6 @@
   <% end -%>
   </tr></thead>
   <tbody>
-<% totalExpenses = [] -%>
 <% for c in @annualExpenses -%>
   <tr class="<%= cycle("odd", "even") %>">
     <td width=250 style="text-align: left">
@@ -84,7 +106,7 @@
   </tr>
 <% end -%>
   <tr class="<%= cycle("odd", "even") %>">
-  	<td width=250 style="text-align: left"><strong>Total</strong></td>
+  	<td width=250 style="text-align: left"><strong>Total Expenses</strong></td>
       <% for j in 0..11 -%>
         <% i = 11 - j -%>
       <td><strong><%= number_with_delimiter(totalExpenses[i].round, :delimiter => ',') %></strong></td>
@@ -110,9 +132,18 @@
     <td width=250 style="text-align: left">Net Cash Flow</td>
     <% for j in 0..11 -%>
       <% i = 11 - j -%>
-      <td><strong><%= number_with_delimiter((@annualDeposits[i].to_f.round - totalExpenses[i].round), :delimiter => ',') %></strong></td>
+      <td><strong><%= number_with_delimiter((totalRevenue[i].round - totalExpenses[i].round), :delimiter => ',') %></strong></td>
     <% end -%>
   </tr>
   </tbody>
 </table>
+
+<% else -%>
+  (no expenses reported yet)
+<% end -%>
+
+</p>
+
+<p align="right">
+  <%= link_to 'Export Actuals to CSV', :controller => 'budget_actuals', :action => 'export' %>
 </p>

@@ -6,32 +6,47 @@ class BudgetActualsController < ApplicationController
 	include SortHelper
 	helper :custom_fields
 	include CustomFieldsHelper
+    helper :deposits
+    include DepositsHelper
 
 	def index
 		budgetCategories = CustomField.find(98).possible_values
 		@project = Project.find(params[:id])
-		@expenses = @project.issues.where('tracker_id = ? AND status_id <> ? AND created_on > ?', 22, 6, Date.today - 1.year)
-		@deposits = @project.issues.where('tracker_id = ? AND created_on > ?', 21, Date.today - 1.year)
+		@revenue = @project.issues.where('tracker_id = ? AND created_on > ?', 26, Date.today - 1.year)
+        @expenses = @project.issues.where('tracker_id = ? AND status_id <> ? AND created_on > ?', 22, 6, Date.today - 1.year)
 		@latestBudget = @project.issues.where(:tracker_id => 19).last
 
 		@dates = []
 		@dateStrings = []
 		@annualExpenses = {}
-		@annualDeposits = []
+        @annualRevenue = {}
 
 		for i in 0..11
 			@dates[i] = Date.today - i.month
 			@dateStrings[i] = @dates[i].strftime('%b %y')
 		end
 
-		for d in @deposits
-			for i in 0..11
-				if Date.parse(d.custom_field_value(19)).month == @dates[i].month &&
-				   Date.parse(d.custom_field_value(19)).year == @dates[i].year then
-					@annualDeposits[i] = @annualDeposits[i].to_f + d.custom_field_value(94).to_f
-				end
-			end
-		end
+        for r in @revenue
+            if r.custom_field_value(85).empty?
+                account = r.custom_field_value(84)
+                accountType = "payer"
+            else
+                account = r.custom_field_value(85)
+                accountType = "beneficiary"
+            end
+
+            for i in 0..11
+                if Date.parse(r.custom_field_value(105)).month == @dates[i].month &&
+                   Date.parse(r.custom_field_value(105)).year == @dates[i].year
+                    if @annualRevenue[account].nil?
+                        @annualRevenue[account] = []
+                        @annualRevenue[account][12] = accountType
+                    end
+                    @annualRevenue[account][i] = @annualRevenue[account][i].to_f + r.custom_field_value(104).to_f
+                end
+            end
+        end
+        @annualRevenue = @annualRevenue.sort
 				
 		for e in @expenses
 			for i in 0..11
