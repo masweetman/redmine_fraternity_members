@@ -65,29 +65,41 @@ class BudgetActualsController < ApplicationController
 
   def export
   	index
+    totalExpenses = [0,0,0,0,0,0,0,0,0,0,0,0]
+    totalRevenue = [0,0,0,0,0,0,0,0,0,0,0,0]
 
     export_csv = 'Actual Revenue' + "\n"
-    export_csv << '"'+''+'"'+','
-    for j in 0..11
-    	i = 11 - j
-    	export_csv << '"'+@dateStrings[i].to_s+'"'+','
+    export_csv << '"'+'Account'+'"'+','
+        for j in 0..11
+        i = 11 - j
+        export_csv << '"'+@dateStrings[i].to_s+'"'+','
     end
     export_csv << "\n"
-    export_csv << '"'+'Total Deposits'+'"'+','
+    
+    for c in @annualRevenue
+        export_csv << '"'+c[0]+'"'+','
+        for j in 0..11
+            i = 11 - j
+            export_csv << '"'+c[1][i].to_f.round.to_s+'"'+','
+            totalRevenue[i] = totalRevenue[i].to_f + c[1][i].to_f
+        end
+        export_csv << "\n"
+    end
+    export_csv << '"'+'Total Revenue'+'"'+','
     for j in 0..11
-    	i = 11 - j
-    	export_csv << '"'+@annualDeposits[i].to_f.round.to_s+'"'+','
+        i = 11 - j
+        export_csv << '"'+totalRevenue[i].round.to_s+'"'+','
     end
     export_csv << "\n" + "\n"
 
     export_csv << 'Actual Expenses' + "\n"
-    export_csv << '"'+''+'"'+','
+    export_csv << '"'+'Account'+'"'+','
         for j in 0..11
     	i = 11 - j
     	export_csv << '"'+@dateStrings[i].to_s+'"'+','
     end
     export_csv << "\n"
-    totalExpenses = []
+    
     for c in @annualExpenses
     	export_csv << '"'+c[0]+'"'+','
     	for j in 0..11
@@ -97,7 +109,7 @@ class BudgetActualsController < ApplicationController
     	end
     	export_csv << "\n"
     end
-    export_csv << '"'+'Total'+'"'+','
+    export_csv << '"'+'Total Expenses'+'"'+','
     for j in 0..11
     	i = 11 - j
     	export_csv << '"'+totalExpenses[i].round.to_s+'"'+','
@@ -111,10 +123,11 @@ class BudgetActualsController < ApplicationController
     	export_csv << '"'+@dateStrings[i].to_s+'"'+','
     end
     export_csv << "\n"
+
     export_csv << '"'+'Net Cash Flow'+'"'+','
     for j in 0..11
     	i = 11 - j
-    	export_csv << '"'+(@annualDeposits[i].to_f.round - totalExpenses[i].round).to_s+'"'+','
+    	export_csv << '"'+(totalRevenue[i].round - totalExpenses[i].round).to_s+'"'+','
     end
     
     send_data(export_csv,
