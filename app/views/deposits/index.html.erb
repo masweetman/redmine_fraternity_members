@@ -1,1 +1,27 @@
 <h2>Deposits</h2>
+
+<table class="list">
+  <thead><tr>
+  <th>Deposit Date</th>
+  <th>Deposit Amount</th>
+  </tr></thead>
+  <tbody>
+  <% for d in @deposits -%>
+    <tr class="<%= cycle("odd", "even") %>">
+        <td>
+
+          <%= link_to d[0], project_issues_path(@project, :set_filter => 1,
+          :tracker_id => 26,
+          :status_id => '*',
+          :cf_105 => d[0],
+          :c => [:tracker,:cf_105,:cf_84,:cf_87,:cf_104]
+          ) %>
+
+        </td>
+        <td>
+          <%= number_with_delimiter(d[1].round, :delimiter => ',') %>
+        </td>
+    </tr>
+  <% end -%>
+  </tbody>
+</table>
