@@ -5,7 +5,7 @@ module DepositsHelper
 		    :tracker_id => 26,
 		    :status_id => '*',
 		    :cf_105 => date,
-		    :c => [:tracker,:cf_105,:cf_84,:cf_85,:cf_88,:cf_89,:cf_91,:cf_90,:cf_104]
+		    :c => [:project,:cf_105,:cf_84,:cf_85,:cf_88,:cf_89,:cf_91,:cf_90,:cf_104]
 	    )
     end
 
@@ -15,14 +15,14 @@ module DepositsHelper
 			    :tracker_id => 26,
 			    :status_id => '*',
 			    :cf_84 => account,
-			    :c => [:tracker,:cf_105,:cf_84,:cf_85,:cf_88,:cf_89,:cf_91,:cf_90,:cf_104]
+			    :c => [:project,:cf_105,:cf_84,:cf_85,:cf_88,:cf_89,:cf_91,:cf_90,:cf_104]
 		    )
 		else
 		    link_to account, project_issues_path(project, :set_filter => 1,
 			    :tracker_id => 26,
 			    :status_id => '*',
 			    :cf_85 => account,
-			    :c => [:tracker,:cf_105,:cf_84,:cf_85,:cf_88,:cf_89,:cf_91,:cf_90,:cf_104]
+			    :c => [:project,:cf_105,:cf_84,:cf_85,:cf_88,:cf_89,:cf_91,:cf_90,:cf_104]
 		    )
 		end
     end
