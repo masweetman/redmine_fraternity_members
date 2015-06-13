@@ -8,3 +8,4 @@ get 'directory/export_google_contacts', :to => 'fraternity_members#export_google
 get '/issues/:id/shingle', :to => 'shingle#shingle_export'
 get '/projects/:id/budget_actuals', :to => 'budget_actuals#index'
 get '/projects/:id/budget_actuals/export', :to => 'budget_actuals#export'
+get '/projects/:id/deposits', :to => 'deposits#index'

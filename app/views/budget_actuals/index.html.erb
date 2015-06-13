@@ -8,16 +8,17 @@
 <%= link_to 'Download the Budget Template', :controller => 'wiki', :action => 'show', :project_id => Project.find(6), :id => 'Downloads' %>
 </p>
 <p>
+<%= link_to 'List all deposits', :controller => 'deposits', :action => 'index' %> |
 <%= link_to 'Report a New Deposit', :controller => 'issues', :action => 'new', :project_id => @project.name, :tracker_id => 21 %> | 
 <%= link_to 'Report a New Expense', :controller => 'issues', :action => 'new', :project_id => @project.name, :tracker_id => 22 %> |
 <a href="https://chaseonline.chase.com" target="_blank">Chase Online Banking</a>
 </p>
 <p>
-<%= link_to "Export Actuals to CSV", :controller => 'budget_actuals', :action => 'export' %>
+<%= link_to 'Export Actuals to CSV', :controller => 'budget_actuals', :action => 'export' %>
 </p>
 
 <p>
-<h2>Actual Revenue</h2>
+<h2><%= link_to 'Actual Revenue', :controller => 'deposits', :action => 'index' %></h2>
 
 <table class="list">
   <thead><tr>
