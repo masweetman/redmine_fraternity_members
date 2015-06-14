@@ -1,17 +1,21 @@
 <h2>Email Groups</h2>
-
-<h3>Advisors</h3>
 <ul>
 <li><%= mail_to(User.current.mail, 'National Council', cc: email_address_string(@national_council),
 	subject: '[National Council]', :encode => 'javascript') %></li>
-<li><%= mail_to(User.current.mail, 'Chapter Advisors', cc: email_address_string(@advisors),
-	subject: '[Advisors]', :encode => 'javascript') %></li>
+<li><%= mail_to(User.current.mail, 'AGO Ministries, Inc. (AGOm)', cc: email_address_string(@agom),
+	subject: '[AGOm]', :encode => 'javascript') %></li>
+<li><%= mail_to(User.current.mail, 'AGO Alumni, Inc. (AAI)', cc: email_address_string(@aai),
+	subject: '[AAI]', :encode => 'javascript') %></li>
+<li><%= mail_to(User.current.mail, 'Beta Housing Board', cc: email_address_string(@beta_housing_board),
+	subject: '[Beta Housing Board]', :encode => 'javascript') %></li>
+<li><%= mail_to(User.current.mail, 'Legion of Honor', cc: email_address_string(@loh),
+	subject: '[LOH]', :encode => 'javascript') %></li>
 <li><%= mail_to(User.current.mail, 'AGODelphian Editors', cc: email_address_string(@agodelphian_editors),
 	subject: '[AGODelphian]', :encode => 'javascript') %></li>
-</ul>
-
-<h3>Chapters</h3>
-<ul>
+<li><%= mail_to(User.current.mail, 'Chapter Advisors', cc: email_address_string(@advisors),
+	subject: '[Advisors]', :encode => 'javascript') %></li>
+<li><%= mail_to(User.current.mail, 'All Alumni Leaders', cc: email_address_string(@alumni_leaders),
+	subject: '[Alumni Leaders]', :encode => 'javascript') %></li>
 <li><%= mail_to(User.current.mail, 'All Presidents', cc: email_address_string(@presidents),
 	subject: '[Presidents]', :encode => 'javascript') %></li>
 <li><%= mail_to(User.current.mail, 'All Vice Presidents', cc: email_address_string(@vice_presidents),
@@ -28,14 +32,16 @@
 	subject: '[Secretaries]', :encode => 'javascript') %></li>
 <li><%= mail_to(User.current.mail, 'All Social Media Managers', cc: email_address_string(@social_media_managers),
 	subject: '[Social Media]', :encode => 'javascript') %></li>
-<li><%= mail_to(User.current.mail, 'All Elected Officers', cc: email_address_string(@officers),
-	subject: '[Officers]', :encode => 'javascript') %></li>
+<li><%= mail_to(User.current.mail, 'All Chapter Execs', cc: email_address_string(@officers),
+	subject: '[All Exec]', :encode => 'javascript') %></li>
 <li><%= mail_to(User.current.mail, 'All Actives', bcc: email_address_string(@actives),
 	subject: '[All Actives]', :encode => 'javascript') %></li>
+<li><%= mail_to(User.current.mail, 'Everyone', bcc: email_address_string(@everyone),
+	subject: '[AGO]', :encode => 'javascript') %></li>
 </ul>
 
 <% for chapter in @chapters.keys -%>
-<h4><%= chapter %></h4>
+<h3><%= chapter %></h3>
 <ul>
 <li><%= mail_to(User.current.mail, 'Chapter Advisors', cc: email_address_string(@chapters[chapter][0]),
 	subject: '[' + chapter + ' Advisors]', :encode => 'javascript') %></li>

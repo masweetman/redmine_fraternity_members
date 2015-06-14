@@ -16,7 +16,12 @@ class EmailGroupsController < ApplicationController
 				@national_council -= [user]
 			end
 		end
+		@national_council = @national_council.uniq
 
+		@agom = Project.find(35).users
+		@aai = (Project.find(30).users + @national_council).uniq
+		@loh = Project.find(33).users
+		
 		@advisors = []
 		@presidents = []
 		@vice_presidents = []
@@ -71,7 +76,6 @@ class EmailGroupsController < ApplicationController
 		@officers = @vice_presidents + @chaplains + @pledgemasters + @treasurers + @house_managers + @secretaries
 		@actives += @officers + @social_media_managers + @agodelphian_editors
 		
-		@national_council = @national_council.uniq
 		@advisors = @advisors.uniq
 		@agodelphian_editors = @agodelphian_editors.uniq
 		@presidents = @presidents.uniq
@@ -84,6 +88,8 @@ class EmailGroupsController < ApplicationController
 		@social_media_managers = @social_media_managers.uniq
 		@officers = @officers.uniq
 		@actives = @actives.uniq
+
+		
 
 		@chapters = {}
 		for chapter in Project.where(:parent_id => 6).sort
@@ -107,8 +113,14 @@ class EmailGroupsController < ApplicationController
 				end
 			end
 		end
-		
 
+		@beta_housing_board = (Project.find(48).users + @chapters['Beta'][1]).uniq
 
+		@alumni_leaders = @agodelphian_editors + @agom + @aai + Project.find(48).users + @loh
+
+		@alumni_leaders = @alumni_leaders.uniq
+
+		@everyone = (@actives + @alumni_leaders).uniq
+	
 	end
 end
