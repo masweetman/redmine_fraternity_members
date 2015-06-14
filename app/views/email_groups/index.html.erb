@@ -1,0 +1,36 @@
+<h2>Email Groups</h2>
+
+<h3>Advisors</h3>
+<ul>
+<li><%= mail_to(User.current.mail, 'National Council', cc: email_address_string(@national_council),
+	subject: '[National Council]', :encode => 'javascript') %></li>
+<li><%= mail_to(User.current.mail, 'Chapter Advisors', cc: email_address_string(@advisors),
+	subject: '[Advisors]', :encode => 'javascript') %></li>
+<li><%= mail_to(User.current.mail, 'AGODelphian Editors', cc: email_address_string(@agodelphian_editors),
+	subject: '[AGODelphian]', :encode => 'javascript') %></li>
+</ul>
+
+<h3>Chapters</h3>
+<ul>
+<li><%= mail_to(User.current.mail, 'All Presidents', cc: email_address_string(@presidents),
+	subject: '[Presidents]', :encode => 'javascript') %></li>
+<li><%= mail_to(User.current.mail, 'All Vice Presidents', cc: email_address_string(@vice_presidents),
+	subject: '[Vice Presidents]', :encode => 'javascript') %></li>
+<li><%= mail_to(User.current.mail, 'All Chaplains', cc: email_address_string(@chaplains),
+	subject: '[Chaplains]', :encode => 'javascript') %></li>
+<li><%= mail_to(User.current.mail, 'All Pledgemasters', cc: email_address_string(@pledgemasters),
+	subject: '[Pledgemasters]', :encode => 'javascript') %></li>
+<li><%= mail_to(User.current.mail, 'All Treasurers', cc: email_address_string(@treasurers),
+	subject: '[Treasurers]', :encode => 'javascript') %></li>
+<li><%= mail_to(User.current.mail, 'All House Managers', cc: email_address_string(@house_managers),
+	subject: '[House Managers]', :encode => 'javascript') %></li>
+<li><%= mail_to(User.current.mail, 'All Secretaries', cc: email_address_string(@secretaries),
+	subject: '[Secretaries]', :encode => 'javascript') %></li>
+<li><%= mail_to(User.current.mail, 'All Social Media Managers', cc: email_address_string(@social_media_managers),
+	subject: '[Social Media]', :encode => 'javascript') %></li>
+<li><%= mail_to(User.current.mail, 'All Elected Officers', cc: email_address_string(@officers),
+	subject: '[Officers]', :encode => 'javascript') %></li>
+<li><%= mail_to(User.current.mail, 'All Actives', bcc: email_address_string(@actives),
+	subject: '[All Actives]', :encode => 'javascript') %></li>
+</ul>
+	
