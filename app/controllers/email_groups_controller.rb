@@ -69,7 +69,7 @@ class EmailGroupsController < ApplicationController
 		@secretaries += @presidents
 		@social_media_managers += @presidents
 		@officers = @vice_presidents + @chaplains + @pledgemasters + @treasurers + @house_managers + @secretaries
-		@actives += @officers + @social_media_managers
+		@actives += @officers + @social_media_managers + @agodelphian_editors
 		
 		@national_council = @national_council.uniq
 		@advisors = @advisors.uniq
@@ -84,6 +84,30 @@ class EmailGroupsController < ApplicationController
 		@social_media_managers = @social_media_managers.uniq
 		@officers = @officers.uniq
 		@actives = @actives.uniq
+
+		@chapters = {}
+		for chapter in Project.where(:parent_id => 6).sort
+			@chapters[chapter.name] = []
+			@chapters[chapter.name][0] = []
+			@chapters[chapter.name][1] = []
+			@chapters[chapter.name][2] = []
+			for user in @advisors
+				if user.member_of?(chapter)
+					@chapters[chapter.name][0] << user
+				end
+			end
+			for user in @officers
+				if user.member_of?(chapter)
+					@chapters[chapter.name][1] << user
+				end
+			end
+			for user in @actives
+				if user.member_of?(chapter)
+					@chapters[chapter.name][2] << user
+				end
+			end
+		end
+		
 
 
 	end

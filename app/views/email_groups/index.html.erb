@@ -33,4 +33,16 @@
 <li><%= mail_to(User.current.mail, 'All Actives', bcc: email_address_string(@actives),
 	subject: '[All Actives]', :encode => 'javascript') %></li>
 </ul>
-	
+
+<% for chapter in @chapters.keys -%>
+<h4><%= chapter %></h4>
+<ul>
+<li><%= mail_to(User.current.mail, 'Chapter Advisors', cc: email_address_string(@chapters[chapter][0]),
+	subject: '[' + chapter + ' Advisors]', :encode => 'javascript') %></li>
+<li><%= mail_to(User.current.mail, 'Executive Board', cc: email_address_string(@chapters[chapter][1]),
+	subject: '[' + chapter + ' Exec]', :encode => 'javascript') %></li>
+<li><%= mail_to(User.current.mail, 'Actives', cc: email_address_string(@chapters[chapter][2]),
+	subject: '[' + chapter + ' Actives]', :encode => 'javascript') %></li>
+</ul>
+
+<% end -%>
