@@ -42,9 +42,19 @@
 <table>
   <tbody>
     <tr>
-      <th>Fraternity Password</th>
+      <td><strong>Fraternity Password:</strong></td>
       <td>
       	<%= text_field_tag "settings[fraternity_password]", settings['fraternity_password'] %>
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Google Apps Admin:</strong><br>
+      	Enter the ago.org email address<br>
+      	of a Google Apps Super Admin:
+      </td>
+      <td>
+      	
+      	<%= text_field_tag "settings[google_admin_email]", settings['google_admin_email'] %>
       </td>
     </tr>
   </tbody>
