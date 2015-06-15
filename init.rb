@@ -1,3 +1,9 @@
+require 'google/api_client'
+require 'google/api_client/service'
+require 'google/api_client/client_secrets'
+require 'google/api_client/auth/file_storage'
+require 'google/api_client/auth/installed_app'
+
 require 'user_hooks'
 
 require_dependency 'registration_patch'
@@ -9,14 +15,14 @@ Redmine::Plugin.register :redmine_fraternity_members do
   name 'Redmine Fraternity Members'
   author 'Mike Sweetman'
   description 'This plugin manages the member database.'
-  version '3.0.0'
+  version '3.0.1'
   url 'https://github.com/masweetman/redmine_fraternity_members.git'
   author_url ''
 
   redmine_root = Redmine::Utils.relative_url_root
   directory_path = redmine_root + '/directory'
 
-  settings :default => {:actives_only => ""}, :partial => 'shared/settings'
+  settings :default => {'empty' => true}, :partial => 'shared/settings'
 
   permission :export_member_directory, :fraternity_members => [:export, :export_google_contacts]
   permission :edit_fraternity_members, :fraternity_members => [:edit, :update]

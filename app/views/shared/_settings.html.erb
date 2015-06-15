@@ -1,10 +1,70 @@
+<% settings['email_addresses'] = {} if settings['email_addresses'].nil? %>
+<% settings['email_addresses']['National Council'] = '' if settings['email_addresses']['National Council'].nil? %>
+<% settings['email_addresses']['National Exec'] = '' if settings['email_addresses']['National Exec'].nil? %>
+<% settings['email_addresses']['AGOm'] = '' if settings['email_addresses']['AGOm'].nil? %>
+<% settings['email_addresses']['AAI'] = '' if settings['email_addresses']['AAI'].nil? %>
+<% settings['email_addresses']['Beta Housing Board'] = '' if settings['email_addresses']['Beta Housing Board'].nil? %>
+<% settings['email_addresses']['Legion of Honor'] = '' if settings['email_addresses']['Legion of Honor'].nil? %>
+<% settings['email_addresses']['AGODelphian Editors'] = '' if settings['email_addresses']['AGODelphian Editors'].nil? %>
+<% settings['email_addresses']['Chapter Advisors'] = '' if settings['email_addresses']['Chapter Advisors'].nil? %>
+<% settings['email_addresses']['All Alumni Leaders'] = '' if settings['email_addresses']['All Alumni Leaders'].nil? %>
+<% settings['email_addresses']['All Presidents'] = '' if settings['email_addresses']['All Presidents'].nil? %>
+<% settings['email_addresses']['All Vice Presidents'] = '' if settings['email_addresses']['All Vice Presidents'].nil? %>
+<% settings['email_addresses']['All Chaplains'] = '' if settings['email_addresses']['All Chaplains'].nil? %>
+<% settings['email_addresses']['All Pledgemasters'] = '' if settings['email_addresses']['All Pledgemasters'].nil? %>
+<% settings['email_addresses']['All Treasurers'] = '' if settings['email_addresses']['All Treasurers'].nil? %>
+<% settings['email_addresses']['All House Managers'] = '' if settings['email_addresses']['All House Managers'].nil? %>
+<% settings['email_addresses']['All Secretaries'] = '' if settings['email_addresses']['All Secretaries'].nil? %>
+<% settings['email_addresses']['All Social Media Managers'] = '' if settings['email_addresses']['All Social Media Managers'].nil? %>
+<% settings['email_addresses']['All Chapter Execs'] = '' if settings['email_addresses']['All Chapter Execs'].nil? %>
+<% settings['email_addresses']['All Actives'] = '' if settings['email_addresses']['All Actives'].nil? %>
+<% settings['email_addresses']['Everyone'] = '' if settings['email_addresses']['Everyone'].nil? %>
+
+<% chapters = Project.where(:parent_id => 6).sort %>
+
+<% for c in chapters %>
+	<% settings['email_addresses'][c.identifier + ' actives'] = '' if settings['email_addresses'][c.identifier + ' actives'].nil? %>
+	<% settings['email_addresses'][c.identifier + ' exec'] = '' if settings['email_addresses'][c.identifier + ' exec'].nil? %>
+	<% settings['email_addresses'][c.identifier + ' advisors'] = '' if settings['email_addresses'][c.identifier + ' advisors'].nil? %>
+	<% settings['email_addresses'][c.identifier + ' president'] = '' if settings['email_addresses'][c.identifier + ' president'].nil? %>
+	<% settings['email_addresses'][c.identifier + ' vice president'] = '' if settings['email_addresses'][c.identifier + ' vice president'].nil? %>
+	<% settings['email_addresses'][c.identifier + ' chaplain'] = '' if settings['email_addresses'][c.identifier + ' chaplain'].nil? %>
+	<% settings['email_addresses'][c.identifier + ' pledgemaster'] = '' if settings['email_addresses'][c.identifier + ' pledgemaster'].nil? %>
+	<% settings['email_addresses'][c.identifier + ' treasurer'] = '' if settings['email_addresses'][c.identifier + ' treasurer'].nil? %>
+	<% settings['email_addresses'][c.identifier + ' house manager'] = '' if settings['email_addresses'][c.identifier + ' house manager'].nil? %>
+	<% settings['email_addresses'][c.identifier + ' secretary'] = '' if settings['email_addresses'][c.identifier + ' secretary'].nil? %>
+<% end %>
+
+<h3>General</h3>
+
 <table>
   <tbody>
     <tr>
       <th>Fraternity Password</th>
-      <td><input type="text" id="settings_fraternity_password" 
-                     value="<%= settings['fraternity_password'] %>" 
-             name="settings[fraternity_password]" >
+      <td>
+      	<%= text_field_tag "settings[fraternity_password]", settings['fraternity_password'] %>
+      </td>
     </tr>
+  </tbody>
+</table>
+
+<h3>Google Apps Email Groups</h3>
+
+<table class="list">
+	<thead><tr>
+	<th>Group</th>
+	<th>Email Address</th>
+	</tr></thead>
+	<tbody>
+<% for e in settings['email_addresses'] %>
+	<tr class="<%= cycle("odd", "even") %>">
+		<td>
+			<%= e[0] %>
+		</td>
+		<td>
+			<%= text_field_tag "settings[email_addresses["+e[0]+"]", settings['email_addresses'][e[0]] %>
+		</td>
+	</tr>
+<% end %>
   </tbody>
 </table>
