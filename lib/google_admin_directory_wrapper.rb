@@ -17,7 +17,7 @@ class GoogleAdminDirectoryWrapper
 
 		puts result.data
 
-		@email_addresses = settings['email_addresses']
+		@email_addresses = Setting.plugin_redmine_fraternity_members['email_addresses']
 	end
 
 	def get_group

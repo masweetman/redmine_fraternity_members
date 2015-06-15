@@ -1,4 +1,5 @@
 <% settings['email_addresses'] = {} if settings['email_addresses'].nil? %>
+
 <% settings['email_addresses']['National Council'] = '' if settings['email_addresses']['National Council'].nil? %>
 <% settings['email_addresses']['National Exec'] = '' if settings['email_addresses']['National Exec'].nil? %>
 <% settings['email_addresses']['AGOm'] = '' if settings['email_addresses']['AGOm'].nil? %>
@@ -23,16 +24,17 @@
 <% chapters = Project.where(:parent_id => 6).sort %>
 
 <% for c in chapters %>
-	<% settings['email_addresses'][c.identifier + ' actives'] = '' if settings['email_addresses'][c.identifier + ' actives'].nil? %>
-	<% settings['email_addresses'][c.identifier + ' exec'] = '' if settings['email_addresses'][c.identifier + ' exec'].nil? %>
-	<% settings['email_addresses'][c.identifier + ' advisors'] = '' if settings['email_addresses'][c.identifier + ' advisors'].nil? %>
-	<% settings['email_addresses'][c.identifier + ' president'] = '' if settings['email_addresses'][c.identifier + ' president'].nil? %>
-	<% settings['email_addresses'][c.identifier + ' vice president'] = '' if settings['email_addresses'][c.identifier + ' vice president'].nil? %>
-	<% settings['email_addresses'][c.identifier + ' chaplain'] = '' if settings['email_addresses'][c.identifier + ' chaplain'].nil? %>
-	<% settings['email_addresses'][c.identifier + ' pledgemaster'] = '' if settings['email_addresses'][c.identifier + ' pledgemaster'].nil? %>
-	<% settings['email_addresses'][c.identifier + ' treasurer'] = '' if settings['email_addresses'][c.identifier + ' treasurer'].nil? %>
-	<% settings['email_addresses'][c.identifier + ' house manager'] = '' if settings['email_addresses'][c.identifier + ' house manager'].nil? %>
-	<% settings['email_addresses'][c.identifier + ' secretary'] = '' if settings['email_addresses'][c.identifier + ' secretary'].nil? %>
+	<% settings[c.identifier + '_email_addresses'] = {} if settings[c.identifier + '_email_addresses'].nil? %>
+	<% settings[c.identifier + '_email_addresses'][c.name + ' Actives'] = '' if settings[c.identifier + '_email_addresses'][c.name + ' Actives'].nil? %>
+	<% settings[c.identifier + '_email_addresses'][c.name + ' Exec'] = '' if settings[c.identifier + '_email_addresses'][c.name + ' Exec'].nil? %>
+	<% settings[c.identifier + '_email_addresses'][c.name + ' Advisors'] = '' if settings[c.identifier + '_email_addresses'][c.name + ' Advisors'].nil? %>
+	<% settings[c.identifier + '_email_addresses'][c.name + ' President'] = '' if settings[c.identifier + '_email_addresses'][c.name + ' President'].nil? %>
+	<% settings[c.identifier + '_email_addresses'][c.name + ' Vice President'] = '' if settings[c.identifier + '_email_addresses'][c.name + ' Vice President'].nil? %>
+	<% settings[c.identifier + '_email_addresses'][c.name + ' Chaplain'] = '' if settings[c.identifier + '_email_addresses'][c.name + ' Chaplain'].nil? %>
+	<% settings[c.identifier + '_email_addresses'][c.name + ' Pledgemaster'] = '' if settings[c.identifier + '_email_addresses'][c.name + ' Pledgemaster'].nil? %>
+	<% settings[c.identifier + '_email_addresses'][c.name + ' Treasurer'] = '' if settings[c.identifier + '_email_addresses'][c.name + ' Treasurer'].nil? %>
+	<% settings[c.identifier + '_email_addresses'][c.name + ' House Manager'] = '' if settings[c.identifier + '_email_addresses'][c.name + ' House Manager'].nil? %>
+	<% settings[c.identifier + '_email_addresses'][c.name + ' Secretary'] = '' if settings[c.identifier + '_email_addresses'][c.name + ' Secretary'].nil? %>
 <% end %>
 
 <h3>General</h3>
@@ -68,3 +70,26 @@
 <% end %>
   </tbody>
 </table>
+
+<% for c in chapters %>
+	<h4><%= c.name %></h4>
+
+	<table class="list">
+		<thead><tr>
+		<th>Group</th>
+		<th>Email Address</th>
+		</tr></thead>
+		<tbody>
+	<% for e in settings[c.identifier + '_email_addresses'] %>
+		<tr class="<%= cycle("odd", "even") %>">
+			<td>
+				<%= e[0] %>
+			</td>
+			<td>
+				<%= text_field_tag "settings["+c.identifier+"_email_addresses["+e[0]+"]", settings[c.identifier + '_email_addresses'][e[0]] %>
+			</td>
+		</tr>
+	<% end %>
+	  </tbody>
+	</table>
+<% end %>
