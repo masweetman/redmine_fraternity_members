@@ -3,6 +3,8 @@ require 'google/api_client/service'
 require 'google/api_client/client_secrets'
 require 'google/api_client/auth/file_storage'
 require 'google/api_client/auth/installed_app'
+require 'httparty'
+require 'json'
 
 require 'user_hooks'
 
