@@ -99,7 +99,7 @@ namespace :redmine do
 			chapters[c.identifier] = {}
 			chapters[c.identifier]['Actives'] = []
 			chapters[c.identifier]['Exec'] = []
-			chapters[c.identifier]['Advisors'] = []
+			chapters[c.identifier]['Advisors'] = national['Council']
 			chapters[c.identifier]['President'] = []
 			chapters[c.identifier]['Vice President'] = []
 			chapters[c.identifier]['Chaplain'] = []
@@ -132,6 +132,7 @@ namespace :redmine do
 					chapters[c.identifier]['Treasurer'] << user
 					chapters[c.identifier]['House Manager'] << user
 					chapters[c.identifier]['Secretary'] << user
+                    chapters[c.identifier]['Social Media Manager'] << user
 				end
 				if user.roles_for_project(c).include?(Role.find_by_name("Vice President"))
 					chapters[c.identifier]['Actives'] << user
