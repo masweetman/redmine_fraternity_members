@@ -198,6 +198,7 @@ namespace :redmine do
 
 		#add new google groups
 		google_directory = GoogleDirectory.new
+		google_directory.cache_directory_api_file
 		google_directory.update_groups
 
 		#update group

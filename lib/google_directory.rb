@@ -2,12 +2,9 @@ class GoogleDirectory
 
 	#usage:
 	# google_directory = GoogleDirectory.new
+	# google_directory.cache_directory_api_file
 	# group = google_directory.get_group('test@test.com')
 	# etc...
-
-	def new
-		cache_directory_api_file
-	end
 
 	def cache_directory_api_file
 		File.open(directory_api_file, 'w') do |f|
