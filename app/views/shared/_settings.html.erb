@@ -62,7 +62,7 @@
 
 <h3>Google Apps Email Groups</h3>
 
-<table class="list">
+<table style="width: 400px" class="list">
 	<thead><tr>
 	<th>Group</th>
 	<th>Email Address</th>
@@ -70,10 +70,10 @@
 	<tbody>
 <% for e in settings['email_addresses'] %>
 	<tr class="<%= cycle("odd", "even") %>">
-		<td>
+		<td style="text-align: left">
 			<%= e[0] %>
 		</td>
-		<td>
+		<td style="text-align: left">
 			<%= text_field_tag "settings[email_addresses["+e[0]+"]", settings['email_addresses'][e[0]] %>
 		</td>
 	</tr>
@@ -84,7 +84,7 @@
 <% for c in chapters %>
 	<h4><%= c.name %></h4>
 
-	<table class="list">
+	<table style="width: 400px" class="list">
 		<thead><tr>
 		<th>Group</th>
 		<th>Email Address</th>
@@ -92,10 +92,10 @@
 		<tbody>
 	<% for e in settings[c.identifier + '_email_addresses'] %>
 		<tr class="<%= cycle("odd", "even") %>">
-			<td>
+			<td style="text-align: left">
 				<%= e[0] %>
 			</td>
-			<td>
+			<td style="text-align: left">
 				<%= text_field_tag "settings["+c.identifier+"_email_addresses["+e[0]+"]", settings[c.identifier + '_email_addresses'][e[0]] %>
 			</td>
 		</tr>

@@ -50,23 +50,52 @@ class GoogleDirectory
 	end
 
 	def update_groups
-		@email_addresses = Setting.plugin_redmine_fraternity_members['email_addresses']
-		i=0
-		for e in @email_addresses do
-			group = get_group(e[1])
-			if group.error?
-				i = i+1 if group.data.error['errors'].first['reason']=='notFound'
+		email_addresses = Setting.plugin_redmine_fraternity_members['email_addresses']
+		google_groups = list_groups
+		for e in email_addresses do
+			if !google_groups.include?(e[1])
+				create_group(e[1], e[0])
 			end
 		end
-		return i
 	end
 
-	def get_group(groupEmailAddress)
+	def create_group(groupEmailAddress, groupName)
+		results = client.execute(
+			:api_method => google_directory_api.groups.insert,
+			:parameters => {:group => groupEmailAddress},
+			:body_object => {:email => groupEmailAddress, :name => groupName}
+			)
+	end
+
+	def group_exists?(groupEmailAddress)
 		results = client.execute(
 			:api_method => google_directory_api.groups.get,
 			:parameters => {:groupKey => groupEmailAddress},
 			:body => nil
 			)
+		exists = true
+		if results.error?
+			results = JSON.parse(results.body)
+			if results['error']['code'] == 404
+				exists = false
+			end
+		end
+		exists
+	end
+
+	def list_groups
+		results = client.execute(
+			:api_method => google_directory_api.groups.list,
+			:parameters => {:customer => 'my_customer'},
+			:body => nil
+			)
+		results = JSON.parse(results.body)
+		if results['groups'].nil?
+			results = []
+		else
+			results = results['groups'].map{ |m| m['email'] }
+		end
+		results
 	end
 
 	def list_members(groupEmailAddress)
@@ -76,7 +105,35 @@ class GoogleDirectory
 			:body => nil
 			)
 		results = JSON.parse(results.body)
-		results = results['members'].map{ |m| m['email'] }
+		if results['members'].nil?
+			results = []
+		else
+			results = results['members'].map{ |m| m['email'] }
+		end
+		results
+	end
+
+	def update_members(groupEmailAddress, users)
+		new_emails = users.map{ |u| u[:mail] }
+		previous_emails = list_members(groupEmailAddress)
+		unless new_emails.sort == previous_emails.sort
+			delete_emails = previous_emails - new_emails
+			add_emails = new_emails - previous_emails
+			for d in delete_emails
+				delete_member(groupEmailAddress, d)
+			end
+			for a in add_emails
+				add_member(groupEmailAddress, a)
+			end
+		end
+	end
+
+	def delete_member(groupEmailAddress, memberEmailAddress)
+		results = client.execute(
+			:api_method => google_directory_api.members.delete,
+			:parameters => {:groupKey => groupEmailAddress, :memberKey => memberEmailAddress},
+			:body => nil
+			)
 	end
 
 	def add_member(groupEmailAddress, memberEmailAddress)
