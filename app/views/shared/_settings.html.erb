@@ -2,6 +2,21 @@
 
 <% settings['email_addresses']['National Council'] = '' if settings['email_addresses']['National Council'].nil? %>
 <% settings['email_addresses']['National Exec'] = '' if settings['email_addresses']['National Exec'].nil? %>
+
+
+<% settings['email_addresses']['National President'] = '' if settings['email_addresses']['National President'].nil? %>
+<% settings['email_addresses']['VP Collegiate Chapters'] = '' if settings['email_addresses']['VP Collegiate Chapters'].nil? %>
+<% settings['email_addresses']['VP Alumni'] = '' if settings['email_addresses']['VP Alumni'].nil? %>
+<% settings['email_addresses']['National Chaplain'] = '' if settings['email_addresses']['National Chaplain'].nil? %>
+<% settings['email_addresses']['National Treasurer'] = '' if settings['email_addresses']['National Treasurer'].nil? %>
+<% settings['email_addresses']['National Secretary'] = '' if settings['email_addresses']['National Secretary'].nil? %>
+
+<% settings['email_addresses']['DC North'] = '' if settings['email_addresses']['DC North'].nil? %>
+<% settings['email_addresses']['DC South'] = '' if settings['email_addresses']['DC South'].nil? %>
+<% settings['email_addresses']['DC Central'] = '' if settings['email_addresses']['DC Central'].nil? %>
+<% settings['email_addresses']['DC Mountain'] = '' if settings['email_addresses']['DC Mountain'].nil? %>
+<% settings['email_addresses']['Accountant'] = '' if settings['email_addresses']['Accountant'].nil? %>
+
 <% settings['email_addresses']['AGOm'] = '' if settings['email_addresses']['AGOm'].nil? %>
 <% settings['email_addresses']['AAI'] = '' if settings['email_addresses']['AAI'].nil? %>
 <% settings['email_addresses']['Beta Housing Board'] = '' if settings['email_addresses']['Beta Housing Board'].nil? %>
@@ -35,6 +50,7 @@
 	<% settings[c.identifier + '_email_addresses'][c.name + ' Treasurer'] = '' if settings[c.identifier + '_email_addresses'][c.name + ' Treasurer'].nil? %>
 	<% settings[c.identifier + '_email_addresses'][c.name + ' House Manager'] = '' if settings[c.identifier + '_email_addresses'][c.name + ' House Manager'].nil? %>
 	<% settings[c.identifier + '_email_addresses'][c.name + ' Secretary'] = '' if settings[c.identifier + '_email_addresses'][c.name + ' Secretary'].nil? %>
+	<% settings[c.identifier + '_email_addresses'][c.name + ' Social Media'] = '' if settings[c.identifier + '_email_addresses'][c.name + ' Social Media'].nil? %>
 <% end %>
 
 <h3>General</h3>
