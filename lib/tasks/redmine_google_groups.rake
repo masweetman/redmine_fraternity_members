@@ -292,43 +292,62 @@ namespace :redmine do
     	google_directory.update_members(group, users) unless group.empty?
 
     	#update chapter email groups
-    	#for c in Project.where(:parent_id => 6)
-    	#	group_actives = Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'][c.name + ' Actives']
-    	#	group_exec = Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'][c.name + ' Exec']
-    	#	group_advisors = Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'][c.name + ' Advisors']
-    	#	group_pres = Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'][c.name + ' President']
-    	#	group_vp = Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'][c.name + ' Vice President']
-    	#	group_chap = Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'][c.name + ' Chaplain']
-    	#	group_pm = Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'][c.name + ' Pledgemaster']
-    	#	group_treas = Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'][c.name + ' Treasurer']
-    	#	group_hm = Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'][c.name + ' House Manager']
-    	#	group_sec = Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'][c.name + ' Secretary']
-    	#	group_social = Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'][c.name + ' Social Media']
+    	for c in Project.where(:parent_id => 6)
+            #update group
+            group = Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'][c.name + ' Actives']
+            users = chapters[c.identifier]['Actives']
+            google_directory.update_members(group, users) unless group.empty?
 
-		#	users_actives = chapters[c.identifier]['Actives']
-		#	users_exec = chapters[c.identifier]['Exec']
-		#	users_advisors = chapters[c.identifier]['Advisors']
-		#	users_pres = chapters[c.identifier]['President']
-		#	users_vp = chapters[c.identifier]['Vice President']
-		#	users_chap = chapters[c.identifier]['Chaplain']
-		#	users_pm = chapters[c.identifier]['Pledgemaster']
-		#	users_treas = chapters[c.identifier]['Treasurer']
-		#	users_hm = chapters[c.identifier]['House Manager']
-		#	users_sec = chapters[c.identifier]['Secretary']
-		#	users_social = chapters[c.identifier]['Social Media Manager']
-			
-		#	google_directory.update_members(group_actives, users_actives) unless group_actives.empty?
-		#	google_directory.update_members(group_exec, users_exec) unless group_exec.empty?
-		#	google_directory.update_members(group_advisors, users_advisors) unless group_advisors.empty?
-		#	google_directory.update_members(group_pres, users_pres) unless group_pres.empty?
-		#	google_directory.update_members(group_vp, users_vp) unless group_vp.empty?
-		#	google_directory.update_members(group_chap, users_chap) unless group_chap.empty?
-		#	google_directory.update_members(group_pm, users_pm) unless group_pm.empty?
-		#	google_directory.update_members(group_treas, users_treas) unless group_treas.empty?
-		#	google_directory.update_members(group_hm, users_hm) unless group_hm.empty?
-		#	google_directory.update_members(group_sec, users_sec) unless group_sec.empty?
-		#	google_directory.update_members(group_social, users_social) unless group_social.empty?
-    	#end
+            #update group
+            group = Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'][c.name + ' Exec']
+            users = chapters[c.identifier]['Exec']
+            google_directory.update_members(group, users) unless group.empty?
+
+            #update group
+            group = Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'][c.name + ' Advisors']
+            users = chapters[c.identifier]['Advisors']
+            google_directory.update_members(group, users) unless group.empty?
+
+            #update group
+            group = Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'][c.name + ' President']
+            users = chapters[c.identifier]['President']
+            google_directory.update_members(group, users) unless group.empty?
+
+            #update group
+            group = Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'][c.name + ' Vice President']
+            users = chapters[c.identifier]['Vice President']
+            google_directory.update_members(group, users) unless group.empty?
+
+            #update group
+            group = Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'][c.name + ' Chaplain']
+            users = chapters[c.identifier]['Chaplain']
+            google_directory.update_members(group, users) unless group.empty?
+
+            #update group
+            group = Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'][c.name + ' Pledgemaster']
+            users = chapters[c.identifier]['Pledgemaster']
+            google_directory.update_members(group, users) unless group.empty?
+
+            #update group
+            group = Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'][c.name + ' Treasurer']
+            users = chapters[c.identifier]['Treasurer']
+            google_directory.update_members(group, users) unless group.empty?
+
+            #update group
+            group = Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'][c.name + ' House Manager']
+            users = chapters[c.identifier]['House Manager']
+            google_directory.update_members(group, users) unless group.empty?
+
+            #update group
+            group = Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'][c.name + ' Secretary']
+            users = chapters[c.identifier]['Secretary']
+            google_directory.update_members(group, users) unless group.empty?
+
+            #update group
+            group = Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'][c.name + ' Social Media']
+            users = chapters[c.identifier]['Social Media Manager']
+            google_directory.update_members(group, users) unless group.empty?
+    	end
 
     end
 
