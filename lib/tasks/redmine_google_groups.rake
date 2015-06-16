@@ -204,12 +204,92 @@ namespace :redmine do
 		#update group
 		group = Setting.plugin_redmine_fraternity_members['email_addresses']['National Council']
     	users = national['Council']
-    	google_directory.update_members(group, users)
+    	google_directory.update_members(group, users) unless group.empty?
 
 		#update group
 		group = Setting.plugin_redmine_fraternity_members['email_addresses']['National Exec']
     	users = national['Exec']
-    	google_directory.update_members(group, users)
+    	google_directory.update_members(group, users) unless group.empty?
+
+		#update group
+		group = Setting.plugin_redmine_fraternity_members['email_addresses']['National President']
+    	users = national['Pres']
+    	google_directory.update_members(group, users) unless group.empty?
+
+		#update group
+		group = Setting.plugin_redmine_fraternity_members['email_addresses']['VP Collegiate Chapters']
+    	users = national['VPC']
+    	google_directory.update_members(group, users) unless group.empty?
+
+		#update group
+		group = Setting.plugin_redmine_fraternity_members['email_addresses']['VP Alumni']
+    	users = national['VPA']
+    	google_directory.update_members(group, users) unless group.empty?
+
+    	#update group
+		group = Setting.plugin_redmine_fraternity_members['email_addresses']['National Chaplain']
+    	users = national['Chap']
+    	google_directory.update_members(group, users) unless group.empty?
+
+    	#update group
+		group = Setting.plugin_redmine_fraternity_members['email_addresses']['National Treasurer']
+    	users = national['Treas']
+    	google_directory.update_members(group, users) unless group.empty?
+
+    	#update group
+		group = Setting.plugin_redmine_fraternity_members['email_addresses']['National Secretary']
+    	users = national['Sec']
+    	google_directory.update_members(group, users) unless group.empty?
+
+    	#update group
+		group = Setting.plugin_redmine_fraternity_members['email_addresses']['DC North']
+    	users = national['DC North']
+    	google_directory.update_members(group, users) unless group.empty?
+
+    	#update group
+		group = Setting.plugin_redmine_fraternity_members['email_addresses']['DC South']
+    	users = national['DC South']
+    	google_directory.update_members(group, users) unless group.empty?
+
+    	#update group
+		group = Setting.plugin_redmine_fraternity_members['email_addresses']['DC Central']
+    	users = national['DC Central']
+    	google_directory.update_members(group, users) unless group.empty?
+
+    	#update group
+		group = Setting.plugin_redmine_fraternity_members['email_addresses']['DC Mountain']
+    	users = national['DC Mountain']
+    	google_directory.update_members(group, users) unless group.empty?
+
+    	#update group
+		group = Setting.plugin_redmine_fraternity_members['email_addresses']['AGODelphian Editors']
+    	users = national['AGODelphian']
+    	google_directory.update_members(group, users) unless group.empty?
+
+    	#update group
+		group = Setting.plugin_redmine_fraternity_members['email_addresses']['Accountant']
+    	users = national['Accountant']
+    	google_directory.update_members(group, users) unless group.empty?
+
+    	#update group
+		group = Setting.plugin_redmine_fraternity_members['email_addresses']['AGOm']
+    	users = national['AGOm']
+    	google_directory.update_members(group, users) unless group.empty?
+
+    	#update group
+		group = Setting.plugin_redmine_fraternity_members['email_addresses']['AAI']
+    	users = national['AAI']
+    	google_directory.update_members(group, users) unless group.empty?
+
+    	#update group
+		group = Setting.plugin_redmine_fraternity_members['email_addresses']['Beta Housing Board']
+    	users = national['ABA']
+    	google_directory.update_members(group, users) unless group.empty?
+
+    	#update group
+		group = Setting.plugin_redmine_fraternity_members['email_addresses']['Legion of Honor']
+    	users = national['LOH']
+    	google_directory.update_members(group, users) unless group.empty?
 
     	#update chapter email groups
     	#for c in Project.where(:parent_id => 6)
