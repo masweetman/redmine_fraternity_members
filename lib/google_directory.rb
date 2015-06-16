@@ -114,8 +114,8 @@ class GoogleDirectory
 		results
 	end
 
-	def update_members(groupEmailAddress, users)
-		new_emails = users.map{ |u| u[:mail] }
+	def update_members(groupEmailAddress, emails)
+		new_emails = emails
 		previous_emails = list_members(groupEmailAddress)
 		unless new_emails.sort == previous_emails.sort
 			delete_emails = previous_emails - new_emails
