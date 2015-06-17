@@ -81,15 +81,7 @@ namespace :redmine do
     		end
     	end
 
-    	national['Advisors'] = []
-    	national['All Alumni Leaders'] = [Setting.plugin_redmine_fraternity_members['email_addresses']['Chapter Advisors'],
-                                            Setting.plugin_redmine_fraternity_members['email_addresses']['AGODelphian Editors'],
-                                            Setting.plugin_redmine_fraternity_members['email_addresses']['AGOm'],
-                                            Setting.plugin_redmine_fraternity_members['email_addresses']['AAI'],
-                                            Setting.plugin_redmine_fraternity_members['email_addresses']['Beta Housing Board'],
-                                            Setting.plugin_redmine_fraternity_members['email_addresses']['Legion of Honor']
-                                            ]
-    	
+    	national['Advisors'] = [Setting.plugin_redmine_fraternity_members['email_addresses']['National Council']]
         national['All Chapter Exec'] = [Setting.plugin_redmine_fraternity_members['email_addresses']['Chapter Advisors']]
     	national['All Pres'] = [Setting.plugin_redmine_fraternity_members['email_addresses']['Chapter Advisors']]
     	national['All VP'] = [Setting.plugin_redmine_fraternity_members['email_addresses']['Chapter Advisors']]
@@ -99,8 +91,8 @@ namespace :redmine do
     	national['All HM'] = [Setting.plugin_redmine_fraternity_members['email_addresses']['Chapter Advisors']]
     	national['All Sec'] = [Setting.plugin_redmine_fraternity_members['email_addresses']['Chapter Advisors']]
     	national['All Social'] = [Setting.plugin_redmine_fraternity_members['email_addresses']['Chapter Advisors']]
-    	national['All Actives'] = [Setting.plugin_redmine_fraternity_members['email_addresses']['National Council']]
-        national['Everyone'] = national['All Actives'] + national['All Alumni Leaders']
+    	national['All Actives'] = [Setting.plugin_redmine_fraternity_members['email_addresses']['Chapter Advisors']]
+        
 		
 		chapters = {}
 		for c in Project.where(:parent_id => 6)
@@ -186,7 +178,6 @@ namespace :redmine do
 			end
 
 	    	national['Advisors'] << Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'][c.name + ' Advisors']
-	    	national['All Alumni Leaders'] << Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'][c.name + ' Advisors']
 	    	national['All Chapter Exec'] << Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'][c.name + ' Exec']
 	    	national['All Pres'] << Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'][c.name + ' President']
 	    	national['All VP'] << Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'][c.name + ' Vice President']
@@ -200,6 +191,16 @@ namespace :redmine do
 	    	
 		end
 		
+        national['All Alumni Leaders'] = [Setting.plugin_redmine_fraternity_members['email_addresses']['Chapter Advisors'],
+                                    Setting.plugin_redmine_fraternity_members['email_addresses']['AGODelphian Editors'],
+                                    Setting.plugin_redmine_fraternity_members['email_addresses']['AGOm'],
+                                    Setting.plugin_redmine_fraternity_members['email_addresses']['AAI'],
+                                    Setting.plugin_redmine_fraternity_members['email_addresses']['Beta Housing Board'],
+                                    Setting.plugin_redmine_fraternity_members['email_addresses']['Legion of Honor']
+                                    ]
+
+        national['Everyone'] = national['All Actives'] + national['All Alumni Leaders']
+
 		for group in national
 			group[1].uniq!
 		end
@@ -299,28 +300,70 @@ namespace :redmine do
     	emails = national['LOH']
     	google_directory.update_members(group, emails) unless group.empty?
 
+        #update group
+        group = Setting.plugin_redmine_fraternity_members['email_addresses']['Chapter Advisors']
+        emails = national['Advisors']
+        google_directory.update_members(group, emails) unless group.empty?
 
+        #update group
+        group = Setting.plugin_redmine_fraternity_members['email_addresses']['All Alumni Leaders']
+        emails = national['All Alumni Leaders']
+        google_directory.update_members(group, emails) unless group.empty?
 
-#Chapter Advisors  
-#All Alumni Leaders
-#All Presidents
-#All Vice Presidents
-#All Chaplains
-#All Pledgemasters
-#All Treasurers
-#All House Managers
-#All Secretaries
-#All Social Media Managers
-#All Chapter Execs
-#All Actives
-#Everyone
+        #update group
+        group = Setting.plugin_redmine_fraternity_members['email_addresses']['All Presidents']
+        emails = national['All Pres']
+        google_directory.update_members(group, emails) unless group.empty?
 
+        #update group
+        group = Setting.plugin_redmine_fraternity_members['email_addresses']['All Vice Presidents']
+        emails = national['All VP']
+        google_directory.update_members(group, emails) unless group.empty?
 
+        #update group
+        group = Setting.plugin_redmine_fraternity_members['email_addresses']['All Chaplains']
+        emails = national['All Chap']
+        google_directory.update_members(group, emails) unless group.empty?
 
+        #update group
+        group = Setting.plugin_redmine_fraternity_members['email_addresses']['All Pledgemasters']
+        emails = national['All PM']
+        google_directory.update_members(group, emails) unless group.empty?
 
+        #update group
+        group = Setting.plugin_redmine_fraternity_members['email_addresses']['All Treasurers']
+        emails = national['All Treas']
+        google_directory.update_members(group, emails) unless group.empty?
 
+        #update group
+        group = Setting.plugin_redmine_fraternity_members['email_addresses']['All House Managers']
+        emails = national['All HM']
+        google_directory.update_members(group, emails) unless group.empty?
 
+        #update group
+        group = Setting.plugin_redmine_fraternity_members['email_addresses']['All Secretaries']
+        emails = national['All Sec']
+        google_directory.update_members(group, emails) unless group.empty?
 
+        #update group
+        group = Setting.plugin_redmine_fraternity_members['email_addresses']['All Social Media Managers']
+        emails = national['All Social']
+        google_directory.update_members(group, emails) unless group.empty?
+
+        #update group
+        group = Setting.plugin_redmine_fraternity_members['email_addresses']['All Chapter Execs']
+        emails = national['All Chapter Exec']
+        google_directory.update_members(group, emails) unless group.empty?
+
+        #update group
+        group = Setting.plugin_redmine_fraternity_members['email_addresses']['All Actives']
+        emails = national['All Actives']
+        google_directory.update_members(group, emails) unless group.empty?
+
+        #update group
+        group = Setting.plugin_redmine_fraternity_members['email_addresses']['Everyone']
+        emails = national['Everyone']
+        google_directory.update_members(group, emails) unless group.empty?
 
     	#update chapter email groups
     	for c in Project.where(:parent_id => 6)
