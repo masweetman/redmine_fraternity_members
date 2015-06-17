@@ -81,7 +81,7 @@ namespace :redmine do
     		end
     	end
 
-    	national['Advisors'] = [Setting.plugin_redmine_fraternity_members['email_addresses']['National Council']]
+    	national['Advisors'] = []
         national['All Chapter Exec'] = [Setting.plugin_redmine_fraternity_members['email_addresses']['Chapter Advisors']]
     	national['All Pres'] = [Setting.plugin_redmine_fraternity_members['email_addresses']['Chapter Advisors']]
     	national['All VP'] = [Setting.plugin_redmine_fraternity_members['email_addresses']['Chapter Advisors']]
