@@ -1,7 +1,7 @@
 <h2>Email Groups</h2>
 
 <p>
-	Click a group name to view the current members of the group. Emails sent to <%= mail_to('everyone@ago.org', 'everyone@ago.org', :encode => 'javascript') %> will go to all actives and alumni leaders.
+	Click a group name to view the current members of the group. Emails sent to <%= mail_to('everyone@ago.org', 'everyone@ago.org', :encode => 'javascript') %> will go to all actives and alumni leaders. To change email group memberships, <%= link_to 'update the appropriate Project roles.', :controller => 'wiki', :action => 'show', :project_id => 'chapters', :id => 'Manage_Chapter_Membership' %> Email groups will be automatically synchronized nightly.
 </p>
 
 <table style="width: 400px" class="list">
