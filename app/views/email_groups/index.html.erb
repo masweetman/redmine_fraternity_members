@@ -1,5 +1,9 @@
 <h2>Email Groups</h2>
 
+<p>
+	Click a group name to view the current members of the group. Emails sent to <%= mail_to('everyone@ago.org', 'everyone@ago.org', :encode => 'javascript') %> will go to all actives and alumni leaders.
+</p>
+
 <table style="width: 400px" class="list">
 	<thead><tr>
 	<th>Group</th>
@@ -9,7 +13,7 @@
 <% for e in Setting.plugin_redmine_fraternity_members['email_addresses'] %>
 	<tr class="<%= cycle("odd", "even") %>">
 		<td style="text-align: left">
-			<%= e[0] %>
+			<%= link_to e[0], :controller => 'email_groups', :action => 'show', :group => e[0] %>
 		</td>
 		<td style="text-align: left">
 			<%= mail_to(Setting.plugin_redmine_fraternity_members['email_addresses'][e[0]],
@@ -33,7 +37,7 @@
 	<% for e in Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'] %>
 		<tr class="<%= cycle("odd", "even") %>">
 			<td style="text-align: left">
-				<%= e[0] %>
+				<%= link_to e[0], :controller => 'email_groups', :action => 'show', :chapter => c, :group => e[0] %>
 			</td>
 			<td style="text-align: left">
 				<%= mail_to(Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'][e[0]],

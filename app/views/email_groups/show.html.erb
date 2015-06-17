@@ -1,0 +1,23 @@
+<h2><%= @group %> Google Group Members</h2>
+<p>
+	<%= mail_to(@email, @email, :encode => 'javascript') %>
+</p>
+
+<table style="width: 500px" class="list">
+	<thead><tr>
+	<th>User</th>
+	<th>Email</th>
+	</tr></thead>
+	<tbody>
+<% for m in @members %>
+	<tr class="<%= cycle("odd", "even") %>">
+		<td style="text-align: left">
+			<%= link_to_user User.find_by_mail(m) %>
+		</td>
+		<td style="text-align: left">
+			<%= mail_to(m, m, :encode => 'javascript') %>
+		</td>
+	</tr>
+<% end %>
+  </tbody>
+</table>
