@@ -115,7 +115,7 @@ class GoogleDirectory
 	end
 
 	def update_members(groupEmailAddress, emails)
-		new_emails = emails
+		new_emails = emails.delete("")
 		previous_emails = list_members(groupEmailAddress)
 		unless new_emails.sort == previous_emails.sort
 			delete_emails = previous_emails - new_emails
