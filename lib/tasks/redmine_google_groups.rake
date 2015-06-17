@@ -81,7 +81,7 @@ namespace :redmine do
     		end
     	end
 
-    	national['Advisors'] = [Setting.plugin_redmine_fraternity_members['email_addresses']['National Council']]
+    	national['Advisors'] = []
     	national['All Alumni Leaders'] = [Setting.plugin_redmine_fraternity_members['email_addresses']['Chapter Advisors'],
                                             Setting.plugin_redmine_fraternity_members['email_addresses']['AGODelphian Editors'],
                                             Setting.plugin_redmine_fraternity_members['email_addresses']['AGOm'],
@@ -107,7 +107,7 @@ namespace :redmine do
 			chapters[c.identifier] = {}
 			chapters[c.identifier]['Actives'] = []
 			chapters[c.identifier]['Exec'] = []
-			chapters[c.identifier]['Advisors'] = national['Council']
+			chapters[c.identifier]['Advisors'] = [Setting.plugin_redmine_fraternity_members['email_addresses']['National Council']]
 			chapters[c.identifier]['President'] = []
 			chapters[c.identifier]['Vice President'] = []
 			chapters[c.identifier]['Chaplain'] = []
@@ -298,6 +298,29 @@ namespace :redmine do
 		group = Setting.plugin_redmine_fraternity_members['email_addresses']['Legion of Honor']
     	emails = national['LOH']
     	google_directory.update_members(group, emails) unless group.empty?
+
+
+
+#Chapter Advisors  
+#All Alumni Leaders
+#All Presidents
+#All Vice Presidents
+#All Chaplains
+#All Pledgemasters
+#All Treasurers
+#All House Managers
+#All Secretaries
+#All Social Media Managers
+#All Chapter Execs
+#All Actives
+#Everyone
+
+
+
+
+
+
+
 
     	#update chapter email groups
     	for c in Project.where(:parent_id => 6)
