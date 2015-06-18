@@ -428,12 +428,19 @@ namespace :redmine do
             google_directory.update_members(group, emails) unless group.empty?
     	end
 
+        all_alumni_chapter_emails = [Setting.plugin_redmine_fraternity_members['email_addresses']['National Council']]
         for c in Project.where(:parent_id => 50)
             #update group
             group = Setting.plugin_redmine_fraternity_members['ac_email_addresses'][c.name]
             emails = alumni_chapters[c.name]
             google_directory.update_members(group, emails) unless group.empty?
+
+            all_alumni_chapter_emails << Setting.plugin_redmine_fraternity_members['ac_email_addresses'][c.name]
         end
+
+        #update group
+        group = Setting.plugin_redmine_fraternity_members['email_addresses']['All Alumni Chapters']
+        google_directory.update_members(group, all_alumni_chapter_emails) unless group.empty?
 
     end
 
