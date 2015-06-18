@@ -37,16 +37,38 @@
 	<% for e in Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'] %>
 		<tr class="<%= cycle("odd", "even") %>">
 			<td style="text-align: left">
-				<%= link_to e[0], :controller => 'email_groups', :action => 'show', :chapter => c, :group => e[0] %>
+				<%= link_to e[0], :controller => 'email_groups', :action => 'show',
+				:chapter => c,
+				:group => e[0] %>
 			</td>
 			<td style="text-align: left">
 				<%= mail_to(Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'][e[0]],
 					Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'][e[0]],
 					:encode => 'javascript') %>
-				<%=  %>
 			</td>
 		</tr>
 	<% end %>
 	  </tbody>
 	</table>
 <% end %>
+
+<h3>Alumni Chapters</h3>
+
+<table style="width: 400px" class="list">
+	<thead><tr>
+	<th>Group</th>
+	<th>Email Address</th>
+	</tr></thead>
+	<tbody>
+<% for c in @alumni_chapters %>
+	<tr class="<%= cycle("odd", "even") %>">
+		<td style="text-align: left">
+			<%= link_to c.name, :controller => 'email_groups', :action => 'show', :chapter => c, :group => c.name %>
+		</td>
+		<td style="text-align: left">
+			<%= mail_to(Setting.plugin_redmine_fraternity_members['ac_email_addresses'][c.name], Setting.plugin_redmine_fraternity_members['ac_email_addresses'][c.name], :encode => 'javascript') %>
+		</td>
+	</tr>
+<% end %>
+  </tbody>
+</table>

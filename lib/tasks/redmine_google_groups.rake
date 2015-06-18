@@ -205,6 +205,11 @@ namespace :redmine do
 			group[1].uniq!
 		end
 
+        alumni_chapters = {}
+        for c in Project.where(:parent_id => 50)
+            alumni_chapters[c.name] = c.users.map{ |u| u[:mail] }
+        end
+
 		#add new google groups
 		google_directory = GoogleDirectory.new
 		google_directory.cache_directory_api_file
@@ -422,6 +427,13 @@ namespace :redmine do
             emails = chapters[c.identifier]['Social Media Manager']
             google_directory.update_members(group, emails) unless group.empty?
     	end
+
+        for c in Project.where(:parent_id => 50)
+            #update group
+            group = Setting.plugin_redmine_fraternity_members['ac_email_addresses'][c.name]
+            emails = alumni_chapters[c.name]
+            google_directory.update_members(group, emails) unless group.empty?
+        end
 
     end
 

@@ -40,7 +40,16 @@
       <%= link_to_project home_project %>
       </li>
     <% end %>
-    </ul>  
+    </ul>
+  
+  <%= link_to_project @home_projects.find(50) %>
+    <ul>
+    <% for home_project in @home_projects.where(parent_id: 50).sort_by{|p| p.name.downcase} %>
+      <li>
+      <%= link_to_project home_project %>
+      </li>
+    <% end %>
+    </ul>
 
   <%= link_to_project @home_projects.find(29) %>
     <ul>
