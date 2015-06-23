@@ -183,8 +183,6 @@ namespace :redmine do
 		
         national['All Alumni Leaders'] = [Setting.plugin_redmine_fraternity_members['email_addresses']['Chapter Advisors']]
 
-        national['Everyone'] = national['All Actives'] + national['All Alumni Leaders']
-
 		for group in national
 			group[1].uniq!
 		end
@@ -200,6 +198,10 @@ namespace :redmine do
 
             national['All Alumni Leaders'] << Setting.plugin_redmine_fraternity_members['ao_email_addresses'][a.name] unless Setting.plugin_redmine_fraternity_members['ao_email_addresses'][a.name].empty?
         end
+
+        alumni_orgs['Beta Housing Board'] << Setting.plugin_redmine_fraternity_members['beta_email_addresses']['Beta Exec']
+
+        national['Everyone'] = national['All Actives'] + national['All Alumni Leaders']
 
 		#add new google groups
 		google_directory = GoogleDirectory.new
