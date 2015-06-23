@@ -58,6 +58,14 @@
 	<% settings['ac_email_addresses'][c.name] = '' if settings['ac_email_addresses'][c.name].nil? %>
 <% end %>
 
+
+<% settings['ao_email_addresses'] = {} if settings['ao_email_addresses'].nil? %>
+
+<% alumni_orgs = Project.where(:parent_id => 36).sort %>
+<% for a in alumni_orgs %>
+	<% settings['ao_email_addresses'][a.name] = '' if settings['ao_email_addresses'][a.name].nil? %>
+<% end %>
+
 <h3>General</h3>
 
 <table>
@@ -96,6 +104,27 @@
 		</td>
 		<td style="text-align: left">
 			<%= text_field_tag "settings[email_addresses["+e[0]+"]", settings['email_addresses'][e[0]] %>
+		</td>
+	</tr>
+<% end %>
+  </tbody>
+</table>
+
+<h4>Alumni Organizations</h4>
+
+<table style="width: 400px" class="list">
+	<thead><tr>
+	<th>Group</th>
+	<th>Email Address</th>
+	</tr></thead>
+	<tbody>
+<% for e in settings['ao_email_addresses'] %>
+	<tr class="<%= cycle("odd", "even") %>">
+		<td style="text-align: left">
+			<%= e[0] %>
+		</td>
+		<td style="text-align: left">
+			<%= text_field_tag "settings[ao_email_addresses["+e[0]+"]", settings['ao_email_addresses'][e[0]] %>
 		</td>
 	</tr>
 <% end %>

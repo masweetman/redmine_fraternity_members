@@ -15,13 +15,7 @@ namespace :redmine do
     	national['DC South'] = []
     	national['DC Central'] = []
     	national['DC Mountain'] = []
-    	national['AGODelphian'] = []
     	national['Accountant'] = []
-
-    	national['AGOm'] = Project.find('agom').users.map{ |u| u[:mail] }
-    	national['AAI'] = Project.find('aai').users.map{ |u| u[:mail] }
-    	national['ABA'] = Project.find('aba').users.map{ |u| u[:mail] }
-    	national['LOH'] = Project.find('loh').users.map{ |u| u[:mail] }
 
     	for user in Project.find(6).users
     		if user.roles_for_project(Project.find(6)).include?(Role.find_by_name("Natl President"))
@@ -73,9 +67,6 @@ namespace :redmine do
     		if user.roles_for_project(Project.find(6)).include?(Role.find_by_name("First Herald - LOH"))
     			national['Council'] << user.mail
     		end
-    		if user.roles_for_project(Project.find(6)).include?(Role.find_by_name("AGODelphian Editor"))
-    			national['AGODelphian'] << user.mail
-    		end
     		if user.roles_for_project(Project.find(6)).include?(Role.find_by_name("Accountant"))
     			national['Accountant'] << user.mail
     		end
@@ -92,7 +83,6 @@ namespace :redmine do
     	national['All Sec'] = [Setting.plugin_redmine_fraternity_members['email_addresses']['Chapter Advisors']]
     	national['All Social'] = [Setting.plugin_redmine_fraternity_members['email_addresses']['Chapter Advisors']]
     	national['All Actives'] = [Setting.plugin_redmine_fraternity_members['email_addresses']['Chapter Advisors']]
-        
 		
 		chapters = {}
 		for c in Project.where(:parent_id => 6)
@@ -191,13 +181,7 @@ namespace :redmine do
 	    	
 		end
 		
-        national['All Alumni Leaders'] = [Setting.plugin_redmine_fraternity_members['email_addresses']['Chapter Advisors'],
-                                    Setting.plugin_redmine_fraternity_members['email_addresses']['AGODelphian Editors'],
-                                    Setting.plugin_redmine_fraternity_members['email_addresses']['AGOm'],
-                                    Setting.plugin_redmine_fraternity_members['email_addresses']['AAI'],
-                                    Setting.plugin_redmine_fraternity_members['email_addresses']['Beta Housing Board'],
-                                    Setting.plugin_redmine_fraternity_members['email_addresses']['Legion of Honor']
-                                    ]
+        national['All Alumni Leaders'] = [Setting.plugin_redmine_fraternity_members['email_addresses']['Chapter Advisors']]
 
         national['Everyone'] = national['All Actives'] + national['All Alumni Leaders']
 
@@ -208,6 +192,13 @@ namespace :redmine do
         alumni_chapters = {}
         for c in Project.where(:parent_id => 50)
             alumni_chapters[c.name] = c.users.map{ |u| u[:mail] }
+        end
+
+        alumni_orgs = {}
+        for a in Project.where(:parent_id => 36)
+            alumni_orgs[a.name] = a.users.map{ |u| u[:mail] }
+
+            national['All Alumni Leaders'] << Setting.plugin_redmine_fraternity_members['ao_email_addresses'][a.name] unless Setting.plugin_redmine_fraternity_members['ao_email_addresses'][a.name].empty?
         end
 
 		#add new google groups
@@ -276,33 +267,8 @@ namespace :redmine do
     	google_directory.update_members(group, emails) unless group.empty?
 
     	#update group
-		group = Setting.plugin_redmine_fraternity_members['email_addresses']['AGODelphian Editors']
-    	emails = national['AGODelphian']
-    	google_directory.update_members(group, emails) unless group.empty?
-
-    	#update group
 		group = Setting.plugin_redmine_fraternity_members['email_addresses']['Accountant']
     	emails = national['Accountant']
-    	google_directory.update_members(group, emails) unless group.empty?
-
-    	#update group
-		group = Setting.plugin_redmine_fraternity_members['email_addresses']['AGOm']
-    	emails = national['AGOm']
-    	google_directory.update_members(group, emails) unless group.empty?
-
-    	#update group
-		group = Setting.plugin_redmine_fraternity_members['email_addresses']['AAI']
-    	emails = national['AAI']
-    	google_directory.update_members(group, emails) unless group.empty?
-
-    	#update group
-		group = Setting.plugin_redmine_fraternity_members['email_addresses']['Beta Housing Board']
-    	emails = national['ABA']
-    	google_directory.update_members(group, emails) unless group.empty?
-
-    	#update group
-		group = Setting.plugin_redmine_fraternity_members['email_addresses']['Legion of Honor']
-    	emails = national['LOH']
     	google_directory.update_members(group, emails) unless group.empty?
 
         #update group
@@ -436,6 +402,13 @@ namespace :redmine do
             google_directory.update_members(group, emails) unless group.empty?
 
             all_alumni_chapter_emails << Setting.plugin_redmine_fraternity_members['ac_email_addresses'][c.name]
+        end
+
+        for a in Project.where(:parent_id => 36)
+            #update group
+            group = Setting.plugin_redmine_fraternity_members['ao_email_addresses'][a.name]
+            emails = alumni_orgs[a.name]
+            google_directory.update_members(group, emails) unless group.empty?
         end
 
         #update group

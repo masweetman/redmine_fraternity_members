@@ -7,6 +7,7 @@ class EmailGroupsController < ApplicationController
 
 	def index
 		@chapters = Project.where(:parent_id => 6).sort
+		@alumni_orgs = Project.where(:parent_id => 36).sort
 		@alumni_chapters = Project.where(:parent_id => 50).sort
 	end
 
@@ -18,6 +19,8 @@ class EmailGroupsController < ApplicationController
 			@email = Setting.plugin_redmine_fraternity_members['email_addresses'][@group]
 		elsif Project.find(@chapter).parent_id == 50
 			@email = Setting.plugin_redmine_fraternity_members['ac_email_addresses'][@group]
+		elsif Project.find(@chapter).parent_id == 36
+			@email = Setting.plugin_redmine_fraternity_members['ao_email_addresses'][@group]
 		elsif Project.find(@chapter).parent_id == 6
 			@email = Setting.plugin_redmine_fraternity_members[@chapter + '_email_addresses'][@group]
 		end

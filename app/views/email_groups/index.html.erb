@@ -25,6 +25,27 @@
   </tbody>
 </table>
 
+<h3>Alumni Organizations</h3>
+
+<table style="width: 400px" class="list">
+	<thead><tr>
+	<th>Group</th>
+	<th>Email Address</th>
+	</tr></thead>
+	<tbody>
+<% for c in @alumni_orgs %>
+	<tr class="<%= cycle("odd", "even") %>">
+		<td style="text-align: left">
+			<%= link_to c.name, :controller => 'email_groups', :action => 'show', :chapter => c, :group => c.name %>
+		</td>
+		<td style="text-align: left">
+			<%= mail_to(Setting.plugin_redmine_fraternity_members['ao_email_addresses'][c.name], Setting.plugin_redmine_fraternity_members['ao_email_addresses'][c.name], :encode => 'javascript') %>
+		</td>
+	</tr>
+<% end %>
+  </tbody>
+</table>
+
 <% for c in @chapters %>
 	<h3><%= c.name %></h3>
 
