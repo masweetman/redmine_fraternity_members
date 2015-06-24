@@ -13,17 +13,12 @@ class FraternityMembersController < ApplicationController
     sort_update %w(chapter active_number lastname pledge_name mail phone address)
 
     scope = FraternityMember
-    scope = scope.where("
-      chapter LIKE :chapter AND (
-      active_number LIKE :search OR
-      firstname LIKE :search OR
-      lastname LIKE :search OR
-      pledge_name LIKE :search OR
-      mail LIKE :search OR
-      phone LIKE :search OR
-      address LIKE :search)",
-      :chapter => "#{params[:chapter]}%",
-      :search => "#{params[:search]}%") if params[:chapter].present? or params[:search].present?
+
+    if params[:chapter].present? or params[:search].present?
+      search = params[:search].split
+      query = search.map{ |word| "chapter LIKE '#{params[:chapter]}%' AND (active_number LIKE '#{word}%' OR firstname LIKE '#{word}%' OR lastname LIKE '#{word}%' OR pledge_name LIKE '#{word}%' OR mail LIKE '#{word}%' OR phone LIKE '#{word}%' OR address LIKE '#{word}%')" }.join(" AND ")
+      scope = scope.where(query)
+    end
 
     @member_count = scope.count
     @member_pages = Paginator.new @member_count, 100, params['page']
@@ -50,17 +45,9 @@ class FraternityMembersController < ApplicationController
 
   def export
     if params[:chapter].present? or params[:search].present?
-      @fraternity_members = FraternityMember.where("
-      chapter LIKE :chapter AND (
-      active_number LIKE :search OR
-      firstname LIKE :search OR
-      lastname LIKE :search OR
-      pledge_name LIKE :search OR
-      mail LIKE :search OR
-      phone LIKE :search OR
-      address LIKE :search)",
-      :chapter => "#{params[:chapter]}%",
-      :search => "#{params[:search]}%")
+      search = params[:search].split
+      query = search.map{ |word| "chapter LIKE '#{params[:chapter]}%' AND (active_number LIKE '#{word}%' OR firstname LIKE '#{word}%' OR lastname LIKE '#{word}%' OR pledge_name LIKE '#{word}%' OR mail LIKE '#{word}%' OR phone LIKE '#{word}%' OR address LIKE '#{word}%')" }.join(" AND ")
+      @fraternity_members = FraternityMember.where(query)
     else
       @fraternity_members = FraternityMember.all
     end
@@ -91,17 +78,9 @@ class FraternityMembersController < ApplicationController
 
   def export_google_contacts
     if params[:chapter].present? or params[:search].present?
-      @fraternity_members = FraternityMember.where("
-      chapter LIKE :chapter AND (
-      active_number LIKE :search OR
-      firstname LIKE :search OR
-      lastname LIKE :search OR
-      pledge_name LIKE :search OR
-      mail LIKE :search OR
-      phone LIKE :search OR
-      address LIKE :search)",
-      :chapter => "#{params[:chapter]}%",
-      :search => "#{params[:search]}%")
+      search = params[:search].split
+      query = search.map{ |word| "chapter LIKE '#{params[:chapter]}%' AND (active_number LIKE '#{word}%' OR firstname LIKE '#{word}%' OR lastname LIKE '#{word}%' OR pledge_name LIKE '#{word}%' OR mail LIKE '#{word}%' OR phone LIKE '#{word}%' OR address LIKE '#{word}%')" }.join(" AND ")
+      @fraternity_members = FraternityMember.where(query)
     else
       @fraternity_members = FraternityMember.all
     end
