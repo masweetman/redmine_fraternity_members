@@ -201,7 +201,7 @@ namespace :redmine do
 
         alumni_orgs['Beta Housing Board'] << Setting.plugin_redmine_fraternity_members['beta_email_addresses']['Beta Exec']
 
-        national['Everyone'] = national['All Actives'] + national['All Alumni Leaders']
+        national['Everyone'] = [Setting.plugin_redmine_fraternity_members['email_addresses']['All Actives'], Setting.plugin_redmine_fraternity_members['email_addresses']['All Alumni Leaders']]
 
 		#add new google groups
 		google_directory = GoogleDirectory.new
