@@ -52,6 +52,7 @@ class GoogleDirectory
 			email_addresses = email_addresses.merge(Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'])
 		end
 		email_addresses = email_addresses.merge(Setting.plugin_redmine_fraternity_members['ac_email_addresses'])
+		email_addresses = email_addresses.merge(Setting.plugin_redmine_fraternity_members['ao_email_addresses'])
 		
 		email_addresses.delete_if{ |g, e| e.empty? }
 		google_groups = list_groups
