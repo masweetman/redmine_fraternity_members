@@ -15,9 +15,14 @@ class FraternityMembersController < ApplicationController
     scope = FraternityMember
 
     if params[:chapter].present? or params[:search].present?
-      search = params[:search].split
-      query = search.map{ |word| "chapter LIKE '#{params[:chapter]}%' AND (active_number LIKE '#{word}%' OR firstname LIKE '#{word}%' OR lastname LIKE '#{word}%' OR pledge_name LIKE '#{word}%' OR mail LIKE '#{word}%' OR phone LIKE '#{word}%' OR address LIKE '#{word}%')" }.join(" AND ")
-      scope = scope.where(query)
+        search = params[:search].split
+        if !params[:search].present?
+          query = "chapter LIKE '#{params[:chapter]}%'"
+        else
+          query = "chapter LIKE '#{params[:chapter]}%' AND "
+          query += search.map{ |word| "(active_number LIKE '#{word}%' OR firstname LIKE '#{word}%' OR lastname LIKE '#{word}%' OR pledge_name LIKE '#{word}%' OR address LIKE '#{word}%')" }.join(" AND ")
+        end
+        scope = scope.where(query)
     end
 
     @member_count = scope.count
