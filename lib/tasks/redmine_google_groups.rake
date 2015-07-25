@@ -189,12 +189,12 @@ namespace :redmine do
 
         alumni_chapters = {}
         for c in Project.where(:parent_id => 50)
-            alumni_chapters[c.name] = c.users.map{ |u| u[:mail] }
+            alumni_chapters[c.name] = c.users.map{ |u| u.mail }
         end
 
         alumni_orgs = {}
         for a in Project.where(:parent_id => 36)
-            alumni_orgs[a.name] = a.users.map{ |u| u[:mail] }
+            alumni_orgs[a.name] = a.users.map{ |u| u.mail }
 
             national['All Alumni Leaders'] << Setting.plugin_redmine_fraternity_members['ao_email_addresses'][a.name] unless Setting.plugin_redmine_fraternity_members['ao_email_addresses'][a.name].empty?
         end

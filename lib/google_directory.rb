@@ -1,3 +1,5 @@
+require 'application_controller'
+
 class GoogleDirectory
 
 	#usage:
