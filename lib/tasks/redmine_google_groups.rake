@@ -211,189 +211,189 @@ namespace :redmine do
 		#update group
 		group = Setting.plugin_redmine_fraternity_members['email_addresses']['National Council']
     	emails = national['Council']
-    	google_directory.update_members(group, emails) unless group.empty?
+    	google_directory.update_members(group, emails)
 
 		#update group
 		group = Setting.plugin_redmine_fraternity_members['email_addresses']['National Exec']
     	emails = national['Exec']
-    	google_directory.update_members(group, emails) unless group.empty?
+    	google_directory.update_members(group, emails)
 
 		#update group
 		group = Setting.plugin_redmine_fraternity_members['email_addresses']['National President']
     	emails = national['Pres']
-    	google_directory.update_members(group, emails) unless group.empty?
+    	google_directory.update_members(group, emails)
 
 		#update group
 		group = Setting.plugin_redmine_fraternity_members['email_addresses']['VP Collegiate Chapters']
     	emails = national['VPC']
-    	google_directory.update_members(group, emails) unless group.empty?
+    	google_directory.update_members(group, emails)
 
 		#update group
 		group = Setting.plugin_redmine_fraternity_members['email_addresses']['VP Alumni']
     	emails = national['VPA']
-    	google_directory.update_members(group, emails) unless group.empty?
+    	google_directory.update_members(group, emails)
 
     	#update group
 		group = Setting.plugin_redmine_fraternity_members['email_addresses']['National Chaplain']
     	emails = national['Chap']
-    	google_directory.update_members(group, emails) unless group.empty?
+    	google_directory.update_members(group, emails)
 
     	#update group
 		group = Setting.plugin_redmine_fraternity_members['email_addresses']['National Treasurer']
     	emails = national['Treas']
-    	google_directory.update_members(group, emails) unless group.empty?
+    	google_directory.update_members(group, emails)
 
     	#update group
 		group = Setting.plugin_redmine_fraternity_members['email_addresses']['National Secretary']
     	emails = national['Sec']
-    	google_directory.update_members(group, emails) unless group.empty?
+    	google_directory.update_members(group, emails)
 
     	#update group
 		group = Setting.plugin_redmine_fraternity_members['email_addresses']['DC North']
     	emails = national['DC North']
-    	google_directory.update_members(group, emails) unless group.empty?
+    	google_directory.update_members(group, emails)
 
     	#update group
 		group = Setting.plugin_redmine_fraternity_members['email_addresses']['DC South']
     	emails = national['DC South']
-    	google_directory.update_members(group, emails) unless group.empty?
+    	google_directory.update_members(group, emails)
 
     	#update group
 		group = Setting.plugin_redmine_fraternity_members['email_addresses']['DC Central']
     	emails = national['DC Central']
-    	google_directory.update_members(group, emails) unless group.empty?
+    	google_directory.update_members(group, emails)
 
     	#update group
 		group = Setting.plugin_redmine_fraternity_members['email_addresses']['DC Mountain']
     	emails = national['DC Mountain']
-    	google_directory.update_members(group, emails) unless group.empty?
+    	google_directory.update_members(group, emails)
 
     	#update group
 		group = Setting.plugin_redmine_fraternity_members['email_addresses']['Accountant']
     	emails = national['Accountant']
-    	google_directory.update_members(group, emails) unless group.empty?
+    	google_directory.update_members(group, emails)
 
         #update group
         group = Setting.plugin_redmine_fraternity_members['email_addresses']['Chapter Advisors']
         emails = national['Advisors']
-        google_directory.update_members(group, emails) unless group.empty?
+        google_directory.update_members(group, emails)
 
         #update group
         group = Setting.plugin_redmine_fraternity_members['email_addresses']['All Alumni Leaders']
         emails = national['All Alumni Leaders']
-        google_directory.update_members(group, emails) unless group.empty?
+        google_directory.update_members(group, emails)
 
         #update group
         group = Setting.plugin_redmine_fraternity_members['email_addresses']['All Presidents']
         emails = national['All Pres']
-        google_directory.update_members(group, emails) unless group.empty?
+        google_directory.update_members(group, emails)
 
         #update group
         group = Setting.plugin_redmine_fraternity_members['email_addresses']['All Vice Presidents']
         emails = national['All VP']
-        google_directory.update_members(group, emails) unless group.empty?
+        google_directory.update_members(group, emails)
 
         #update group
         group = Setting.plugin_redmine_fraternity_members['email_addresses']['All Chaplains']
         emails = national['All Chap']
-        google_directory.update_members(group, emails) unless group.empty?
+        google_directory.update_members(group, emails)
 
         #update group
         group = Setting.plugin_redmine_fraternity_members['email_addresses']['All Pledgemasters']
         emails = national['All PM']
-        google_directory.update_members(group, emails) unless group.empty?
+        google_directory.update_members(group, emails)
 
         #update group
         group = Setting.plugin_redmine_fraternity_members['email_addresses']['All Treasurers']
         emails = national['All Treas']
-        google_directory.update_members(group, emails) unless group.empty?
+        google_directory.update_members(group, emails)
 
         #update group
         group = Setting.plugin_redmine_fraternity_members['email_addresses']['All House Managers']
         emails = national['All HM']
-        google_directory.update_members(group, emails) unless group.empty?
+        google_directory.update_members(group, emails)
 
         #update group
         group = Setting.plugin_redmine_fraternity_members['email_addresses']['All Secretaries']
         emails = national['All Sec']
-        google_directory.update_members(group, emails) unless group.empty?
+        google_directory.update_members(group, emails)
 
         #update group
         group = Setting.plugin_redmine_fraternity_members['email_addresses']['All Social Media Managers']
         emails = national['All Social']
-        google_directory.update_members(group, emails) unless group.empty?
+        google_directory.update_members(group, emails)
 
         #update group
         group = Setting.plugin_redmine_fraternity_members['email_addresses']['All Chapter Execs']
         emails = national['All Chapter Exec']
-        google_directory.update_members(group, emails) unless group.empty?
+        google_directory.update_members(group, emails)
 
         #update group
         group = Setting.plugin_redmine_fraternity_members['email_addresses']['All Actives']
         emails = national['All Actives']
-        google_directory.update_members(group, emails) unless group.empty?
+        google_directory.update_members(group, emails)
 
         #update group
         group = Setting.plugin_redmine_fraternity_members['email_addresses']['Everyone']
         emails = national['Everyone']
-        google_directory.update_members(group, emails) unless group.empty?
+        google_directory.update_members(group, emails)
 
     	#update chapter email groups
     	for c in Project.where(:parent_id => 6)
             #update group
             group = Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'][c.name + ' Actives']
             emails = chapters[c.identifier]['Actives']
-            google_directory.update_members(group, emails) unless group.empty?
+            google_directory.update_members(group, emails)
 
             #update group
             group = Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'][c.name + ' Exec']
             emails = chapters[c.identifier]['Exec']
-            google_directory.update_members(group, emails) unless group.empty?
+            google_directory.update_members(group, emails)
 
             #update group
             group = Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'][c.name + ' Advisors']
             emails = chapters[c.identifier]['Advisors']
-            google_directory.update_members(group, emails) unless group.empty?
+            google_directory.update_members(group, emails)
 
             #update group
             group = Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'][c.name + ' President']
             emails = chapters[c.identifier]['President']
-            google_directory.update_members(group, emails) unless group.empty?
+            google_directory.update_members(group, emails)
 
             #update group
             group = Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'][c.name + ' Vice President']
             emails = chapters[c.identifier]['Vice President']
-            google_directory.update_members(group, emails) unless group.empty?
+            google_directory.update_members(group, emails)
 
             #update group
             group = Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'][c.name + ' Chaplain']
             emails = chapters[c.identifier]['Chaplain']
-            google_directory.update_members(group, emails) unless group.empty?
+            google_directory.update_members(group, emails)
 
             #update group
             group = Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'][c.name + ' Pledgemaster']
             emails = chapters[c.identifier]['Pledgemaster']
-            google_directory.update_members(group, emails) unless group.empty?
+            google_directory.update_members(group, emails)
 
             #update group
             group = Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'][c.name + ' Treasurer']
             emails = chapters[c.identifier]['Treasurer']
-            google_directory.update_members(group, emails) unless group.empty?
+            google_directory.update_members(group, emails)
 
             #update group
             group = Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'][c.name + ' House Manager']
             emails = chapters[c.identifier]['House Manager']
-            google_directory.update_members(group, emails) unless group.empty?
+            google_directory.update_members(group, emails)
 
             #update group
             group = Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'][c.name + ' Secretary']
             emails = chapters[c.identifier]['Secretary']
-            google_directory.update_members(group, emails) unless group.empty?
+            google_directory.update_members(group, emails)
 
             #update group
             group = Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'][c.name + ' Social Media']
             emails = chapters[c.identifier]['Social Media Manager']
-            google_directory.update_members(group, emails) unless group.empty?
+            google_directory.update_members(group, emails)
     	end
 
         all_alumni_chapter_emails = [Setting.plugin_redmine_fraternity_members['email_addresses']['National Council']]
@@ -401,7 +401,7 @@ namespace :redmine do
             #update group
             group = Setting.plugin_redmine_fraternity_members['ac_email_addresses'][c.name]
             emails = alumni_chapters[c.name]
-            google_directory.update_members(group, emails) unless group.empty?
+            google_directory.update_members(group, emails)
 
             all_alumni_chapter_emails << Setting.plugin_redmine_fraternity_members['ac_email_addresses'][c.name]
         end
@@ -410,12 +410,12 @@ namespace :redmine do
             #update group
             group = Setting.plugin_redmine_fraternity_members['ao_email_addresses'][a.name]
             emails = alumni_orgs[a.name]
-            google_directory.update_members(group, emails) unless group.empty?
+            google_directory.update_members(group, emails)
         end
 
         #update group
         group = Setting.plugin_redmine_fraternity_members['email_addresses']['All Alumni Chapters']
-        google_directory.update_members(group, all_alumni_chapter_emails) unless group.empty?
+        google_directory.update_members(group, all_alumni_chapter_emails)
 
     end
 
