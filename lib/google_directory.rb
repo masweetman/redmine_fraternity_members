@@ -118,16 +118,18 @@ class GoogleDirectory
 	end
 
 	def update_members(groupEmailAddress, new_emails)
-		new_emails.delete("")
-		previous_emails = list_members(groupEmailAddress)
-		unless new_emails.sort == previous_emails.sort
-			delete_emails = previous_emails - new_emails
-			add_emails = new_emails - previous_emails
-			for d in delete_emails
-				delete_member(groupEmailAddress, d)
-			end
-			for a in add_emails
-				add_member(groupEmailAddress, a)
+		unless groupEmailAddress.nil? or groupEmailAddress.empty? or new_emails.nil?
+			new_emails.delete("")
+			previous_emails = list_members(groupEmailAddress)
+			unless new_emails.sort == previous_emails.sort
+				delete_emails = previous_emails - new_emails
+				add_emails = new_emails - previous_emails
+				for d in delete_emails
+					delete_member(groupEmailAddress, d)
+				end
+				for a in add_emails
+					add_member(groupEmailAddress, a)
+				end
 			end
 		end
 	end
