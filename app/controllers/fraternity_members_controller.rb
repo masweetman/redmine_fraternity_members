@@ -8,6 +8,17 @@ class FraternityMembersController < ApplicationController
   helper :custom_fields
   include CustomFieldsHelper
 
+  def query
+    search = params[:search].split
+    if !params[:search].present?
+      query = "chapter LIKE '#{params[:chapter]}%'"
+    else
+      query = "chapter LIKE '#{params[:chapter]}%' AND "
+      query += search.map{ |word| "(active_number LIKE '#{word}%' OR firstname LIKE '#{word}%' OR lastname LIKE '#{word}%' OR pledge_name LIKE '#{word}%' OR address LIKE '#{word}%')" }.join(" AND ")
+    end
+    return query
+  end
+
   def index
     sort_init 'chapter, active_number', 'asc'
     sort_update %w(chapter active_number lastname pledge_name mail phone address)
@@ -15,14 +26,7 @@ class FraternityMembersController < ApplicationController
     scope = FraternityMember
 
     if params[:chapter].present? or params[:search].present?
-        search = params[:search].split
-        if !params[:search].present?
-          query = "chapter LIKE '#{params[:chapter]}%'"
-        else
-          query = "chapter LIKE '#{params[:chapter]}%' AND "
-          query += search.map{ |word| "(active_number LIKE '#{word}%' OR firstname LIKE '#{word}%' OR lastname LIKE '#{word}%' OR pledge_name LIKE '#{word}%' OR address LIKE '#{word}%')" }.join(" AND ")
-        end
-        scope = scope.where(query)
+      scope = scope.where(query)
     end
 
     @member_count = scope.count
@@ -49,15 +53,15 @@ class FraternityMembersController < ApplicationController
   end
 
   def export
+    scope = FraternityMember
+
     if params[:chapter].present? or params[:search].present?
-      search = params[:search].split
-      query = search.map{ |word| "chapter LIKE '#{params[:chapter]}%' AND (active_number LIKE '#{word}%' OR firstname LIKE '#{word}%' OR lastname LIKE '#{word}%' OR pledge_name LIKE '#{word}%' OR mail LIKE '#{word}%' OR phone LIKE '#{word}%' OR address LIKE '#{word}%')" }.join(" AND ")
-      @fraternity_members = FraternityMember.where(query)
+      scope = scope.where(query)
     else
-      @fraternity_members = FraternityMember.all
+      scope = scope.all
     end
 
-    @fraternity_members = @fraternity_members.sort_by{|a| [a.chapter, a.active_number]}
+    @fraternity_members = scope.sort_by{|a| [a.chapter, a.active_number]}
 
     export_csv = 'Chapter,Active No,First Name,Middle Name,Last Name,Pledge Name,E-mail Address,Home Phone,Home Address,Graduation Year,Current Active?' + "\n"
     @fraternity_members.each do |e|
@@ -82,15 +86,15 @@ class FraternityMembersController < ApplicationController
   end
 
   def export_google_contacts
+    scope = FraternityMember
+
     if params[:chapter].present? or params[:search].present?
-      search = params[:search].split
-      query = search.map{ |word| "chapter LIKE '#{params[:chapter]}%' AND (active_number LIKE '#{word}%' OR firstname LIKE '#{word}%' OR lastname LIKE '#{word}%' OR pledge_name LIKE '#{word}%' OR mail LIKE '#{word}%' OR phone LIKE '#{word}%' OR address LIKE '#{word}%')" }.join(" AND ")
-      @fraternity_members = FraternityMember.where(query)
+      scope = scope.where(query)
     else
-      @fraternity_members = FraternityMember.all
+      scope = scope.all
     end
 
-    @fraternity_members = @fraternity_members.sort_by{|a| [a.chapter, a.active_number]}
+    @fraternity_members = scope.sort_by{|a| [a.chapter, a.active_number]}
 
     fallback = { 
       'Š'=>'S', 'š'=>'s', 'Ð'=>'Dj','Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A',
@@ -109,7 +113,7 @@ class FraternityMembersController < ApplicationController
         if e.pledge_name.to_s == ""
           full_name = e.firstname.to_s+' '+e.lastname.to_s
         else
-          full_name = e.firstname.to_s+' \''+e.pledge_name.to_s.truncate(18)+'\' '+e.lastname.to_s
+          full_name = e.firstname.to_s+' '+e.lastname.to_s+' ('+e.pledge_name.to_s.truncate(18)+')'
         end
 
         export_csv << '"'+e.chapter.to_s.gsub(',','')+'"'+','+
