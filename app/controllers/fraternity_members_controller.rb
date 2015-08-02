@@ -42,11 +42,18 @@ class FraternityMembersController < ApplicationController
 
   def update
     @fraternity_member = FraternityMember.find(params[:id])
-    #(render_403; return false) unless @fraternity_member.editable_by?(User.current)
-    @fraternity_member.safe_attributes = params[:fraternity_member]
+
+    @fraternity_member.firstname = params[:fraternity_member][:firstname]
+    @fraternity_member.middlename = params[:fraternity_member][:middlename]
+    @fraternity_member.lastname = params[:fraternity_member][:lastname]
+    @fraternity_member.mail = params[:fraternity_member][:mail]
+    @fraternity_member.chapter = params[:fraternity_member][:chapter]
+    @fraternity_member.active_number = params[:fraternity_member][:active_number]
+    @fraternity_member.pledge_name = params[:fraternity_member][:pledge_name]
+
     if @fraternity_member.save
       flash[:notice] = l(:notice_successful_update)
-      redirect_to fraternity_members_path
+      redirect_to directory_path
     else
       render :action => 'edit'
     end
