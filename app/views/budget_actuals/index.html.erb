@@ -27,7 +27,7 @@
   <th>Account</th>
   <% for j in 0..11 -%>
     <% i = 11 - j -%>
-    <th>
+    <th class="<%= 'budget_mobile' if i > 2 %>">
 
       <%= link_to @dateStrings[i], :controller => 'deposits', :action => 'index' %>
 
@@ -44,7 +44,7 @@
     </td>
     <% for j in 0..11 -%>
       <% i = 11 - j -%>
-      <td><%= number_with_delimiter(c[1][i].to_f.round, :delimiter => ',') %></td>
+      <td class="<%= 'budget_mobile' if i > 2 %>"><%= number_with_delimiter(c[1][i].to_f.round, :delimiter => ',') %></td>
       <% totalRevenue[i] = totalRevenue[i].to_f + c[1][i].to_f -%>
     <% end -%>
   </tr>
@@ -53,7 +53,7 @@
     <td width=250 style="text-align: left"><strong>Total Revenue</strong></td>
       <% for j in 0..11 -%>
         <% i = 11 - j -%>
-      <td><strong><%= number_with_delimiter(totalRevenue[i].round, :delimiter => ',') %></strong></td>
+      <td class="<%= 'budget_mobile' if i > 2 %>"><strong><%= number_with_delimiter(totalRevenue[i].round, :delimiter => ',') %></strong></td>
     <% end -%>
   </tr>
   </tbody>
@@ -73,7 +73,7 @@
   <th>Account</th>
   <% for j in 0..11 -%>
     <% i = 11 - j -%>
-    <th>
+    <th class="<%= 'budget_mobile' if i > 2 %>">
 
       <%= link_to @dateStrings[i], project_issues_path(@project, :set_filter => 1,
         :f=>[:status_id, :tracker_id, :cf_28, ""],
@@ -100,7 +100,7 @@
     </td>
     <% for j in 0..11 -%>
       <% i = 11 - j -%>
-      <td><%= number_with_delimiter(c[1][i].to_f.round, :delimiter => ',') %></td>
+      <td class="<%= 'budget_mobile' if i > 2 %>"><%= number_with_delimiter(c[1][i].to_f.round, :delimiter => ',') %></td>
       <% totalExpenses[i] = totalExpenses[i].to_f + c[1][i].to_f -%>
     <% end -%>
   </tr>
@@ -109,7 +109,7 @@
   	<td width=250 style="text-align: left"><strong>Total Expenses</strong></td>
       <% for j in 0..11 -%>
         <% i = 11 - j -%>
-      <td><strong><%= number_with_delimiter(totalExpenses[i].round, :delimiter => ',') %></strong></td>
+      <td class="<%= 'budget_mobile' if i > 2 %>"><strong><%= number_with_delimiter(totalExpenses[i].round, :delimiter => ',') %></strong></td>
     <% end -%>
   </tr>
   </tbody>
@@ -124,7 +124,7 @@
   <th></th>
   <% for j in 0..11 -%>
     <% i = 11 - j -%>
-    <th><%= @dateStrings[i] %></th>
+    <th class="<%= 'budget_mobile' if i > 2 %>"><%= @dateStrings[i] %></th>
   <% end -%>
   </tr></thead>
   <tbody>
@@ -132,7 +132,7 @@
     <td width=250 style="text-align: left">Net Cash Flow</td>
     <% for j in 0..11 -%>
       <% i = 11 - j -%>
-      <td><strong><%= number_with_delimiter((totalRevenue[i].round - totalExpenses[i].round), :delimiter => ',') %></strong></td>
+      <td class="<%= 'budget_mobile' if i > 2 %>"><strong><%= number_with_delimiter((totalRevenue[i].round - totalExpenses[i].round), :delimiter => ',') %></strong></td>
     <% end -%>
   </tr>
   </tbody>
