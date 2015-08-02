@@ -28,7 +28,7 @@ Redmine::Plugin.register :redmine_fraternity_members do
   permission :edit_fraternity_members, :fraternity_members => [:edit, :update]
   permission :view_budget_actuals, { :budget_actuals => :index }
 
-  menu :top_menu, :fraternity_members, { :controller => 'fraternity_members', :action => 'index' }, :caption => 'Member Directory'
+  menu :top_menu, :fraternity_members, directory_path, :caption => 'Member Directory'
   menu :top_menu, :email_groups, { :controller => 'email_groups', :action => 'index' }, :caption => 'Email Groups'
   menu :top_menu, :wiki, { :controller => 'wiki', :action => 'show', :project_id => 'chapters', :id => 'wiki' }, :caption => 'National Wiki'
   menu :project_menu, :budget_actuals, { :controller => 'budget_actuals', :action => 'index' }, :caption => 'Budget', :after => :activity
