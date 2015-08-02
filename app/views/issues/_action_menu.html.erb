@@ -1,6 +1,6 @@
 <div class="contextual">
 
-<%= link_to 'Print Shingle', :controller => 'shingle', :action => 'shingle_export', :id => @issue.id if @issue.tracker_id == 7 %>
+<%= link_to 'Print Shingle', { :controller => 'shingle', :action => 'shingle_export', :id => @issue.id }, :class => 'icon icon-edit' if @issue.tracker_id == 7 %>
 
 <%= link_to l(:button_edit), edit_issue_path(@issue), :onclick => 'showAndScrollTo("update", "issue_notes"); return false;', :class => 'icon icon-edit', :accesskey => accesskey(:edit) if @issue.editable? %>
 <%= link_to l(:button_log_time), new_issue_time_entry_path(@issue), :class => 'icon icon-time-add' if User.current.allowed_to?(:log_time, @project) %>
