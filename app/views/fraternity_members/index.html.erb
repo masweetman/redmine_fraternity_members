@@ -8,20 +8,19 @@ Chapter:
 <%= select_tag('chapter', options_for_select(chapters, params[:chapter]), :onchange => params[:chapter]) %>
 
 <label for='search'><%= 'Search' %>:</label>
-<%= text_field_tag 'search', params[:search], :size => 30 %>
+<%= text_field_tag 'search', params[:search], :size => 28 %>
 <%= submit_tag l(:button_apply), :class => "small", :search => nil %>
-<%= " | " %>
+<%= link_to l(:button_clear), directory_path, :class => 'icon icon-reload' %>
+<br>
 <%= link_to "Export to CSV", :controller => 'fraternity_members', :action => 'export', :chapter => params[:chapter], :search => params[:search] %>
 <%= " | " %>
 <%= link_to "Export Google Contacts", :controller => 'fraternity_members', :action => 'export_google_contacts', :chapter => params[:chapter], :search => params[:search] %>
-<%= " | " %>
-<%= link_to l(:button_clear), directory_path, :class => 'icon icon-reload' %>
 </fieldset>
 <% end %>
 &nbsp;
 
 <div class="autoscroll">
-<table class="list">
+<table class="list fraternity_members">
   <thead><tr>
   <%= sort_header_tag('chapter', :caption => 'Chapter') %>
   <%= sort_header_tag('active_number', :caption => 'Active #') %>
@@ -51,7 +50,7 @@ Chapter:
   	<td><%= h(f.phone) %></td>
   	<td><%= h(f.address) %></td>
     <td>
-      <%= link_to 'Edit', edit_fraternity_member_path(f) %>
+      <%= link_to l(:button_edit), edit_fraternity_member_path(f), :class => 'icon icon-edit' %>
     </td>
   </tr>
 <% end -%>
