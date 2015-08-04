@@ -47,7 +47,7 @@ module Redmine
           pdf.set_print_footer(false)
           pdf.set_margins(10, 148, 10)
 
-          Issue.where("tracker_id = 7 AND status_id <> 9").each do |shingle|
+          Issue.where("tracker_id = 7 AND status_id <> 9").order("project_id").each do |shingle|
             if shingle.project.parent_id == 6
 
               member_name = shingle.custom_field_value(83).to_s
