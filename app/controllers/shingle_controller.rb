@@ -1,5 +1,7 @@
+include Redmine::Export::PDF::ShinglePdfHelper
+
 class ShingleController < ApplicationController
-  unloadable
+  #unloadable
 
         def shingle_export
                 shingle = Issue.find(params[:id])
@@ -41,6 +43,12 @@ shingle_html += shingle.custom_field_value(97).to_s + '</span></i></p></div></bo
 
                 send_data(shingle_html, :type => 'text/doc',
                 	:filename => shingle.project.name.to_s + '_' + shingle.custom_field_value(24).to_s + '_shingle.doc')
+        end
+
+        def shingle_export_pdf
+    		shingle = Issue.find(params[:id])
+			send_data(shingle_to_pdf(shingle), :type => 'application/pdf',
+            	:filename => shingle.project.name.to_s + '_' + shingle.custom_field_value(24).to_s + '_shingle.pdf')
         end
 
 end
