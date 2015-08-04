@@ -19,20 +19,19 @@ module Redmine
           font = 'times'
           pdf.set_print_header(false)
           pdf.set_print_footer(false)
-          pdf.set_margins(15, 27, 15)
+          pdf.set_margins(10, 148, 10)
           pdf.add_page('P','LETTER',true,false)
 
           pdf.set_font(font,'', 34)
 
           pdf.write(5, member_name, '', 0, 'C', true)
-          pdf.ln
 
           pdf.set_font(font,'I', 16)
+          
+          pdf.ln(32)
 
           pdf.write(5, "Member Number " + member_number + ", " + chapter + " Chapter", '', 0, 'C', true)
-          pdf.ln
           pdf.write(5, "Initiated on " + initiation_date  + " at", '', 0, 'C', true)
-          pdf.ln
           pdf.write(5, university, '', 0, 'C', true)
 
           pdf.output
