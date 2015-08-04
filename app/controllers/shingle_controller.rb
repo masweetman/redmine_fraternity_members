@@ -3,7 +3,18 @@ include Redmine::Export::PDF::ShinglePdfHelper
 class ShingleController < ApplicationController
 	#unloadable
 
-        def shingle_export
+        def shingle_export_pdf
+    		shingle = Issue.find(params[:id])
+			send_data(shingle_to_pdf(shingle), :type => 'application/pdf',
+            	:filename => shingle.project.name.to_s + '_' + shingle.custom_field_value(24).to_s + '_shingle.pdf')
+        end
+
+        def shingles_export_pdf
+			send_data(shingles_to_pdf, :type => 'application/pdf',
+            	:filename => 'Unshipped_Shingles.pdf')
+        end
+
+        def shingle_export_html
 	        shingle = Issue.find(params[:id])
 	        initiation_date = Date.parse(shingle.custom_field_value(23).to_s)
 	        initiation_date = initiation_date.strftime('%B %-d, %Y')
@@ -43,12 +54,6 @@ class ShingleController < ApplicationController
 
 	        send_data(shingle_html, :type => 'text/doc',
 	        	:filename => shingle.project.name.to_s + '_' + shingle.custom_field_value(24).to_s + '_shingle.doc')
-        end
-
-        def shingle_export_pdf
-    		shingle = Issue.find(params[:id])
-			send_data(shingle_to_pdf(shingle), :type => 'application/pdf',
-            	:filename => shingle.project.name.to_s + '_' + shingle.custom_field_value(24).to_s + '_shingle.pdf')
         end
 
 end
