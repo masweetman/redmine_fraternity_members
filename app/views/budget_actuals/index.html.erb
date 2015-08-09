@@ -79,7 +79,7 @@
         :f=>[:status_id, :tracker_id, :cf_28, ""],
         :op=>{:status_id=>"*", :tracker_id=>"=", :cf_28=>"><"},
         :v=>{:tracker_id=>["22"], :cf_28=>[@dates[i].beginning_of_month, @dates[i].end_of_month]},
-        :c => [:cf_27,:tracker,:cf_98,:cf_31,:cf_28,:cf_26,:status,:cf_93,:assigned_to]
+        :c => [:cf_27,:tracker,:cf_98,:cf_31,:cf_28,:cf_26,:status,:cf_93,:subject,:assigned_to]
         ) %>
 
     </th>
@@ -94,7 +94,7 @@
       :tracker_id => 22,
       :status_id => '*',
       :cf_98 => c[0],
-      :c => [:cf_27,:tracker,:cf_98,:cf_31,:cf_28,:cf_26,:status,:cf_93,:assigned_to]
+      :c => [:cf_27,:tracker,:cf_98,:cf_31,:cf_28,:cf_26,:status,:cf_93,:subject,:assigned_to]
       ) %>
 
     </td>
