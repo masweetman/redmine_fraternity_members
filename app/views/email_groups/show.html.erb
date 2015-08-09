@@ -3,7 +3,7 @@
 	<%= mail_to(@email, @email, :encode => 'javascript') %>
 </h3>
 
-<table style="width: 500px" class="list">
+<table class="email_groups">
 	<thead><tr>
 	<th>User</th>
 	<th>Email</th>
@@ -21,3 +21,7 @@
 <% end %>
   </tbody>
 </table>
+
+<% content_for :header_tags do %>
+    <%= stylesheet_link_tag 'email_groups', :plugin => 'redmine_fraternity_members' %>
+<% end %>
