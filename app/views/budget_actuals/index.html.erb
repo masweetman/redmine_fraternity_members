@@ -18,11 +18,11 @@
 </p>
 
 <p>
-<h2>Actual Revenue</h2>
+<h1>Actual Revenue</h1>
 
 <% if !@annualRevenue.empty? -%>
 
-<table class="list">
+<table class="budget">
   <thead><tr>
   <th>Account</th>
   <% for j in 0..11 -%>
@@ -37,23 +37,31 @@
   <tbody>
 <% for c in @annualRevenue -%>
   <tr class="<%= cycle("odd", "even") %>">
-    <td width=250 style="text-align: left">
+    <td style="text-align: left">
 
       <%= link_to_project_deposit_issues_by_account(@project, c[0], c[1][12]) %>
 
     </td>
     <% for j in 0..11 -%>
       <% i = 11 - j -%>
-      <td class="<%= 'budget_mobile' if i > 2 %>"><%= number_with_delimiter(c[1][i].to_f.round, :delimiter => ',') %></td>
+      <td class="<%= 'budget_mobile' if i > 2 %>" style="text-align: right">
+        <% if c[1][i].to_f > 0 %>
+          <%= number_to_currency(c[1][i].to_f.round, :precision => 0, :format => '%n', negative_format: '(%n)') %>
+        <% else %>
+          -
+        <% end %>
+      </td>
       <% totalRevenue[i] = totalRevenue[i].to_f + c[1][i].to_f -%>
     <% end -%>
   </tr>
 <% end -%>
   <tr class="<%= cycle("odd", "even") %>">
-    <td width=250 style="text-align: left"><strong>Total Revenue</strong></td>
+    <td style="text-align: left"><strong>Total Revenue</strong></td>
       <% for j in 0..11 -%>
         <% i = 11 - j -%>
-      <td class="<%= 'budget_mobile' if i > 2 %>"><strong><%= number_with_delimiter(totalRevenue[i].round, :delimiter => ',') %></strong></td>
+      <td class="<%= 'budget_mobile' if i > 2 %>" style="text-align: right">
+        <strong><%= number_to_currency(totalRevenue[i].round, :precision => 0, :format => '%u%n', negative_format: '(%u%n)') %></strong>
+      </td>
     <% end -%>
   </tr>
   </tbody>
@@ -64,11 +72,11 @@
 <% end -%>
 
 <p>
-<h2>Actual Expenses</h2>
+<h1>Actual Expenses</h1>
 
 <% if !@annualExpenses.empty? -%>
 
-<table class="list">
+<table class="budget">
   <thead><tr>
   <th>Account</th>
   <% for j in 0..11 -%>
@@ -88,7 +96,7 @@
   <tbody>
 <% for c in @annualExpenses -%>
   <tr class="<%= cycle("odd", "even") %>">
-    <td width=250 style="text-align: left">
+    <td style="text-align: left">
 
       <%= link_to c[0], project_issues_path(@project, :set_filter => 1,
       :tracker_id => 22,
@@ -100,16 +108,24 @@
     </td>
     <% for j in 0..11 -%>
       <% i = 11 - j -%>
-      <td class="<%= 'budget_mobile' if i > 2 %>"><%= number_with_delimiter(c[1][i].to_f.round, :delimiter => ',') %></td>
+      <td class="<%= 'budget_mobile' if i > 2 %>" style="text-align: right">
+        <% if c[1][i].to_f > 0 %>
+          <%= number_to_currency(c[1][i].to_f.round, :precision => 0, :format => '%n', negative_format: '(%n)') %>
+        <% else %>
+          -
+        <% end %>
+      </td>
       <% totalExpenses[i] = totalExpenses[i].to_f + c[1][i].to_f -%>
     <% end -%>
   </tr>
 <% end -%>
   <tr class="<%= cycle("odd", "even") %>">
-  	<td width=250 style="text-align: left"><strong>Total Expenses</strong></td>
+  	<td style="text-align: left"><strong>Total Expenses</strong></td>
       <% for j in 0..11 -%>
         <% i = 11 - j -%>
-      <td class="<%= 'budget_mobile' if i > 2 %>"><strong><%= number_with_delimiter(totalExpenses[i].round, :delimiter => ',') %></strong></td>
+      <td class="<%= 'budget_mobile' if i > 2 %>" style="text-align: right">
+        <strong><%= number_to_currency(totalExpenses[i].round, :precision => 0, :format => '%u%n', negative_format: '(%u%n)') %></strong>
+      </td>
     <% end -%>
   </tr>
   </tbody>
@@ -117,9 +133,9 @@
 </p>
 
 <p>
-<h2>Net Cash Flow</h2>
+<h1>Net Cash Flow</h1>
 
-<table class="list">
+<table class="budget">
   <thead><tr>
   <th></th>
   <% for j in 0..11 -%>
@@ -129,10 +145,12 @@
   </tr></thead>
   <tbody>
   <tr class="<%= cycle("odd", "even") %>">
-    <td width=250 style="text-align: left">Net Cash Flow</td>
+    <td style="text-align: left">Net Cash Flow</td>
     <% for j in 0..11 -%>
       <% i = 11 - j -%>
-      <td class="<%= 'budget_mobile' if i > 2 %>"><strong><%= number_with_delimiter((totalRevenue[i].round - totalExpenses[i].round), :delimiter => ',') %></strong></td>
+      <td class="<%= 'budget_mobile' if i > 2 %>" style="text-align: right">
+        <strong><%= number_to_currency((totalRevenue[i] - totalExpenses[i]).round, :precision => 0, :format => '%u%n', negative_format: '(%u%n)') %></strong>
+      </td>
     <% end -%>
   </tr>
   </tbody>
@@ -147,3 +165,7 @@
 <p align="right">
   <%= link_to 'Export Actuals to CSV', :controller => 'budget_actuals', :action => 'export' %>
 </p>
+
+<% content_for :header_tags do %>
+    <%= stylesheet_link_tag 'budget', :plugin => 'redmine_fraternity_members' %>
+<% end %>
