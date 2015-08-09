@@ -2,6 +2,7 @@
 table.email_groups {
   border: none;
   border-collapse: collapse;
+  width: 100%;
 }
 
 table.email_groups th a, table.email_groups th{
@@ -12,6 +13,9 @@ table.email_groups th a, table.email_groups th{
 table.email_groups th, table.email_groups td {
   text-align: left;
   padding: 2px 5px 2px 5px;
+}
+
+table.email_groups th:first-child, table.email_groups td:first-child {
   width: 155px;
 }
 
