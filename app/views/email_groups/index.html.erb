@@ -1,10 +1,6 @@
-<h2>Email Groups</h2>
+<p>Click a group name to view the current members of the group. Emails sent to <%= mail_to('everyone@ago.org', 'everyone@ago.org', :encode => 'javascript') %> will go to all actives and alumni leaders. To change email group memberships, <%= link_to 'update the appropriate Project roles.', :controller => 'wiki', :action => 'show', :project_id => 'chapters', :id => 'Manage_Chapter_Membership' %> Email groups will be automatically synchronized nightly.</p>
 
-<p>
-	Click a group name to view the current members of the group. Emails sent to <%= mail_to('everyone@ago.org', 'everyone@ago.org', :encode => 'javascript') %> will go to all actives and alumni leaders. To change email group memberships, <%= link_to 'update the appropriate Project roles.', :controller => 'wiki', :action => 'show', :project_id => 'chapters', :id => 'Manage_Chapter_Membership' %> Email groups will be automatically synchronized nightly.
-</p>
-
-<table style="width: 400px" class="list">
+<table class="email_groups">
 	<thead><tr>
 	<th>Group</th>
 	<th>Email Address</th>
@@ -25,9 +21,9 @@
   </tbody>
 </table>
 
-<h3>Alumni Organizations</h3>
+<h1>Alumni Organizations</h1>
 
-<table style="width: 400px" class="list">
+<table class="email_groups">
 	<thead><tr>
 	<th>Group</th>
 	<th>Email Address</th>
@@ -47,9 +43,9 @@
 </table>
 
 <% for c in @chapters %>
-	<h3><%= c.name %></h3>
+	<h1><%= c.name %></h1>
 
-	<table style="width: 400px" class="list">
+	<table class="email_groups">
 		<thead><tr>
 		<th>Group</th>
 		<th>Email Address</th>
@@ -73,9 +69,9 @@
 	</table>
 <% end %>
 
-<h3>Alumni Chapters</h3>
+<h1>Alumni Chapters</h1>
 
-<table style="width: 400px" class="list">
+<table class="email_groups">
 	<thead><tr>
 	<th>Group</th>
 	<th>Email Address</th>
@@ -93,3 +89,7 @@
 <% end %>
   </tbody>
 </table>
+
+<% content_for :header_tags do %>
+    <%= stylesheet_link_tag 'email_groups', :plugin => 'redmine_fraternity_members' %>
+<% end %>

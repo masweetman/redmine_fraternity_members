@@ -1,0 +1,25 @@
+/***** Email Groups Tables *****/
+table.email_groups {
+  border: none;
+  border-collapse: collapse;
+}
+
+table.email_groups th a, table.email_groups th{
+  color: #28303a;
+  text-transform: uppercase;
+}
+
+table.email_groups th, table.email_groups td {
+  text-align: left;
+  padding: 2px 5px 2px 5px;
+  width: 155px;
+}
+
+table.email_groups th {background: none; white-space:nowrap; border-top: 1px solid #e6eaef; }
+table.email_groups tr {
+  border-bottom: 1px solid #e6eaef !important;
+}
+
+table.email_groups tbody tr:hover { background-color: #f8f8f2; }
+table.email_groups tbody tr.group:hover { background-color:inherit; }
+
