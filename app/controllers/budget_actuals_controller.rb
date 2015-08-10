@@ -11,19 +11,27 @@ class BudgetActualsController < ApplicationController
 
 	def index
         if Date.today.month >= 7
-            startDate = Date.new(Date.today.year,7,1)
-            endDate = Date.new(Date.today.year + 1,6,30)
+            startDate = Date.new(Date.today.year, 7, 1)
+            endDate = Date.new(Date.today.year + 1, 6, 30)
             @currentRelativeMonth = Date.today.month - 7
         else
-            startDate = Date.new(Date.today.year - 1,7,1)
-            endDate = Date.new(Date.today.year,6,30)
+            startDate = Date.new(Date.today.year - 1, 7, 1)
+            endDate = Date.new(Date.today.year, 6, 30)
             @currentRelativeMonth = Date.today.month - 7 + 12
         end
 
+        if params[:date].present?
+            startDate = Date.new(params[:date][:year].to_i, 7, 1)
+            endDate = Date.new(params[:date][:year].to_i + 1, 6, 30)
+            @currentRelativeMonth = 12
+        end
+
+        @FYStart = startDate
+
 		budgetCategories = CustomField.find(98).possible_values
 		@project = Project.find(params[:id])
-		@revenue = @project.issues.where('tracker_id = ? AND created_on >= ?', 26, startDate - 1.month)
-        @expenses = @project.issues.where('tracker_id = ? AND status_id <> ? AND created_on >= ?', 22, 6, startDate - 1.month)
+		@revenue = @project.issues.where('tracker_id = ? AND created_on > ? AND created_on < ?', 26, startDate - 1.month, endDate + 1.month)
+        @expenses = @project.issues.where('tracker_id = ? AND status_id <> ? AND created_on > ? AND created_on < ?', 22, 6, startDate - 1.month, endDate + 1.month)
 		@latestBudget = @project.issues.where(:tracker_id => 19).last
 
 		@dates = []
