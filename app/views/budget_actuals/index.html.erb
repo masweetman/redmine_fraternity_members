@@ -25,26 +25,25 @@
 <table class="budget">
   <thead><tr>
   <th>Account</th>
-  <% for j in 0..11 -%>
-    <% i = 11 - j -%>
-    <th class="<%= 'budget_mobile' if i > 2 %>">
+  <% for i in 0..11 -%>
+    <th class="<%= 'budget_mobile' unless i == @currentRelativeMonth %>">
 
       <%= link_to @dateStrings[i], :controller => 'deposits', :action => 'index' %>
 
     </th>
   <% end -%>
+  <th><center>Total</center></th>
   </tr></thead>
   <tbody>
 <% for c in @annualRevenue -%>
   <tr class="<%= cycle("odd", "even") %>">
+
     <td style="text-align: left">
-
-      <%= link_to_project_deposit_issues_by_account(@project, c[0], c[1][12]) %>
-
+      <%= link_to_project_deposit_issues_by_account(@project, c[0], c[1][13]) %>
     </td>
-    <% for j in 0..11 -%>
-      <% i = 11 - j -%>
-      <td class="<%= 'budget_mobile' if i > 2 %>" style="text-align: right">
+
+    <% for i in 0..12 -%>
+      <td class="<%= 'budget_mobile' unless i == @currentRelativeMonth or i == 12 %>" style="text-align: right">
         <% if c[1][i].to_f > 0 %>
           <%= number_to_currency(c[1][i].to_f.round, :precision => 0, :format => '%n', negative_format: '(%n)') %>
         <% else %>
@@ -57,18 +56,17 @@
 <% end -%>
   <tr class="<%= cycle("odd", "even") %>">
     <td style="text-align: left"><strong>Total Revenue</strong></td>
-      <% for j in 0..11 -%>
-        <% i = 11 - j -%>
-      <td class="<%= 'budget_mobile' if i > 2 %>" style="text-align: right">
-        <strong><%= number_to_currency(totalRevenue[i].round, :precision => 0, :format => '%u%n', negative_format: '(%u%n)') %></strong>
-      </td>
-    <% end -%>
+      <% for i in 0..12 -%>
+        <td class="<%= 'budget_mobile' unless i == @currentRelativeMonth or i == 12 %>" style="text-align: right">
+          <strong><%= number_to_currency(totalRevenue[i].round, :precision => 0, :format => '%u%n', negative_format: '(%u%n)') %></strong>
+        </td>
+      <% end -%>
   </tr>
   </tbody>
 </table>
 
 <% else -%>
-  (no revenue reported yet)
+  No revenue reported yet for the current Fiscal Year.
 <% end -%>
 
 <p>
@@ -79,9 +77,8 @@
 <table class="budget">
   <thead><tr>
   <th>Account</th>
-  <% for j in 0..11 -%>
-    <% i = 11 - j -%>
-    <th class="<%= 'budget_mobile' if i > 2 %>">
+  <% for i in 0..11 -%>
+    <th class="<%= 'budget_mobile' unless i == @currentRelativeMonth %>">
 
       <%= link_to @dateStrings[i], project_issues_path(@project, :set_filter => 1,
         :f=>[:status_id, :tracker_id, :cf_28, ""],
@@ -92,6 +89,7 @@
 
     </th>
   <% end -%>
+  <th><center>Total</center></th>
   </tr></thead>
   <tbody>
 <% for c in @annualExpenses -%>
@@ -106,9 +104,8 @@
       ) %>
 
     </td>
-    <% for j in 0..11 -%>
-      <% i = 11 - j -%>
-      <td class="<%= 'budget_mobile' if i > 2 %>" style="text-align: right">
+    <% for i in 0..12 -%>
+      <td class="<%= 'budget_mobile' unless i == @currentRelativeMonth or i == 12 %>" style="text-align: right">
         <% if c[1][i].to_f > 0 %>
           <%= number_to_currency(c[1][i].to_f.round, :precision => 0, :format => '%n', negative_format: '(%n)') %>
         <% else %>
@@ -121,12 +118,11 @@
 <% end -%>
   <tr class="<%= cycle("odd", "even") %>">
   	<td style="text-align: left"><strong>Total Expenses</strong></td>
-      <% for j in 0..11 -%>
-        <% i = 11 - j -%>
-      <td class="<%= 'budget_mobile' if i > 2 %>" style="text-align: right">
-        <strong><%= number_to_currency(totalExpenses[i].round, :precision => 0, :format => '%u%n', negative_format: '(%u%n)') %></strong>
-      </td>
-    <% end -%>
+      <% for i in 0..12 -%>
+        <td class="<%= 'budget_mobile' unless i == @currentRelativeMonth or i == 12 %>" style="text-align: right">
+          <strong><%= number_to_currency(totalExpenses[i].round, :precision => 0, :format => '%u%n', negative_format: '(%u%n)') %></strong>
+        </td>
+      <% end -%>
   </tr>
   </tbody>
 </table>
@@ -138,18 +134,17 @@
 <table class="budget">
   <thead><tr>
   <th></th>
-  <% for j in 0..11 -%>
-    <% i = 11 - j -%>
-    <th class="<%= 'budget_mobile' if i > 2 %>"><%= @dateStrings[i] %></th>
+  <% for i in 0..11 -%>
+    <th class="<%= 'budget_mobile' unless i == @currentRelativeMonth %>"><%= @dateStrings[i] %></th>
   <% end -%>
+  <th><center>Total</center></th>
   </tr></thead>
   <tbody>
   <tr class="<%= cycle("odd", "even") %>">
     <td style="text-align: left">Net Cash Flow</td>
-    <% for j in 0..11 -%>
-      <% i = 11 - j -%>
-      <td class="<%= 'budget_mobile' if i > 2 %>" style="text-align: right">
-        <strong><%= number_to_currency((totalRevenue[i] - totalExpenses[i]).round, :precision => 0, :format => '%u%n', negative_format: '(%u%n)') %></strong>
+    <% for i in 0..12 -%>
+      <td class="<%= 'budget_mobile' unless i == @currentRelativeMonth or i == 12 %>" style="text-align: right">
+        <strong><%= number_to_currency((totalRevenue[i].to_f - totalExpenses[i].to_f).round, :precision => 0, :format => '%u%n', negative_format: '(%u%n)') %></strong>
       </td>
     <% end -%>
   </tr>
@@ -157,7 +152,7 @@
 </table>
 
 <% else -%>
-  (no expenses reported yet)
+  No expenses reported yet for the current Fiscal Year.
 <% end -%>
 
 </p>

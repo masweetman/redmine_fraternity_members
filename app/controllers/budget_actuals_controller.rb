@@ -10,10 +10,20 @@ class BudgetActualsController < ApplicationController
     include DepositsHelper
 
 	def index
+        if Date.today.month >= 7
+            startDate = Date.new(Date.today.year,7,1)
+            endDate = Date.new(Date.today.year + 1,6,30)
+            @currentRelativeMonth = Date.today.month - 7
+        else
+            startDate = Date.new(Date.today.year - 1,7,1)
+            endDate = Date.new(Date.today.year,6,30)
+            @currentRelativeMonth = Date.today.month - 7 + 12
+        end
+
 		budgetCategories = CustomField.find(98).possible_values
 		@project = Project.find(params[:id])
-		@revenue = @project.issues.where('tracker_id = ? AND created_on > ?', 26, Date.today - 1.year)
-        @expenses = @project.issues.where('tracker_id = ? AND status_id <> ? AND created_on > ?', 22, 6, Date.today - 1.year)
+		@revenue = @project.issues.where('tracker_id = ? AND created_on >= ?', 26, startDate - 1.month)
+        @expenses = @project.issues.where('tracker_id = ? AND status_id <> ? AND created_on >= ?', 22, 6, startDate - 1.month)
 		@latestBudget = @project.issues.where(:tracker_id => 19).last
 
 		@dates = []
@@ -22,7 +32,7 @@ class BudgetActualsController < ApplicationController
         @annualRevenue = {}
 
 		for i in 0..11
-			@dates[i] = Date.today - i.month
+			@dates[i] = startDate + i.month
 			@dateStrings[i] = @dates[i].strftime('%b %y')
 		end
 
@@ -40,9 +50,12 @@ class BudgetActualsController < ApplicationController
                    Date.parse(r.custom_field_value(105)).year == @dates[i].year
                     if @annualRevenue[account].nil?
                         @annualRevenue[account] = []
-                        @annualRevenue[account][12] = accountType
+                        @annualRevenue[account][13] = accountType
                     end
+                    # sum Monthly values
                     @annualRevenue[account][i] = @annualRevenue[account][i].to_f + r.custom_field_value(104).to_f
+                    # sum Total values
+                    @annualRevenue[account][12] = @annualRevenue[account][12].to_f + r.custom_field_value(104).to_f
                 end
             end
         end
@@ -56,7 +69,10 @@ class BudgetActualsController < ApplicationController
 					if @annualExpenses[e.custom_field_value(98)].nil?
 				   		@annualExpenses[e.custom_field_value(98)] = []
 					end
+                    # sum Monthly values
 					@annualExpenses[e.custom_field_value(98)][i] = @annualExpenses[e.custom_field_value(98)][i].to_f + e.custom_field_value(31).to_f
+                    # sum Total values
+                    @annualExpenses[e.custom_field_value(98)][12] = @annualExpenses[e.custom_field_value(98)][12].to_f + e.custom_field_value(31).to_f
 				end
 			end
 		end
@@ -65,69 +81,64 @@ class BudgetActualsController < ApplicationController
 
   def export
   	index
-    totalExpenses = [0,0,0,0,0,0,0,0,0,0,0,0]
-    totalRevenue = [0,0,0,0,0,0,0,0,0,0,0,0]
+    totalExpenses = []
+    totalRevenue = []
 
     export_csv = 'Actual Revenue' + "\n"
     export_csv << '"'+'Account'+'"'+','
-        for j in 0..11
-        i = 11 - j
+    for i in 0..11
         export_csv << '"'+@dateStrings[i].to_s+'"'+','
     end
+    export_csv << '"TOTAL"'
     export_csv << "\n"
     
     for c in @annualRevenue
         export_csv << '"'+c[0]+'"'+','
-        for j in 0..11
-            i = 11 - j
+        for i in 0..12
             export_csv << '"'+c[1][i].to_f.round.to_s+'"'+','
             totalRevenue[i] = totalRevenue[i].to_f + c[1][i].to_f
         end
         export_csv << "\n"
     end
     export_csv << '"'+'Total Revenue'+'"'+','
-    for j in 0..11
-        i = 11 - j
-        export_csv << '"'+totalRevenue[i].round.to_s+'"'+','
+    for i in 0..12
+        export_csv << '"'+totalRevenue[i].to_f.round.to_s+'"'+','
     end
     export_csv << "\n" + "\n"
 
     export_csv << 'Actual Expenses' + "\n"
     export_csv << '"'+'Account'+'"'+','
-        for j in 0..11
-    	i = 11 - j
+    for i in 0..11
     	export_csv << '"'+@dateStrings[i].to_s+'"'+','
     end
+    export_csv << '"TOTAL"'
     export_csv << "\n"
     
     for c in @annualExpenses
     	export_csv << '"'+c[0]+'"'+','
-    	for j in 0..11
-    		i = 11 - j
+    	for i in 0..12
     		export_csv << '"'+c[1][i].to_f.round.to_s+'"'+','
     		totalExpenses[i] = totalExpenses[i].to_f + c[1][i].to_f
     	end
     	export_csv << "\n"
     end
     export_csv << '"'+'Total Expenses'+'"'+','
-    for j in 0..11
-    	i = 11 - j
-    	export_csv << '"'+totalExpenses[i].round.to_s+'"'+','
+    for i in 0..12
+    	export_csv << '"'+totalExpenses[i].to_f.round.to_s+'"'+','
     end
     export_csv << "\n" + "\n"
 
     export_csv << 'Net Cash Flow' + "\n"
     export_csv << '"'+''+'"'+','
-        for j in 0..11
-    	i = 11 - j
+        for i in 0..11
     	export_csv << '"'+@dateStrings[i].to_s+'"'+','
     end
+    export_csv << '"TOTAL"'
     export_csv << "\n"
 
     export_csv << '"'+'Net Cash Flow'+'"'+','
-    for j in 0..11
-    	i = 11 - j
-    	export_csv << '"'+(totalRevenue[i].round - totalExpenses[i].round).to_s+'"'+','
+    for i in 0..12
+    	export_csv << '"'+(totalRevenue[i].to_f - totalExpenses[i].to_f).round.to_s+'"'+','
     end
     
     send_data(export_csv,
