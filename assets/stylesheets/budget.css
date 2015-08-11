@@ -10,14 +10,19 @@ table.budget th a, table.budget th{
 }
 
 table.budget th, table.budget td {
-  text-align: left;
   padding: 2px 5px 2px 5px;
-  min-width: 56px;
+  width: 56px;
 }
-table.budget th:first-child, table.budget td:first-child {
+table.budget td:nth-child(n) {
+  text-align: right;
+}
+table.budget th:first-child {
   min-width: 160px;
 }
-
+table.budget td:first-child {
+  min-width: 160px;
+  text-align: left;
+}
 
 table.budget th {background: none; white-space:nowrap; border-top: 1px solid #e6eaef; }
 table.budget tr {

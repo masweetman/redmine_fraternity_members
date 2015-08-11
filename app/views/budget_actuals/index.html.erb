@@ -45,12 +45,12 @@ Fiscal Year: <%= select_date(@FYStart, :discard_month => true) %>
 <% for c in @annualRevenue -%>
   <tr class="<%= cycle("odd", "even") %>">
 
-    <td style="text-align: left">
+    <td>
       <%= link_to_project_deposit_issues_by_account(@project, c[0], c[1][13]) %>
     </td>
 
     <% for i in 0..12 -%>
-      <td class="<%= 'budget_mobile' unless i == @currentRelativeMonth or i == 12 %>" style="text-align: right">
+      <td class="<%= 'budget_mobile' unless i == @currentRelativeMonth or i == 12 %>">
         <% if c[1][i].to_f > 0 %>
           <%= number_to_currency(c[1][i].to_f.round, :precision => 0, :format => '%n', negative_format: '(%n)') %>
         <% else %>
@@ -62,9 +62,9 @@ Fiscal Year: <%= select_date(@FYStart, :discard_month => true) %>
   </tr>
 <% end -%>
   <tr class="<%= cycle("odd", "even") %>">
-    <td style="text-align: left"><strong>Total Revenue</strong></td>
+    <td><strong>Total Revenue</strong></td>
       <% for i in 0..12 -%>
-        <td class="<%= 'budget_mobile' unless i == @currentRelativeMonth or i == 12 %>" style="text-align: right">
+        <td class="<%= 'budget_mobile' unless i == @currentRelativeMonth or i == 12 %>">
           <strong><%= number_to_currency(totalRevenue[i].to_f.round, :precision => 0, :format => '%u%n', negative_format: '(%u%n)') %></strong>
         </td>
       <% end -%>
@@ -101,7 +101,7 @@ Fiscal Year: <%= select_date(@FYStart, :discard_month => true) %>
   <tbody>
 <% for c in @annualExpenses -%>
   <tr class="<%= cycle("odd", "even") %>">
-    <td style="text-align: left">
+    <td>
 
       <%= link_to c[0], project_issues_path(@project, :set_filter => 1,
       :tracker_id => 22,
@@ -112,7 +112,7 @@ Fiscal Year: <%= select_date(@FYStart, :discard_month => true) %>
 
     </td>
     <% for i in 0..12 -%>
-      <td class="<%= 'budget_mobile' unless i == @currentRelativeMonth or i == 12 %>" style="text-align: right">
+      <td class="<%= 'budget_mobile' unless i == @currentRelativeMonth or i == 12 %>">
         <% if c[1][i].to_f > 0 %>
           <%= number_to_currency(c[1][i].to_f.round, :precision => 0, :format => '%n', negative_format: '(%n)') %>
         <% else %>
@@ -124,9 +124,9 @@ Fiscal Year: <%= select_date(@FYStart, :discard_month => true) %>
   </tr>
 <% end -%>
   <tr class="<%= cycle("odd", "even") %>">
-  	<td style="text-align: left"><strong>Total Expenses</strong></td>
+  	<td><strong>Total Expenses</strong></td>
       <% for i in 0..12 -%>
-        <td class="<%= 'budget_mobile' unless i == @currentRelativeMonth or i == 12 %>" style="text-align: right">
+        <td class="<%= 'budget_mobile' unless i == @currentRelativeMonth or i == 12 %>">
           <strong><%= number_to_currency(totalExpenses[i].to_f.round, :precision => 0, :format => '%u%n', negative_format: '(%u%n)') %></strong>
         </td>
       <% end -%>
@@ -148,9 +148,9 @@ Fiscal Year: <%= select_date(@FYStart, :discard_month => true) %>
   </tr></thead>
   <tbody>
   <tr class="<%= cycle("odd", "even") %>">
-    <td style="text-align: left">Net Cash Flow</td>
+    <td>Net Cash Flow</td>
     <% for i in 0..12 -%>
-      <td class="<%= 'budget_mobile' unless i == @currentRelativeMonth or i == 12 %>" style="text-align: right">
+      <td class="<%= 'budget_mobile' unless i == @currentRelativeMonth or i == 12 %>">
         <strong><%= number_to_currency((totalRevenue[i].to_f - totalExpenses[i].to_f).round, :precision => 0, :format => '%u%n', negative_format: '(%u%n)') %></strong>
       </td>
     <% end -%>
