@@ -25,6 +25,7 @@ module UserPatch
 
 		def new_fraternity_member
 			if (active? && fraternity_member_id.nil? && custom_field_value(3).to_i > 0 && !anonymous?)
+				self.pref.no_self_notified = true
 				member = FraternityMember.where(chapter: self.custom_field_value(2), active_number: self.custom_field_value(3)).first
 				if member.nil?
 					self.fraternity_member_id = FraternityMember.create.id
