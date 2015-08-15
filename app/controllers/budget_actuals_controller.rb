@@ -10,6 +10,13 @@ class BudgetActualsController < ApplicationController
     include DepositsHelper
 
 	def index
+
+        @project = Project.find(params[:id])
+        
+        if @project.parent_id == 6
+            @mint_value = mint_value(@project.name)
+        end
+
         if Date.today.month >= 7
             startDate = Date.new(Date.today.year, 7, 1)
             endDate = Date.new(Date.today.year + 1, 6, 30)
@@ -29,7 +36,6 @@ class BudgetActualsController < ApplicationController
         @FYStart = startDate
 
 		budgetCategories = CustomField.find(98).possible_values
-		@project = Project.find(params[:id])
 		@revenue = @project.issues.where('tracker_id = ? AND created_on > ? AND created_on < ?', 26, startDate - 1.month, endDate + 1.month)
         @expenses = @project.issues.where('tracker_id = ? AND status_id <> ? AND created_on > ? AND created_on < ?', 22, 6, startDate - 1.month, endDate + 1.month)
 		@latestBudget = @project.issues.where(:tracker_id => 19).last
@@ -152,6 +158,21 @@ class BudgetActualsController < ApplicationController
     send_data(export_csv,
       :type => 'text/csv; charset=utf-8; header=present',
       :filename => @project.name + "_budget_actuals_" + Date.today.to_s + ".csv")
+  end
+
+  def mint_value(chapter)
+    account_name = chapter + ' Account'
+    user = Setting.plugin_redmine_fraternity_members['mint_user']
+    pw = Setting.plugin_redmine_fraternity_members['mint_pw']
+
+    credentials = Minty::Credentials.new(user,pw)
+    client = Minty::Client.new(credentials)
+    client.refresh
+
+    accounts = client.accounts
+    account = accounts.find { |a| a.name == account_name }
+
+    account.value
   end
 
 end

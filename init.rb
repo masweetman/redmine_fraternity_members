@@ -5,6 +5,7 @@ require 'google/api_client/auth/file_storage'
 require 'google/api_client/auth/installed_app'
 require 'httparty'
 require 'json'
+require 'minty'
 
 require 'user_hooks'
 
@@ -15,7 +16,7 @@ Redmine::Plugin.register :redmine_fraternity_members do
   name 'Redmine Fraternity Members'
   author 'Mike Sweetman'
   description 'This plugin manages the member database.'
-  version '3.4.0'
+  version '3.5.0'
   url 'https://github.com/masweetman/redmine_fraternity_members.git'
   author_url ''
 

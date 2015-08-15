@@ -77,8 +77,19 @@
       	of a Google Apps Super Admin:
       </td>
       <td>
-      	
       	<%= text_field_tag "settings[google_admin_email]", settings['google_admin_email'] %>
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Mint.com username:</strong></td>
+      <td>
+      	<%= text_field_tag "settings[mint_user]", settings['mint_user'] %>
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Mint.com password:</strong></td>
+      <td>
+      	<%= text_field_tag "settings[mint_pw]", settings['mint_pw'] %>
       </td>
     </tr>
   </tbody>

@@ -10,9 +10,26 @@
 <p>
 <%= link_to 'List All Deposits', :controller => 'deposits', :action => 'index' %> |
 <%= link_to 'Report a New Deposit', :controller => 'issues', :action => 'new', :project_id => @project.identifier, :tracker_id => 26 %> | 
-<%= link_to 'Report a New Expense', :controller => 'issues', :action => 'new', :project_id => @project.identifier, :tracker_id => 22 %> |
-<a href="https://chaseonline.chase.com" target="_blank">Chase Online Banking</a>
+<%= link_to 'Report a New Expense', :controller => 'issues', :action => 'new', :project_id => @project.identifier, :tracker_id => 22 %>
 </p>
+<% if @project.parent_id == 6 %>
+<p>
+  <table align="center" class="budget" style="width: 200px !important;">
+    <th colspan='2'>
+      <a href="https://chaseonline.chase.com" target="_blank">Chase Online Banking</a>
+    </th>
+    <tr>
+      <td>
+        Account Value:
+      </td>
+      <td>
+        <strong><%= number_to_currency(@mint_value, :precision => 0) %></strong>
+      </td>
+    </tr>
+  </table>
+</p>
+<% end %>
+
 
 <%= form_tag({:controller => 'budget_actuals', :action => 'index'}, :method => :get) do %>
 <fieldset>
