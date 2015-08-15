@@ -1,4 +1,4 @@
-surce 'https://rubygems.org'
+source 'https://rubygems.org'
 
 gem 'google-api-client'
 gem 'httparty'
