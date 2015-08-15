@@ -1,0 +1,38 @@
+<h1>Recent Transactions</h1>
+<p>These transactions are listed from <a href="https://chaseonline.chase.com" target="_blank">Chase Online Banking</a>. Make sure you have accounted for all transactions by reporting them as Expenses or Deposits.</p>
+
+<table class="list">
+  <thead>
+    <th>
+      Date
+    </th>
+    <th>
+      Type
+    </th>
+    <th>
+      Description
+    </th>
+    <th>
+      Amount
+    </th>
+  </thead>
+<% @transactions.each do |t| %>  
+  <% text_color = 'color: green !important;' if t['Transaction Type'] == 'credit' %>
+  <% text_color = 'color: red !important;' if t['Transaction Type'] == 'debit' %>
+  <tr>
+    <td>
+      <%= t['Date'] %>
+    </td>
+    <td style='<%= text_color %>'>
+      <%= t['Transaction Type'].capitalize %>
+    </td>
+    <td>
+      <%= t['Description'] %>
+    </td>
+    <td style='<%= text_color %>'>
+      <%= t['Amount'] %>
+    </td>
+  </tr>
+
+<% end %>
+</table>

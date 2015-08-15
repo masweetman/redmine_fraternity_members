@@ -14,13 +14,18 @@
 </p>
 <% if @project.parent_id == 6 %>
 <p>
-  <table align="center" class="budget" style="width: 200px !important;">
-    <th colspan='2'>
-      <a href="https://chaseonline.chase.com" target="_blank">Chase Online Banking</a>
-    </th>
+  <table align="center" class="list" style="width: 300px !important;">
     <tr>
       <td>
-        Account Value:
+        <strong>Chase Bank:</strong>
+      </td>
+      <td>
+        <%= link_to 'View Recent Transactions', :controller => 'budget_actuals', :action => 'recent_transactions' %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Account Value:</strong>
       </td>
       <td>
         <strong><%= number_to_currency(@mint_value, :precision => 0) %></strong>

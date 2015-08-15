@@ -175,4 +175,22 @@ class BudgetActualsController < ApplicationController
     account.value
   end
 
+  def recent_transactions
+    @project = Project.find(params[:id])
+
+    account_name = @project.name + ' Account'
+
+    user = Setting.plugin_redmine_fraternity_members['mint_user']
+    pw = Setting.plugin_redmine_fraternity_members['mint_pw']
+
+    credentials = Minty::Credentials.new(user,pw)
+    client = Minty::Client.new(credentials)
+
+    all_transactions = client.transactions
+    @transactions = []
+    all_transactions.map { |t| @transactions << t.json if t.json['Account Name'] == account_name }
+
+    @transactions
+  end
+
 end
