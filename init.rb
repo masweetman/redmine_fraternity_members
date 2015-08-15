@@ -5,7 +5,6 @@ require 'google/api_client/auth/file_storage'
 require 'google/api_client/auth/installed_app'
 require 'httparty'
 require 'json'
-require 'mintkit'
 
 require 'user_hooks'
 
