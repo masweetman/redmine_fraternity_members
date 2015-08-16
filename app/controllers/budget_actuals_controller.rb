@@ -188,7 +188,7 @@ class BudgetActualsController < ApplicationController
 
     all_transactions = client.transactions
     @transactions = []
-    all_transactions.map { |t| @transactions << t.json if t.json['Account Name'] == account_name }
+    @transactions = all_transactions.select{ |t| t.json['Account Name'] == account_name }
 
     @transactions
   end

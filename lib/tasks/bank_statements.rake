@@ -15,7 +15,16 @@ namespace :redmine do
 		    transactions = []
 		    transactions = all_transactions.select{ |t| t.json['Account Name'] == account_name && Date.strptime(t.json['Date'], '%m/%d/%Y').month == (Date.current - 1.month).month && Date.strptime(t.json['Date'], '%m/%d/%Y').year == (Date.current - 1.month).year }
 		    if transactions.count > 0
-				Mailer.bank_statement(project, transactions).deliver
+				to_users = []
+				project.users.each do |user|
+					if user.roles_for_project(project).include?(Role.find_by_name('Treasurer')) ||
+						user.roles_for_project(project).include?(Role.find_by_name('President')) ||
+						user.roles_for_project(project).include?(Role.find_by_name('Chapter Advisor')) ||
+						user.roles_for_project(project).include?(Role.find_by_name('Natl VP Collegiate'))
+						to_users << user
+					end
+				end
+				Mailer.bank_statement(project, to_users, transactions).deliver
 			end
 		end
 	end
