@@ -1,0 +1,10 @@
+Bank Transactions for <%= @statement_date %>
+----------------------------------------
+The following transactions occurred during <%= @statement_date %>. Please verify that all transactions are accounted for as Deposits and Expenses. For instructions on reporting Deposits and Expenses, go to Deposits, Expenses, and Reimbursements on the National Wiki.
+
+For a complete bank statement, log on to Chase Online Banking.
+----------------------------------------
+<% @transactions.each do |t| %>
+----------------------------------------
+<%= t['Date'] %> - <%= t['Transaction Type'].capitalize %> - <%= t['Original Description'] %> - <%= t['Amount'] %>
+<% end %>
