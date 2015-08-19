@@ -170,35 +170,45 @@ class BudgetActualsController < ApplicationController
   end
 
   def mint_value(chapter)
-    account_name = chapter + ' Account'
-    user = Setting.plugin_redmine_fraternity_members['mint_user']
-    pw = Setting.plugin_redmine_fraternity_members['mint_pw']
+    begin
+        account_name = chapter + ' Account'
+        user = Setting.plugin_redmine_fraternity_members['mint_user']
+        pw = Setting.plugin_redmine_fraternity_members['mint_pw']
 
-    credentials = Minty::Credentials.new(user,pw)
-    client = Minty::Client.new(credentials)
+        credentials = Minty::Credentials.new(user,pw)
+        client = Minty::Client.new(credentials)
 
-    accounts = client.accounts
-    account = accounts.find { |a| a.name == account_name }
+        accounts = client.accounts
+        account = accounts.find { |a| a.name == account_name }
 
-    account.value
+        account.value
+    rescue Exception => e
+        flash[:error] = 'Unable to retrieve account balance from Mint.com. ' + e.message
+        return 'error'
+    end
   end
 
   def recent_transactions
-    @project = Project.find(params[:id])
+    begin
+        @project = Project.find(params[:id])
 
-    account_name = @project.name + ' Account'
+        account_name = @project.name + ' Account'
 
-    user = Setting.plugin_redmine_fraternity_members['mint_user']
-    pw = Setting.plugin_redmine_fraternity_members['mint_pw']
+        user = Setting.plugin_redmine_fraternity_members['mint_user']
+        pw = Setting.plugin_redmine_fraternity_members['mint_pw']
 
-    credentials = Minty::Credentials.new(user,pw)
-    client = Minty::Client.new(credentials)
+        credentials = Minty::Credentials.new(user,pw)
+        client = Minty::Client.new(credentials)
 
-    all_transactions = client.transactions
-    @transactions = []
-    @transactions = all_transactions.select{ |t| t.json['Account Name'] == account_name }
+        all_transactions = client.transactions
+        @transactions = []
+        @transactions = all_transactions.select{ |t| t.json['Account Name'] == account_name }
 
-    @transactions
+        @transactions
+    rescue Exception => e
+        flash[:error] = 'Unable to retrieve data from Mint.com. ' + e.message
+        @transactions = []
+    end
   end
 
 end
