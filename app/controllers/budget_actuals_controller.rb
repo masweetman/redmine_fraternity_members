@@ -160,6 +160,15 @@ class BudgetActualsController < ApplicationController
       :filename => @project.name + "_budget_actuals_" + Date.today.to_s + ".csv")
   end
 
+  def refresh_mint
+    user = Setting.plugin_redmine_fraternity_members['mint_user']
+    pw = Setting.plugin_redmine_fraternity_members['mint_pw']
+
+    credentials = Minty::Credentials.new(user,pw)
+    client = Minty::Client.new(credentials)
+    client.refresh
+  end
+
   def mint_value(chapter)
     account_name = chapter + ' Account'
     user = Setting.plugin_redmine_fraternity_members['mint_user']
@@ -167,7 +176,6 @@ class BudgetActualsController < ApplicationController
 
     credentials = Minty::Credentials.new(user,pw)
     client = Minty::Client.new(credentials)
-    client.refresh
 
     accounts = client.accounts
     account = accounts.find { |a| a.name == account_name }

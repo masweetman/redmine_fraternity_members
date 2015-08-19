@@ -1,12 +1,20 @@
 namespace :redmine do
 
-	task :send_bank_statements => :environment do
+	task :refresh_mint => :environment do
 	    user = Setting.plugin_redmine_fraternity_members['mint_user']
 	    pw = Setting.plugin_redmine_fraternity_members['mint_pw']
 
 	    credentials = Minty::Credentials.new(user,pw)
 	    client = Minty::Client.new(credentials)
 	    client.refresh
+	end
+
+	task :send_bank_statements => :environment do
+	    user = Setting.plugin_redmine_fraternity_members['mint_user']
+	    pw = Setting.plugin_redmine_fraternity_members['mint_pw']
+
+	    credentials = Minty::Credentials.new(user,pw)
+	    client = Minty::Client.new(credentials)
 
 	    all_transactions = client.transactions
 	    
