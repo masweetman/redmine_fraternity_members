@@ -1,12 +1,11 @@
 Bank Transactions for <%= @statement_date %>
 ----------------------------------------
-Bank transactions are sent on the 5th of every month to the Treasurer, President, and Chapter Advisor. You can also view transactions on the Budget tab of your chapter project.
+The following transactions occurred during <%= @statement_date %>. Please verify that all transactions are accounted for as Deposits or Expenses. If there are any bounced checks or credit returns (from expired AGO checks), simply be reminded to settle those funds by securing payment or cutting new checks (and try to avoid them in the future by communicating with your chapter). For instructions on reporting Deposits and Expenses, go to Deposits, Expenses, and Reimbursements on the National Wiki.
 
-The following transactions occurred during <%= @statement_date %>. Please verify that all transactions are accounted for as Deposits and Expenses. For instructions on reporting Deposits and Expenses, go to Deposits, Expenses, and Reimbursements on the National Wiki.
+These emails are sent every month to the Treasurer, President, and Chapter Advisor. You can also view transactions on the Budget tab of your chapter project. For a complete bank statement, log on to Chase Online Banking.
 
-For a complete bank statement, log on to Chase Online Banking.
+Each Deposit or Expense should be reported within two days of the transaction.
 ----------------------------------------
 <% @transactions.each do |t| %>
-----------------------------------------
-<%= t['Date'] %> - <%= t['Transaction Type'].capitalize %> - <%= t['Original Description'] %> - <%= t['Amount'] %>
+<%= t['Date'] %> | <%= t['Transaction Type'].capitalize %> | <%= t['Original Description'] %> | <%= t['Amount'] %>
 <% end %>
