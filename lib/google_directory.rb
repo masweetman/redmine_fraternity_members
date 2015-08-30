@@ -1,6 +1,6 @@
 require 'transient_cache'
 
-class GoogleDirectory < ApplicationController
+class GoogleDirectory
 
 	#usage:
 	# google_directory = GoogleDirectory.new
@@ -120,35 +120,33 @@ class GoogleDirectory < ApplicationController
 	end
 
 	def update_members(groupEmailAddress, new_emails)
-		c = TransientCache.new
-		c[:c] = client
-		begin
-			unless groupEmailAddress.nil? or groupEmailAddress.empty? or new_emails.nil?
-				new_emails.delete("")
-				c[:p] = list_members(groupEmailAddress)
-				unless new_emails.sort == c[:p].sort
-					c[:d] = c[:p] - new_emails
-					c[:a] = new_emails - c[:p]
-					for d in c[:d]
-						c[:c].execute(
-							:api_method => google_directory_api.members.delete,
-							:parameters => {:groupKey => groupEmailAddress, :memberKey => d},
-							:body => nil
-							)
-					end
-					for a in c[:a]
-						c[:c].execute(
-							:api_method => google_directory_api.members.insert,
-							:parameters => {:groupKey => groupEmailAddress},
-							:body_object => {:email => a, :role => 'MEMBER'}
-							)
-					end
+		unless groupEmailAddress.nil? or groupEmailAddress.empty? or new_emails.nil?
+			c = TransientCache.new
+			c[:c] = client
+
+			new_emails.delete("")
+			c[:p] = list_members(groupEmailAddress)
+			unless new_emails.sort == c[:p].sort
+				c[:d] = c[:p] - new_emails
+				c[:a] = new_emails - c[:p]
+				for d in c[:d]
+					c[:c].execute(
+						:api_method => google_directory_api.members.delete,
+						:parameters => {:groupKey => groupEmailAddress, :memberKey => d},
+						:body => nil
+						)
+				end
+				for a in c[:a]
+					c[:c].execute(
+						:api_method => google_directory_api.members.insert,
+						:parameters => {:groupKey => groupEmailAddress},
+						:body_object => {:email => a, :role => 'MEMBER'}
+						)
 				end
 			end
-		rescue Exception => e
-			logger.error e.message + " group: " + groupEmailAddress.to_s + " emails: " + new_emails.to_s
+
+			ObjectSpace.garbage_collect
 		end
-		ObjectSpace.garbage_collect
 	end
 
 end
