@@ -1,7 +1,6 @@
-require 'application_controller'
 require 'transient_cache'
 
-class GoogleDirectory
+class GoogleDirectory < ApplicationController
 
 	#usage:
 	# google_directory = GoogleDirectory.new
