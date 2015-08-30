@@ -122,7 +122,6 @@ class GoogleDirectory
 	def update_members(groupEmailAddress, new_emails)
 		unless groupEmailAddress.nil? or groupEmailAddress.empty? or new_emails.nil?
 			c = TransientCache.new
-			c[:c] = client
 
 			new_emails.delete("")
 			c[:p] = list_members(groupEmailAddress)
@@ -130,14 +129,14 @@ class GoogleDirectory
 				c[:d] = c[:p] - new_emails
 				c[:a] = new_emails - c[:p]
 				for d in c[:d]
-					c[:c].execute(
+					client.execute(
 						:api_method => google_directory_api.members.delete,
 						:parameters => {:groupKey => groupEmailAddress, :memberKey => d},
 						:body => nil
 						)
 				end
 				for a in c[:a]
-					c[:c].execute(
+					client.execute(
 						:api_method => google_directory_api.members.insert,
 						:parameters => {:groupKey => groupEmailAddress},
 						:body_object => {:email => a, :role => 'MEMBER'}
