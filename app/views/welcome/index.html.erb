@@ -2,19 +2,12 @@
 
 <div class="splitcontentleft">
   <%= textilizable Setting.welcome_text %>
-  <% if @news.any? %>
-  <div class="news box">
-  <h3><%=l(:label_news_latest)%></h3>
-    <%= render :partial => 'news/news', :collection => @news %>
-    <%= link_to l(:label_news_view_all), :controller => 'news' %>
+  <% project = Project.find(6) %>
+  <% if project.description.present? %>
+  <div class="wiki">
+    <%= textilizable project.description %>
   </div>
   <% end %>
-  <%= call_hook(:view_welcome_index_left, :projects => @projects) %>
-<div class="box" id="user-guide">
-    <h3 class="icon22 icon22-users">Help and User Guide</h3>
-    <%= link_to 'Alpha Gamma Omega National Wiki', :controller => 'wiki', :action => 'show', :project_id => 'chapters', :id => 'wiki' %>
-</div>
-
 </div>
 
 <div class="splitcontentright">
