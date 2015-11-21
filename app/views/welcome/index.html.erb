@@ -1,13 +1,24 @@
 <h2><%= l(:label_home) %></h2>
 
 <div class="splitcontentleft">
-  <%= textilizable Setting.welcome_text %>
   <% project = Project.find(6) %>
-  <% if project.description.present? %>
-  <div class="wiki">
-    <%= textilizable project.description %>
+  <%= textilizable Setting.welcome_text %>
+  <div class="box">
+    <h3><%= link_to 'National Wiki', {:controller => 'wiki', :id => project} %></h3>
+    <ul>
+      <li><%= link_to 'Whole Armor', {:controller => 'wiki', :id => project, :page => 'Whole Armor'} %></li>
+      <li><a href="">Officer Manual - President</a></li>
+      <li><a href="">Officer Manual - Vice President</a></li>
+      <li><a href="">Officer Manual - Chaplain</a></li>
+      <li><a href="">Officer Manual - Pledgemaster</a></li>
+      <li><a href="">Officer Manual - Treasurer</a></li>
+      <li><a href="">Officer Manual - House Manager</a></li>
+      <li><a href="">Officer Manual - Secretary</a></li>
+      <li><a href="">Appointed Officer Manuals</a></li>
+      <li><a href="">Active Manual</a></li>
+      <li><a href="">Chapter Advisor Manual</a></li>
+    </ul>
   </div>
-  <% end %>
 </div>
 
 <div class="splitcontentright">
