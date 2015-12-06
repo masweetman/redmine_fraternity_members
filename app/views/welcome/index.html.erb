@@ -23,7 +23,6 @@
 </div>
 
 <div class="splitcontentright">
-    <% if @projects.any? %>
   <div class="projects box">
   <h3><%="Alpha Gamma Omega"%></h3>
   <% @home_projects = Project.visible %>
@@ -73,7 +72,6 @@
     </ul>
 
   </div>
-  <% end %>
     <%= call_hook(:view_welcome_index_right, :projects => @projects) %>
 </div>
 
