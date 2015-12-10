@@ -1,33 +1,47 @@
 /***** Budget Tables *****/
-table.budget {
-  border: none;
-  border-collapse: collapse;
-  width: 100%;
+.fraternity_members_col_3 {
+	text-align:left;
 }
 
-table.budget th a, table.budget th{
-  text-transform: uppercase;
+@media (max-width: 420px) {
+	.fraternity_members_col_1 {
+	display:none;
+	width:0;
+	height:0;
+	opacity:0;
+	visibility: collapse;
+	}
+
+	.fraternity_members_col_2 {
+	display:none;
+	width:0;
+	height:0;
+	opacity:0;
+	visibility: collapse;
+	}
+
+	.fraternity_members_col_4 {
+	display:none;
+	width:0;
+	height:0;
+	opacity:0;
+	visibility: collapse;
+	}
+
+	.fraternity_members_col_7 {
+	display:none;
+	width:0;
+	height:0;
+	opacity:0;
+	visibility: collapse;
+	}
+
+	.fraternity_members_col_8 {
+	display:none;
+	width:0;
+	height:0;
+	opacity:0;
+	visibility: collapse;
+	}
 }
 
-table.budget th, table.budget td {
-  padding: 2px 5px 2px 5px;
-  width: 56px;
-}
-table.budget td:nth-child(n) {
-  text-align: right;
-}
-table.budget th:first-child {
-  min-width: 160px;
-}
-table.budget td:first-child {
-  min-width: 160px;
-  text-align: left;
-}
-
-table.budget th {background: none; white-space:nowrap; border-top: 1px solid #e6eaef; }
-table.budget tr {
-  border-bottom: 1px solid #e6eaef !important;
-}
-
-table.budget tbody tr:hover { background-color: #f8f8f2; }
-table.budget tbody tr.group:hover { background-color:inherit; }

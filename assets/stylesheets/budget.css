@@ -31,3 +31,14 @@ table.budget tr {
 
 table.budget tbody tr:hover { background-color: #f8f8f2; }
 table.budget tbody tr.group:hover { background-color:inherit; }
+
+@media (max-width: 420px) {
+    .budget_mobile {
+        display:none;
+        width:0;
+        height:0;
+        opacity:0;
+        visibility: collapse;
+    }
+}
+
