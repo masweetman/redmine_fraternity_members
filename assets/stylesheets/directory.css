@@ -1,8 +1,4 @@
 /***** Budget Tables *****/
-.fraternity_members_col_3 {
-	text-align:left;
-}
-
 @media (max-width: 420px) {
 	.fraternity_members_col_1 {
 	display:none;
