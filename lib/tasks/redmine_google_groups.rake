@@ -199,7 +199,7 @@ namespace :redmine do
             national['All Alumni Leaders'] << Setting.plugin_redmine_fraternity_members['ao_email_addresses'][a.name] unless Setting.plugin_redmine_fraternity_members['ao_email_addresses'][a.name].empty?
         end
 
-        alumni_orgs['Beta Housing Board'] << Setting.plugin_redmine_fraternity_members['beta_email_addresses']['Beta Exec']
+        alumni_orgs['AGO Beta Alumni Housing Board'] << Setting.plugin_redmine_fraternity_members['beta_email_addresses']['Beta Exec']
 
         national['Everyone'] = [Setting.plugin_redmine_fraternity_members['email_addresses']['All Actives'], Setting.plugin_redmine_fraternity_members['email_addresses']['All Alumni Leaders']]
 
