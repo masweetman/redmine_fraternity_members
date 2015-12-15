@@ -26,7 +26,6 @@
 <% settings['email_addresses']['All Social Media Managers'] = '' if settings['email_addresses']['All Social Media Managers'].nil? %>
 <% settings['email_addresses']['All Chapter Execs'] = '' if settings['email_addresses']['All Chapter Execs'].nil? %>
 <% settings['email_addresses']['All Actives'] = '' if settings['email_addresses']['All Actives'].nil? %>
-<% settings['email_addresses']['Everyone'] = '' if settings['email_addresses']['Everyone'].nil? %>
 <% settings['email_addresses']['All Alumni Chapters'] = '' if settings['email_addresses']['All Alumni Chapters'].nil? %>
 
 <% chapters = Project.where(:parent_id => 6).sort %>

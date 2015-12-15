@@ -201,8 +201,6 @@ namespace :redmine do
 
         alumni_orgs['AGO Beta Alumni Housing Board'] << Setting.plugin_redmine_fraternity_members['beta_email_addresses']['Beta Exec']
 
-        national['Everyone'] = [Setting.plugin_redmine_fraternity_members['email_addresses']['All Actives'], Setting.plugin_redmine_fraternity_members['email_addresses']['All Alumni Leaders']]
-
 		#add new google groups
 		google_directory = GoogleDirectory.new
 		google_directory.cache_directory_api_file
@@ -331,11 +329,6 @@ namespace :redmine do
         #update group
         group = Setting.plugin_redmine_fraternity_members['email_addresses']['All Actives']
         emails = national['All Actives']
-        google_directory.update_members(group, emails)
-
-        #update group
-        group = Setting.plugin_redmine_fraternity_members['email_addresses']['Everyone']
-        emails = national['Everyone']
         google_directory.update_members(group, emails)
 
     	#update chapter email groups

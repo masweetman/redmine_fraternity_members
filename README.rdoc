@@ -1,15 +1,7 @@
-Manage members.
-
 Installation:
 Clone into redmine/plugins directory, then run the following commands:
 
 bundle install
 rake redmine:plugins:migrate RAILS_ENV=production
 
-Features:
-- Syncs user database with Member Directory
-- Enables National News to be sent to all actives
-- Displays pledge names
-- Enables Shingles to be printed from Shingle Order issues.
-
-Enter the approprite details on the plugin settings page (Admin -> Plugins -> Configure)
+Configure the plugin settings: Administration -> Plugins -> Configure
