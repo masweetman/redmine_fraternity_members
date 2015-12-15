@@ -1,7 +1,8 @@
 Installation:
+
 Clone into redmine/plugins directory, then run the following commands:
 
-bundle install
-rake redmine:plugins:migrate RAILS_ENV=production
+- bundle install
+- rake redmine:plugins:migrate RAILS_ENV=production
 
 Configure the plugin settings: Administration -> Plugins -> Configure
