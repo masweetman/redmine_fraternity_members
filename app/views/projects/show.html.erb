@@ -33,7 +33,11 @@
       <%= @subprojects.collect{|p| link_to p, project_path(p)}.join(", ").html_safe %></li>
   <% end %>
   <% render_custom_field_values(@project) do |custom_field, formatted| %>
-    <li><span class="label"><%= custom_field.name %>:</span> <%= formatted %></li>
+    <% if custom_field.name == 'Email' %>
+      <li><span class="label"><%= custom_field.name %>:</span> <%= mail_to formatted %></li>
+    <% else %>
+      <li><span class="label"><%= custom_field.name %>:</span> <%= formatted %></li>
+    <% end %>
   <% end %>
   </ul>
   <% end %>
