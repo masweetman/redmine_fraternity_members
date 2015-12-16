@@ -2,9 +2,16 @@
 
 <div class="splitcontentleft">
   <% project = Project.find(6) %>
+  <% page = project.wiki.find_page('Wiki') %>
+  <% content = page.content %>
   <%= textilizable Setting.welcome_text %>
+
   <div class="box">
-    <% content = Project.find(6).wiki.find_page('Wiki').content %>
+    <% if User.current.member_of?(project) %>
+    <div class="contextual">
+      <%= link_to(l(:button_edit), {:action => 'edit', :controller => 'wiki', :project_id => project.identifier, :id => page.title}, :class => 'icon icon-edit', :accesskey => accesskey(:edit)) %>
+    </div>
+    <% end %>
     <%= render(:partial => "wiki/content", :locals => {:content => content}) %>
   </div>
 </div>
