@@ -7,7 +7,7 @@
   <%= textilizable Setting.welcome_text %>
 
   <div class="box">
-    <% if User.current.member_of?(project) %>
+    <% if User.current.allowed_to?({:controller => 'wiki', :action => 'edit'}, project) %>
     <div class="contextual">
       <%= link_to(l(:button_edit), {:action => 'edit', :controller => 'wiki', :project_id => project.identifier, :id => page.title}, :class => 'icon icon-edit', :accesskey => accesskey(:edit)) %>
     </div>
