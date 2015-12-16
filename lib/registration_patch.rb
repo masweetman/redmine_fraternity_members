@@ -12,7 +12,7 @@ module RegistrationPatch
 
 	module InstanceMethods
 		def register_manually_by_administrator_with_auto(user)
-			#user.pref.no_self_notified = true
+			user.pref.no_self_notified = true
 			auto_register = false
 		    if user.custom_field_value(54).downcase == Setting.plugin_redmine_fraternity_members[:fraternity_password].downcase
 				member = FraternityMember.where(chapter: user.custom_field_value(2), active_number: user.custom_field_value(3)).first
