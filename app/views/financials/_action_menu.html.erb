@@ -1,9 +1,9 @@
 <div class="contextual">
 
 <% if params[:date].present? %>
-  <%= link_to 'Export to CSV', { :controller => 'budget_actuals', :action => 'export', :params => params[:date] } %> ||
+  <%= link_to 'Export to CSV', { :controller => 'financials', :action => 'export', :params => params[:date] } %> ||
 <% else %>
-  <%= link_to 'Export to CSV', { :controller => 'budget_actuals', :action => 'export' } %> ||
+  <%= link_to 'Export to CSV', { :controller => 'financials', :action => 'export' } %> ||
 <% end %>
 
 <% if @latestBudget.nil? then -%>

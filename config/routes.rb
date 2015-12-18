@@ -10,9 +10,9 @@ get '/shingles_pdf', :to => 'shingle#shingles_export_pdf'
 get '/issues/:id/shingle_html', :to => 'shingle#shingle_export_html'
 get '/issues/:id/shingle_pdf', :to => 'shingle#shingle_export_pdf'
 
-get '/projects/:id/budget_actuals', :to => 'budget_actuals#index'
-get '/projects/:id/budget_actuals/export', :to => 'budget_actuals#export'
-get '/projects/:id/recent_transactions', :to => 'budget_actuals#recent_transactions'
+get '/projects/:id/financials', :to => 'financials#index'
+get '/projects/:id/financials/export', :to => 'financials#export'
+get '/projects/:id/recent_transactions', :to => 'financials#recent_transactions'
 
 get '/projects/:id/deposits', :to => 'deposits#index'
 

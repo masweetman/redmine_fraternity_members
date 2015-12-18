@@ -28,11 +28,11 @@ Redmine::Plugin.register :redmine_fraternity_members do
 
   permission :export_member_directory, :fraternity_members => [:export, :export_google_contacts]
   permission :edit_fraternity_members, :fraternity_members => [:edit, :update]
-  permission :view_budget_actuals, { :budget_actuals => :index }
+  permission :view_financials, { :financials => :index }
 
   menu :top_menu, :fraternity_members, directory_path, :caption => 'Member Directory'
   menu :top_menu, :email_groups, { :controller => 'email_groups', :action => 'index' }, :caption => 'Email Groups'
   menu :top_menu, :wiki, { :controller => 'wiki', :action => 'show', :project_id => 'chapters', :id => 'wiki' }, :caption => 'National Wiki'
-  menu :project_menu, :budget_actuals, { :controller => 'budget_actuals', :action => 'index' }, :caption => 'Budget', :after => :activity
+  menu :project_menu, :financials, { :controller => 'financials', :action => 'index' }, :caption => 'Financials', :after => :activity
 
 end

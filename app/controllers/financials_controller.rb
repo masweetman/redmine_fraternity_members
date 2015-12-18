@@ -1,4 +1,4 @@
-class BudgetActualsController < ApplicationController
+class FinancialsController < ApplicationController
 
 	#unloadable
 

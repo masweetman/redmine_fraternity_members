@@ -8,7 +8,7 @@
         <strong>Chase Bank:</strong>
       </td>
       <td>
-        <%= link_to 'View Recent Transactions', :controller => 'budget_actuals', :action => 'recent_transactions' %>
+        <%= link_to 'View Recent Transactions', :controller => 'financials', :action => 'recent_transactions' %>
       </td>
     </tr>
     <tr>
@@ -24,7 +24,7 @@
 <% end %>
 
 
-<%= form_tag({:controller => 'budget_actuals', :action => 'index'}, :method => :get) do %>
+<%= form_tag({:controller => 'financials', :action => 'index'}, :method => :get) do %>
 <fieldset>
 Fiscal Year: <%= select_date(@FYStart, :discard_month => true) %>
 <%= submit_tag l(:button_apply), :class => "small", :search => nil %>
