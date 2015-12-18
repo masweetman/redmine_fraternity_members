@@ -191,6 +191,7 @@ class BudgetActualsController < ApplicationController
   def recent_transactions
     begin
         @project = Project.find(params[:id])
+	@latestBudget = @project.issues.where(:tracker_id => 19).last
 
         account_name = @project.name + ' Account'
 

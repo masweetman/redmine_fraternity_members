@@ -1,18 +1,43 @@
 <h1>Editing fraternity_member</h1>
  
-<%= labelled_form_for :fraternity_member, @fraternity_member, 
-                             :url => { :action => 'update', :id => @fraternity_member }, 
-                             :html => { :multipart => true, :method => :put, :id => "fraternity_member_form" } do |f|  %>
+<%= form_for :fraternity_member, :url => { :action => 'update', :id => @fraternity_member }, method: :patch do |f| %>
 
-  <p>
-    <%= f.text_field :firstname %><br>
-    <%= f.text_field :middlename %><br>
-    <%= f.text_field :lastname %><br>
-    <%= f.text_field :mail %><br>
-    <%= f.text_field :chapter %><br>
-    <%= f.text_field :active_number %><br>
-    <%= f.text_field :pledge_name %><br>
-  </p>
+<table>
+  <tr>
+    <td><%= f.label 'First name:' %></td>
+    <td><%= f.text_field :firstname %></td>
+  </tr>
+  
+  <tr>
+    <td><%= f.label 'Middle name:' %></td>
+    <td><%= f.text_field :middlename %></td>
+  </tr>
+  
+  <tr>
+    <td><%= f.label 'Last name:' %></td>
+    <td><%= f.text_field :lastname %></td>
+  </tr>
+  
+  <tr>
+    <td><%= f.label 'Email:' %></td>
+    <td><%= f.text_field :mail %></td>
+  </tr>
+  
+  <tr>
+    <td><%= f.label 'Chapter:' %></td>
+    <td><%= f.text_field :chapter %></td>
+  </tr>
+  
+  <tr>
+    <td><%= f.label 'Active number:' %></td>
+    <td><%= f.text_field :active_number %></td>
+  </tr>
+
+  <tr>
+    <td><%= f.label 'Pledge name:' %></td>
+    <td><%= f.text_field :pledge_name %></td>
+  </tr>
+</table>
  
   <p>
     <%= f.submit %>

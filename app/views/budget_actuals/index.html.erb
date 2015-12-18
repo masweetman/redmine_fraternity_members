@@ -1,20 +1,8 @@
-<p>
-<% if @latestBudget.nil? then -%>
-  (No current budget available) | 
-<% else -%>
-  <%= link_to 'View Latest Budget', :controller => 'issues', :action => 'show', :id => @latestBudget.id %> | 
-<% end -%>
-<%= link_to 'Upload New Budget', :controller => 'issues', :action => 'new', :project_id => @project.identifier, :tracker_id => 19 %> | 
-<%= link_to 'Download the Budget Template', :controller => 'wiki', :action => 'show', :project_id => Project.find(6), :id => 'Downloads' %>
-</p>
-<p>
-<%= link_to 'List All Deposits', :controller => 'deposits', :action => 'index' %> |
-<%= link_to 'Report a New Deposit', :controller => 'issues', :action => 'new', :project_id => @project.identifier, :tracker_id => 26 %> | 
-<%= link_to 'Report a New Expense', :controller => 'issues', :action => 'new', :project_id => @project.identifier, :tracker_id => 22 %>
-</p>
+<%= render :partial => 'action_menu' %>
+
 <% if @project.parent_id == 6 %>
 <p>
-  <table align="center" class="list" style="width: 300px !important;">
+  <table class="list" style="width: 300px !important;">
     <tr>
       <td>
         <strong>Chase Bank:</strong>
@@ -186,13 +174,7 @@ Fiscal Year: <%= select_date(@FYStart, :discard_month => true) %>
 
 </p>
 
-<p align="right">
-  <% if params[:date].present? %>
-    <%= link_to 'Export Actuals to CSV', :controller => 'budget_actuals', :action => 'export', :params => params[:date] %>
-  <% else %>
-    <%= link_to 'Export Actuals to CSV', :controller => 'budget_actuals', :action => 'export' %>
-  <% end %>
-</p>
+<%= render :partial => 'action_menu' %>
 
 <% content_for :header_tags do %>
     <%= stylesheet_link_tag 'budget', :plugin => 'redmine_fraternity_members' %>
