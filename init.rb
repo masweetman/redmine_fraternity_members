@@ -28,7 +28,10 @@ Redmine::Plugin.register :redmine_fraternity_members do
 
   permission :export_member_directory, :fraternity_members => [:export, :export_google_contacts]
   permission :edit_fraternity_members, :fraternity_members => [:edit, :update]
-  permission :view_financials, { :financials => :index }
+
+  project_module :financials do
+    permission :view_financials, { :financials => :index }
+  end
 
   menu :top_menu, :fraternity_members, directory_path, :caption => 'Member Directory'
   menu :top_menu, :email_groups, { :controller => 'email_groups', :action => 'index' }, :caption => 'Email Groups'
