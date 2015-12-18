@@ -1,22 +1,21 @@
 <div class="contextual">
 
 <% if params[:date].present? %>
-  <%= link_to 'Export to CSV', :controller => 'budget_actuals', :action => 'export', :params => params[:date], :class => 'icon' %> |
+  <%= link_to 'Export to CSV', { :controller => 'budget_actuals', :action => 'export', :params => params[:date] } %> ||
 <% else %>
-  <%= link_to 'Export to CSV', :controller => 'budget_actuals', :action => 'export', :class => 'icon'  %> |
+  <%= link_to 'Export to CSV', { :controller => 'budget_actuals', :action => 'export' } %> ||
 <% end %>
-
-<%= link_to 'New Budget', :controller => 'issues', :action => 'new', :project_id => @project.identifier, :tracker_id => 19, :class => 'icon' %> |
-<%= link_to 'New Deposit', :controller => 'issues', :action => 'new', :project_id => @project.identifier, :tracker_id => 26, :class => 'icon' %> |
-<%= link_to 'New Expense', :controller => 'issues', :action => 'new', :project_id => @project.identifier, :tracker_id => 22, :class => 'icon' %> |
 
 <% if @latestBudget.nil? then -%>
   (No budget) |
 <% else -%>
-  <%= link_to 'View Budget', :controller => 'issues', :action => 'show', :id => @latestBudget.id, :class => 'icon' %> |
+  <%= link_to 'View Budget', { :controller => 'issues', :action => 'show', :id => @latestBudget.id } %> |
 <% end -%>
 
-<%= link_to 'View Deposits', :controller => 'deposits', :action => 'index', :class => 'icon' %>
+<%= link_to 'New Budget', { :controller => 'issues', :action => 'new', :project_id => @project.identifier, :tracker_id => 19 } %> ||
+<%= link_to 'View Deposits', { :controller => 'deposits', :action => 'index' } %> |
+<%= link_to 'New Deposit', { :controller => 'issues', :action => 'new', :project_id => @project.identifier, :tracker_id => 26 } %> ||
+<%= link_to 'New Expense', { :controller => 'issues', :action => 'new', :project_id => @project.identifier, :tracker_id => 22 } %>
 
 </div>
 
