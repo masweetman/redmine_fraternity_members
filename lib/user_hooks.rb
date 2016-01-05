@@ -10,6 +10,8 @@ module NewUserActionsPlugin
         end
       end
 
+      phone = number_to_phone(user.custom_field_value(18).gsub(/\D/, '').to_i, area_code: true)
+      user.custom_field_values=({'18' => phone.to_s})
       user.new_fraternity_member
       user.update_fraternity_member
     end
