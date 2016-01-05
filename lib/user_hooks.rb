@@ -9,9 +9,11 @@ module NewUserActionsPlugin
           Project.find_by_name(user.custom_field_value(2)).members << m
         end
       end
-
-      phone = number_to_phone(user.custom_field_value(18).gsub(/\D/, '').to_i, area_code: true)
-      user.custom_field_values=({'18' => phone.to_s})
+      
+      unless user.custom_field_value(18).empty?
+        phone = number_to_phone(user.custom_field_value(18).gsub(/\D/, '').to_i, area_code: true)
+        user.custom_field_values=({'18' => phone.to_s})
+      end
       user.new_fraternity_member
       user.update_fraternity_member
     end

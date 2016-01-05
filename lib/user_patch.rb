@@ -50,7 +50,7 @@ module UserPatch
 				member.active_number = custom_field_value(3).to_i
 				member.pledge_name = custom_field_value(1)
 				member.big_bro = custom_field_value(55)
-				member.phone = custom_field_value(18)
+				member.phone = custom_field_value(18) 
 				member.address = custom_field_value(4)
 				member.graduation_year = custom_field_value(56).to_i
 				member.bio = custom_field_value(9)
