@@ -139,6 +139,12 @@ class FraternityMembersController < ApplicationController
       :filename => "google_contacts.csv")
   end
 
+  def join_group
+    m = Member.new(:user => User.find(params[:user]), :roles => [Role.find(params[:role_id])])
+	project = Project.find(params[:project])
+    project.members << m
+  end
+  
   private
 
   def find_project
@@ -151,12 +157,6 @@ class FraternityMembersController < ApplicationController
 
   def fraternity_member_params
     params.require(:fraternity_member).permit(:chapter)
-  end
-  
-  def join_group
-    m = Member.new(:user => User.find(params[:user]), :roles => [Role.find(params[:role_id])])
-	project = Project.find(params[:project])
-    project.members << m
   end
 
 end
