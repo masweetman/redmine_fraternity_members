@@ -144,7 +144,7 @@ class FraternityMembersController < ApplicationController
 	project = Project.find(params[:project])
     project.members << m
 	
-	redirect_to project_path(project)
+	redirect_to root
   end
   
   private
