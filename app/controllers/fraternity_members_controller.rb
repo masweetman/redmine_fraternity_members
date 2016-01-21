@@ -152,5 +152,10 @@ class FraternityMembersController < ApplicationController
   def fraternity_member_params
     params.require(:fraternity_member).permit(:chapter)
   end
+  
+  def join_group
+    m = Member.new(:user => user, :roles => [Role.find(role_id)])
+    project.members << m
+  end
 
 end
