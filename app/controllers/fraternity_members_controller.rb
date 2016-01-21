@@ -141,10 +141,10 @@ class FraternityMembersController < ApplicationController
 
   def join_group
     m = Member.new(:user => User.find(params[:user]), :roles => [Role.find(params[:role_id])])
-	project = Project.find(params[:project])
+    project = Project.find(params[:project])
     project.members << m
 	
-	redirect_to redmine_root
+    redirect_to controller: 'projects', action: 'show', id: project
   end
   
   private
