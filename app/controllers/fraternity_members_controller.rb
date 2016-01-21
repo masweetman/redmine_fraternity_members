@@ -143,6 +143,8 @@ class FraternityMembersController < ApplicationController
     m = Member.new(:user => User.find(params[:user]), :roles => [Role.find(params[:role_id])])
 	project = Project.find(params[:project])
     project.members << m
+	
+	redirect_to project_path(project)
   end
   
   private

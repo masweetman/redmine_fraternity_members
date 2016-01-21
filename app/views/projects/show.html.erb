@@ -21,7 +21,9 @@
 
   <% if @project.parent_id == 50 %>
     <% unless User.current.member_of? @project %>
-      <%= link_to 'Click to Join this group!', {:controller => 'fraternity_members', :action => 'join_group', :project => @project, :user => User.current, :role_id => 23}, :remote => true %>
+	  <p>
+        <%= link_to 'Click to Join this group!', {:controller => 'fraternity_members', :action => 'join_group', :project => @project, :user => User.current, :role_id => 23}, :remote => true %>
+      </p>
     <% end %>
   <% end %>
 
@@ -104,7 +106,9 @@
 
   <% if @project.parent_id == 50 %>
     <% unless User.current.member_of? @project %>
-      <%= link_to 'Click to Join this group!', {:controller => 'fraternity_members', :action => 'join_group', :project => @project, :user => User.current, :role_id => 23}, :remote => true %>
+	  <p>
+        <%= link_to 'Click to Join this group!', {:controller => 'fraternity_members', :action => 'join_group', :project => @project, :user => User.current, :role_id => 23}, :remote => true %>
+      </p>
     <% end %>
   <% end %>
 
