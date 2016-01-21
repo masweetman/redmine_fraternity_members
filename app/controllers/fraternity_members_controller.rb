@@ -154,7 +154,8 @@ class FraternityMembersController < ApplicationController
   end
   
   def join_group
-    m = Member.new(:user => user, :roles => [Role.find(role_id)])
+    m = Member.new(:user => User.find(params[:user]), :roles => [Role.find(params[:role_id])])
+	project = Project.find(params[:project])
     project.members << m
   end
 
