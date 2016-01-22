@@ -43,6 +43,9 @@
     <% for home_project in @home_projects.where(parent_id: 50).sort_by{|p| p.name.downcase} %>
       <li>
       <%= link_to_project home_project %>
+      <% unless User.current.member_of? home_project %>
+        - <%= link_to 'Join', {:controller => 'fraternity_members', :action => 'join_group', :project => home_project, :user => User.current, :role_id => 23} %>
+      <% end %>
       </li>
     <% end %>
     </ul>
