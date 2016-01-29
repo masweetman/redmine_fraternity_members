@@ -1,5 +1,3 @@
-require 'transient_cache'
-
 class GoogleDirectory
 
 	#usage:
@@ -121,21 +119,20 @@ class GoogleDirectory
 
 	def update_members(groupEmailAddress, new_emails)
 		unless groupEmailAddress.nil? or groupEmailAddress.empty? or new_emails.nil?
-			c = TransientCache.new
 
 			new_emails.delete("")
-			c[:p] = list_members(groupEmailAddress)
-			unless new_emails.sort == c[:p].sort
-				c[:d] = c[:p] - new_emails
-				c[:a] = new_emails - c[:p]
-				for d in c[:d]
+			current_emails = list_members(groupEmailAddress)
+			unless new_emails.sort == current_emails.sort
+				delete_emails = current_emails - new_emails
+				add_emails = new_emails - current_emails
+				for d in delete_emails
 					client.execute(
 						:api_method => google_directory_api.members.delete,
 						:parameters => {:groupKey => groupEmailAddress, :memberKey => d},
 						:body => nil
 						)
 				end
-				for a in c[:a]
+				for a in add_emails
 					client.execute(
 						:api_method => google_directory_api.members.insert,
 						:parameters => {:groupKey => groupEmailAddress},
@@ -144,7 +141,6 @@ class GoogleDirectory
 				end
 			end
 
-			ObjectSpace.garbage_collect
 		end
 	end
 
