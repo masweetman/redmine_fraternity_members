@@ -20,3 +20,18 @@ get '/projects/:id/deposits', :to => 'deposits#index'
 
 get 'email_groups', :to => 'email_groups#index'
 get 'email_groups/:group', :to => 'email_groups#show'
+get 'email-groups', :to => 'email_groups#index'
+get 'email-groups/:group', :to => 'email_groups#show'
+
+
+get '/budgets', :to => 'shortcuts#budgets'
+get '/chapter-reports', :to => 'shortcuts#chapter_reports'
+get '/deposits', :to => 'shortcuts#deposits'
+get '/expenses', :to => 'shortcuts#expenses'
+get '/minutes', :to => 'shortcuts#minutes'
+get '/pin-orders', :to => 'shortcuts#pin_orders'
+get '/shingle-orders', :to => 'shortcuts#shingle_orders'
+get '/sofs', :to => 'shortcuts#sofs'
+get '/officer-sofs', :to => 'shortcuts#officer_sofs'
+get '/dues', :to => 'shortcuts#dues'
+
