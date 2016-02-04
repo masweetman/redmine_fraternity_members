@@ -92,6 +92,77 @@ class FinancialsController < ApplicationController
 		end
 		@annualExpenses = @annualExpenses.sort
 	end
+  
+  def account
+    @project = Project.find(params[:id])
+    @account = params[:account]
+
+    if Date.today.month >= 7
+        startDate = Date.new(Date.today.year, 7, 1)
+        endDate = Date.new(Date.today.year + 1, 6, 30)
+        @currentRelativeMonth = Date.today.month - 7
+    else
+        startDate = Date.new(Date.today.year - 1, 7, 1)
+        endDate = Date.new(Date.today.year, 6, 30)
+        @currentRelativeMonth = Date.today.month - 7 + 12
+    end
+
+    if params[:date].present?
+        startDate = Date.new(params[:date][:year].to_i, 7, 1)
+        endDate = Date.new(params[:date][:year].to_i + 1, 6, 30)
+        @currentRelativeMonth = 12
+    end
+
+    @FYStart = startDate
+    @latestBudget = @project.issues.where(:tracker_id => 19).last
+    @dates = []
+    @dateStrings = []
+    for i in 0..11
+        @dates[i] = startDate + i.month
+        @dateStrings[i] = @dates[i].strftime('%b %y')
+    end
+
+    deposits = @project.issues.where('tracker_id = ? AND created_on > ? AND created_on < ?', 26, startDate - 1.month, endDate + 1.month)
+    account_deposits = deposits.joins(:custom_values).where("custom_values.custom_field_id = 85 AND custom_values.value = ?", @account)
+    @annual_account_deposits = {}
+
+    for a in account_deposits
+        for i in 0..11
+            if Date.parse(a.custom_field_value(105)).month == @dates[i].month &&
+               Date.parse(a.custom_field_value(105)).year == @dates[i].year
+                if @annual_account_deposits['Dues'].nil?
+                    @annual_account_deposits['Dues'] = []
+                end
+                @annual_account_deposits['Dues'][i] = @annual_account_deposits['Dues'][i].to_f + a.custom_field_value(88).to_f
+                @annual_account_deposits['Dues'][12] = @annual_account_deposits['Dues'][12].to_f + a.custom_field_value(88).to_f
+
+                if @annual_account_deposits['Rent'].nil?
+                    @annual_account_deposits['Rent'] = []
+                end
+                @annual_account_deposits['Rent'][i] = @annual_account_deposits['Rent'][i].to_f + a.custom_field_value(89).to_f
+                @annual_account_deposits['Rent'][12] = @annual_account_deposits['Rent'][12].to_f + a.custom_field_value(89).to_f
+
+                if @annual_account_deposits['Security Deposit'].nil?
+                    @annual_account_deposits['Security Deposit'] = []
+                end
+                @annual_account_deposits['Security Deposit'][i] = @annual_account_deposits['Security Deposit'][i].to_f + a.custom_field_value(120).to_f
+                @annual_account_deposits['Security Deposit'][12] = @annual_account_deposits['Security Deposit'][12].to_f + a.custom_field_value(120).to_f
+
+                if @annual_account_deposits['Fines'].nil?
+                    @annual_account_deposits['Fines'] = []
+                end
+                @annual_account_deposits['Fines'][i] = @annual_account_deposits['Fines'][i].to_f + a.custom_field_value(91).to_f
+                @annual_account_deposits['Fines'][12] = @annual_account_deposits['Fines'][12].to_f + a.custom_field_value(91).to_f
+
+                if @annual_account_deposits['Other'].nil?
+                    @annual_account_deposits['Other'] = []
+                end
+                @annual_account_deposits['Other'][i] = @annual_account_deposits['Other'][i].to_f + a.custom_field_value(90).to_f
+                @annual_account_deposits['Other'][12] = @annual_account_deposits['Other'][12].to_f + a.custom_field_value(90).to_f
+            end
+        end
+    end
+  end
 
   def export
   	index

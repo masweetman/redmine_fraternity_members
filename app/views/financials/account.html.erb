@@ -1,0 +1,51 @@
+<%= render :partial => 'action_menu' %>
+<% totalRevenue = [] %>
+<h1><%= @account %></h1>
+
+<p>
+  List all deposits for <%= link_to_project_deposit_issues_by_account(@project, @account, '') %>
+</p>
+
+<table class="budget">
+  <thead><tr>
+  <th>Account</th>
+  <% for i in 0..11 -%>
+    <th class="<%= 'budget_mobile' unless i == @currentRelativeMonth %>">
+      <%= @dateStrings[i] %>
+    </th>
+  <% end -%>
+  <th><center>Total</center></th>
+  </tr></thead>
+  <tbody>
+<% for c in @annual_account_deposits -%>
+  <tr class="<%= cycle("odd", "even") %>">
+    <td><%= c[0] %></td>
+
+    <% for i in 0..12 -%>
+      <td class="<%= 'budget_mobile' unless i == @currentRelativeMonth or i == 12 %>">
+        <% if c[1][i].to_f > 0 %>
+          <%= number_to_currency(c[1][i].to_f.round, :precision => 0, :format => '%n', negative_format: '(%n)') %>
+        <% else %>
+          -
+        <% end %>
+      </td>
+      <% totalRevenue[i] = totalRevenue[i].to_f + c[1][i].to_f -%>
+    <% end -%>
+  </tr>
+<% end -%>
+  <tr class="<%= cycle("odd", "even") %>">
+    <td><strong>Total</strong></td>
+      <% for i in 0..12 -%>
+        <td class="<%= 'budget_mobile' unless i == @currentRelativeMonth or i == 12 %>">
+          <strong><%= number_to_currency(totalRevenue[i].to_f.round, :precision => 0, :format => '%u%n', negative_format: '(%u%n)') %></strong>
+        </td>
+      <% end -%>
+  </tr>
+  </tbody>
+</table>
+
+<%= render :partial => 'action_menu' %>
+
+<% content_for :header_tags do %>
+    <%= stylesheet_link_tag 'budget', :plugin => 'redmine_fraternity_members' %>
+<% end %>

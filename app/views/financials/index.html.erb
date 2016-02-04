@@ -56,7 +56,7 @@ Fiscal Year: <%= select_date(@FYStart, :discard_month => true) %>
   <tr class="<%= cycle("odd", "even") %>">
 
     <td>
-      <%= link_to_project_deposit_issues_by_account(@project, c[0], c[1][13]) %>
+      <%= link_to c[0], {:controller => 'financials', :action => 'account', :account => c[0]} %>
     </td>
 
     <% for i in 0..12 -%>
