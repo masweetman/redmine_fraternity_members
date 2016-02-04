@@ -1,7 +1,9 @@
 <%= render :partial => 'action_menu' %>
 <% totalRevenue = [] %>
 <h1><%= @account %></h1>
-
+<p>
+  <strong>Member Type:</strong> <%= @member_type %>
+</p>
 <p>
   List all payments received from <%= link_to_project_deposit_issues_by_account(@project, @account, '') %>
 </p>

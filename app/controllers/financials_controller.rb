@@ -124,6 +124,7 @@ class FinancialsController < ApplicationController
 
     deposits = @project.issues.where('tracker_id = ? AND created_on > ? AND created_on < ?', 26, startDate - 1.month, endDate + 1.month)
     account_deposits = deposits.joins(:custom_values).where("custom_values.custom_field_id = 85 AND custom_values.value = ?", @account)
+    @member_type = account_deposits.last.custom_field_value(86)
     @annual_account_deposits = {}
 
     for a in account_deposits
