@@ -29,15 +29,6 @@
     <% end %>
     </ul>
 
-  <%= link_to_project @home_projects.find(36) %>
-    <ul>
-    <% for home_project in @home_projects.where(parent_id: 36).sort_by{|p| p.name.downcase} %>
-      <li>
-      <%= link_to_project home_project %>
-      </li>
-    <% end %>
-    </ul>
-  
   <%= link_to_project @home_projects.find(50) %>
     <ul>
     <% for home_project in @home_projects.where(parent_id: 50).sort_by{|p| p.name.downcase} %>
@@ -50,18 +41,9 @@
     <% end %>
     </ul>
 
-  <%= link_to_project @home_projects.find(29) %>
+  <%= link_to_project @home_projects.find(36) %>
     <ul>
-    <% for home_project in @home_projects.where(parent_id: 29).sort_by{|p| p.name.downcase} %>
-      <li>
-      <%= link_to_project home_project %>
-      </li>
-    <% end %>
-    </ul>
-
-  <%= link_to_project @home_projects.find(1) %>
-    <ul>
-    <% for home_project in @home_projects.where(parent_id: 1).sort_by{|p| p.name.downcase} %>
+    <% for home_project in @home_projects.where(parent_id: 36).sort_by{|p| p.name.downcase} %>
       <li>
       <%= link_to_project home_project %>
       </li>
