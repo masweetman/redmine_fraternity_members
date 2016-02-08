@@ -33,6 +33,15 @@ class FraternityMembersController < ApplicationController
       scope = scope.where(query)
     end
 
+    if params[:status].present?
+      if params[:status] == 'Actives'
+        scope = scope.where(:active => true)
+      end
+      if params[:status] == 'Alumni'
+        scope = scope.where(:active => false)
+      end
+    end
+
     @member_count = scope.count(:all)
     @member_pages = Paginator.new @member_count, 100, params['page']
     @offset ||= @member_pages.offset

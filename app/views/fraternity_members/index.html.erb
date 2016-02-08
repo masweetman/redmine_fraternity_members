@@ -5,16 +5,50 @@
 <%= form_tag(directory_path, :method => :get) do %>
 <fieldset>
 <% chapters = [""] + FraternityMember.all.map(&:chapter).uniq.sort -%>
-Chapter:
-<%= select_tag('chapter', options_for_select(chapters, params[:chapter]), :onchange => params[:chapter]) %>
-<label for='search'><%= 'Search:' %></label>
-<%= text_field_tag 'search', params[:search], :size => 23 %>
-<label for='zip'><%= 'Near Zip:' %></label>
-<%= text_field_tag 'zip', params[:zip], :size => 5 %>
-<label for='dist'><%= 'Distance (Mi):' %></label>
-<%= text_field_tag 'dist', params[:dist], :size => 3 %>
-<%= submit_tag l(:button_apply), :class => "small", :search => nil %>
-<%= link_to l(:button_clear), directory_path, :class => 'icon icon-reload' %>
+<table>
+  <tr>
+    <td>
+      Chapter:
+    </td>
+    <td>
+      <%= select_tag('chapter', options_for_select(chapters, params[:chapter]), :onchange => params[:chapter]) %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Search:
+    </td>
+    <td>
+      <%= text_field_tag 'search', params[:search], :size => 23 %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Near Zip:
+    </td>
+    <td>
+      <%= text_field_tag 'zip', params[:zip], :size => 5 %>
+      <label for='dist'><%= 'Distance:' %></label>
+      <%= text_field_tag 'dist', params[:dist], :size => 3 %> mi
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Status:
+    </td>
+    <td>
+      <%= select_tag('status', options_for_select(['','Actives','Alumni'], params[:status]), :onchange => params[:status]) %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <%= submit_tag l(:button_apply), :class => "small", :search => nil %>
+    </td>
+    <td>
+      <%= link_to l(:button_clear), directory_path, :class => 'icon icon-reload' %>
+    </td>
+  </tr>
+</table>
 </fieldset>
 <% end %>
 
