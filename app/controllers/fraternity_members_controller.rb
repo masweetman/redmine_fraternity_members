@@ -25,11 +25,15 @@ class FraternityMembersController < ApplicationController
 
     scope = FraternityMember
 
-    if params[:chapter].present? or params[:search].present?
+    if params[:zip].present? && params[:dist].present?
+      scope = scope.near(params[:zip].to_s, params[:dist].to_i)
+    end
+
+    if params[:chapter].present? || params[:search].present?
       scope = scope.where(query)
     end
 
-    @member_count = scope.count
+    @member_count = scope.count(:all)
     @member_pages = Paginator.new @member_count, 100, params['page']
     @offset ||= @member_pages.offset
     @members = scope.offset(@offset).limit(100).order(sort_clause).all
@@ -145,6 +149,9 @@ class FraternityMembersController < ApplicationController
     project.members << m
 	
     redirect_to controller: 'projects', action: 'show', id: project
+  end
+
+  def map
   end
   
   private

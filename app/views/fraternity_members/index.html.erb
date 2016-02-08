@@ -7,8 +7,12 @@
 <% chapters = [""] + FraternityMember.all.map(&:chapter).uniq.sort -%>
 Chapter:
 <%= select_tag('chapter', options_for_select(chapters, params[:chapter]), :onchange => params[:chapter]) %>
-<label for='search'><%= 'Search' %>:</label>
+<label for='search'><%= 'Search:' %></label>
 <%= text_field_tag 'search', params[:search], :size => 23 %>
+<label for='zip'><%= 'Near Zip:' %></label>
+<%= text_field_tag 'zip', params[:zip], :size => 5 %>
+<label for='dist'><%= 'Distance (Mi):' %></label>
+<%= text_field_tag 'dist', params[:dist], :size => 3 %>
 <%= submit_tag l(:button_apply), :class => "small", :search => nil %>
 <%= link_to l(:button_clear), directory_path, :class => 'icon icon-reload' %>
 </fieldset>
@@ -45,7 +49,7 @@ Chapter:
   	<td class="fraternity_members_col_4"><%= h(f.pledge_name.to_s.truncate(18)) %></td>
   	<td class="fraternity_members_col_5"><%= mail_to(h(f.mail)) %></td>
   	<td class="fraternity_members_col_6"><%= h(f.phone) %></td>
-  	<td class="fraternity_members_col_7"><%= h(f.address) %></td>
+  	<td class="fraternity_members_col_7"><%= h(f.address.last 5) %></td>
     <% if User.current.admin? %>
       <td class="fraternity_members_col_8">
         <%= link_to l(:button_edit), edit_fraternity_member_path(f), :class => 'icon icon-edit' %>

@@ -42,6 +42,13 @@ module UserPatch
 		def update_fraternity_member
 			if (!fraternity_member_id.nil? && custom_field_value(3).to_i > 0)
 				member = FraternityMember.find(fraternity_member_id)
+
+				address = ''
+				address += custom_field_value(51) + ', ' unless custom_field_value(51).empty?
+				address += custom_field_value(52) + ', ' unless custom_field_value(52).empty?
+				address += custom_field_value(53) + ' ' unless custom_field_value(53).empty?
+				address += custom_field_value(4) unless custom_field_value(4).empty?
+
 				member.firstname = firstname
 				member.middlename = custom_field_value(80)
 				member.lastname = lastname
@@ -51,7 +58,7 @@ module UserPatch
 				member.pledge_name = custom_field_value(1)
 				member.big_bro = custom_field_value(55)
 				member.phone = custom_field_value(18) 
-				member.address = custom_field_value(4)
+				member.address = address
 				member.graduation_year = custom_field_value(56).to_i
 				member.bio = custom_field_value(9)
 				member.facebook = custom_field_value(57)
