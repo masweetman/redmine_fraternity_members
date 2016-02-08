@@ -14,7 +14,7 @@ class FraternityMembersController < ApplicationController
       query = "chapter LIKE '#{params[:chapter]}%'"
     else
       query = "chapter LIKE '#{params[:chapter]}%' AND "
-      query += search.map{ |word| "(active_number LIKE '#{word}' OR firstname LIKE '#{word}%' OR lastname LIKE '#{word}%' OR pledge_name LIKE '%#{word}%' OR address LIKE '#{word}%')" }.join(" AND ")
+      query += search.map{ |word| "(active_number LIKE '#{word}' OR firstname LIKE '#{word}%' OR lastname LIKE '#{word}%' OR pledge_name LIKE '%#{word}%')" }.join(" AND ")
     end
     return query
   end
@@ -149,9 +149,6 @@ class FraternityMembersController < ApplicationController
     project.members << m
 	
     redirect_to controller: 'projects', action: 'show', id: project
-  end
-
-  def map
   end
   
   private

@@ -3,7 +3,6 @@
 resources :fraternity_members
 
 get 'directory', :to => 'fraternity_members#index'
-get 'directory/map', :to => 'fraternity_members#map'
 get 'directory/export', :to => 'fraternity_members#export'
 get 'directory/export_google_contacts', :to => 'fraternity_members#export_google_contacts'
 get 'join_group', :to => 'fraternity_members#join_group'
