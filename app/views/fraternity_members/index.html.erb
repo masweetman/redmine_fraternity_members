@@ -62,6 +62,7 @@
   <%= sort_header_tag('mail', :caption => 'Email', :class => "fraternity_members_col_5") %>
   <%= sort_header_tag('phone', :caption => 'Phone', :class => "fraternity_members_col_6") %>
   <%= sort_header_tag('address', :caption => 'Zip Code', :class => "fraternity_members_col_7") %>
+  <%= sort_header_tag('graduation_year', :caption => 'Class', :class => "fraternity_members_col_7") %>
   <% if User.current.admin? %>
     <th class="fraternity_members_col_8"></th>
   <% end %>
@@ -84,6 +85,7 @@
   	<td class="fraternity_members_col_5"><%= mail_to(h(f.mail)) %></td>
   	<td class="fraternity_members_col_6"><%= h(f.phone) %></td>
   	<td class="fraternity_members_col_7"><%= h(f.address.last 5) %></td>
+	<td class="fraternity_members_col_7"><%= h(f.graduation_year.to_s) %></td>
     <% if User.current.admin? %>
       <td class="fraternity_members_col_8">
         <%= link_to l(:button_edit), edit_fraternity_member_path(f), :class => 'icon icon-edit' %>

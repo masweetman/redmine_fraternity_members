@@ -21,7 +21,7 @@ class FraternityMembersController < ApplicationController
 
   def index
     sort_init 'chapter, active_number', 'asc'
-    sort_update %w(chapter active_number lastname pledge_name mail phone address)
+    sort_update %w(chapter active_number lastname pledge_name mail phone address graduation_year)
 
     scope = FraternityMember
 
