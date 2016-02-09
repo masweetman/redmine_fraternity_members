@@ -39,6 +39,7 @@ Fiscal Year: <%= select_date(@FYStart, :discard_month => true) %>
 
 <% if !@annualRevenue.empty? -%>
 
+<div class="autoscroll">
 <table class="budget">
   <thead><tr>
   <th>Account</th>
@@ -81,6 +82,7 @@ Fiscal Year: <%= select_date(@FYStart, :discard_month => true) %>
   </tr>
   </tbody>
 </table>
+</div>
 
 <% else -%>
   No revenue reported for the selected Fiscal Year.
@@ -91,6 +93,7 @@ Fiscal Year: <%= select_date(@FYStart, :discard_month => true) %>
 
 <% if !@annualExpenses.empty? -%>
 
+<div class="autoscroll">
 <table class="budget">
   <thead><tr>
   <th>Budget</th>
@@ -143,11 +146,13 @@ Fiscal Year: <%= select_date(@FYStart, :discard_month => true) %>
   </tr>
   </tbody>
 </table>
+</div>
 </p>
 
 <p>
 <h1>Net Cash Flow</h1>
 
+<div class="autoscroll">
 <table class="budget">
   <thead><tr>
   <th></th>
@@ -167,6 +172,7 @@ Fiscal Year: <%= select_date(@FYStart, :discard_month => true) %>
   </tr>
   </tbody>
 </table>
+</div>
 
 <% else -%>
   No expenses reported for the selected Fiscal Year.

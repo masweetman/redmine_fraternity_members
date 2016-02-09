@@ -8,6 +8,7 @@
   List all payments received from <%= link_to_project_deposit_issues_by_account(@project, @account, '') %>
 </p>
 
+<div class="autoscroll">
 <table class="budget">
   <thead><tr>
   <th>Account</th>
@@ -45,6 +46,7 @@
   </tr>
   </tbody>
 </table>
+</div>
 
 <%= render :partial => 'action_menu' %>
 
