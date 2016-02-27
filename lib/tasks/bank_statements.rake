@@ -27,8 +27,7 @@ namespace :redmine do
 				project.users.each do |user|
 					if user.roles_for_project(project).include?(Role.find_by_name('Treasurer')) ||
 						user.roles_for_project(project).include?(Role.find_by_name('President')) ||
-						user.roles_for_project(project).include?(Role.find_by_name('Chapter Advisor')) ||
-						user.roles_for_project(project).include?(Role.find_by_name('Natl VP Collegiate'))
+						user.roles_for_project(project).include?(Role.find_by_name('Chapter Advisor'))
 						to_users << user
 					end
 				end
