@@ -163,9 +163,13 @@ class FraternityMembersController < ApplicationController
   private
 
   def find_project
-    Project.where(parent_id: 6).each do |project|
-      if User.current.member_of? project
-        @project = project
+    if User.current.admin?
+      @project = Project.find(6)
+    else
+      Project.where(parent_id: 6).each do |project|
+        if User.current.member_of? project
+          @project = project
+        end
       end
     end
   end
