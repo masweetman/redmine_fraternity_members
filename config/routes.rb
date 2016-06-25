@@ -5,6 +5,7 @@ resources :fraternity_members
 get 'directory', :to => 'fraternity_members#index'
 get 'directory/export', :to => 'fraternity_members#export'
 get 'directory/export_google_contacts', :to => 'fraternity_members#export_google_contacts'
+get 'crm', :to => 'fraternity_members#crm'
 get 'join_group', :to => 'fraternity_members#join_group'
 
 get '/shingles_pdf', :to => 'shingle#shingles_export_pdf'

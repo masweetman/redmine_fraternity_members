@@ -1,0 +1,106 @@
+<%= render :partial => 'action_menu' %>
+
+<h2>CRM (Customer Relationship Management)</h2>
+
+<%= form_tag(directory_path, :method => :get) do %>
+<fieldset>
+<% chapters = [""] + FraternityMember.all.map(&:chapter).uniq.sort -%>
+<table>
+  <tr>
+    <td>
+      Chapter:
+    </td>
+    <td>
+      <%= select_tag('chapter', options_for_select(chapters, params[:chapter]), :onchange => params[:chapter]) %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Search:
+    </td>
+    <td>
+      <%= text_field_tag 'search', params[:search], :size => 23 %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Near Zip:
+    </td>
+    <td>
+      <%= text_field_tag 'zip', params[:zip], :size => 5 %>
+      <label for='dist'><%= 'Distance:' %></label>
+      <%= text_field_tag 'dist', params[:dist], :size => 3 %> mi
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Status:
+    </td>
+    <td>
+      <%= select_tag('status', options_for_select(['','Actives','Alumni'], params[:status]), :onchange => params[:status]) %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <%= submit_tag l(:button_apply), :class => "small", :search => nil %>
+    </td>
+    <td>
+      <%= link_to l(:button_clear), directory_path, :class => 'icon icon-reload' %>
+    </td>
+  </tr>
+</table>
+</fieldset>
+<% end %>
+
+<div class="autoscroll">
+<table class="list fraternity_members">
+  <thead><tr>
+  <%= sort_header_tag('chapter', :caption => 'Chapter', :class => "fraternity_members_col_1" ) %>
+  <%= sort_header_tag('active_number', :caption => 'Active #', :class => "fraternity_members_col_2") %>
+  <%= sort_header_tag('lastname', :caption => 'Name', :class => "fraternity_members_col_3") %>
+  <%= sort_header_tag('pledge_name', :caption => 'Pledge Name', :class => "fraternity_members_col_4") %>
+  <%= sort_header_tag('mail', :caption => 'Email', :class => "fraternity_members_col_5") %>
+  <%= sort_header_tag('phone', :caption => 'Phone', :class => "fraternity_members_col_6") %>
+  <%= sort_header_tag('address', :caption => 'Zip Code', :class => "fraternity_members_col_7") %>
+  <%= sort_header_tag('graduation_year', :caption => 'Class', :class => "fraternity_members_col_7") %>
+  <% if User.current.admin? %>
+    <th class="fraternity_members_col_8"></th>
+  <% end %>
+  </tr></thead>
+  <tbody>
+<% for f in @members -%>
+  <tr class="<%= cycle('odd', 'even') %>">
+  	<td class="fraternity_members_col_1"><%= h(f.chapter) %></td>
+  	<td class="fraternity_members_col_2"><%= h(f.active_number) %></td>
+  	<td class="fraternity_members_col_3">
+      <% uname = f.firstname.to_s + " " + f.lastname.to_s -%>
+      <% if f.redmine_user_id.to_i > 0 -%>
+        <% ulink = user_path(User.find(f.redmine_user_id.to_i)) -%>
+        <%= link_to uname, ulink if f.redmine_user_id > 0 %>
+      <% else -%>
+        <%= uname %>
+      <% end -%>
+  	</td>
+  	<td class="fraternity_members_col_4"><%= h(f.pledge_name.to_s.truncate(18)) %></td>
+  	<td class="fraternity_members_col_5"><%= mail_to(h(f.mail)) %></td>
+  	<td class="fraternity_members_col_6"><%= h(f.phone) %></td>
+  	<td class="fraternity_members_col_7"><%= h(f.address.last 5) %></td>
+	<td class="fraternity_members_col_7"><%= h(f.graduation_year.to_s) %></td>
+    <% if User.current.admin? %>
+      <td class="fraternity_members_col_8">
+        <%= link_to l(:button_edit), edit_fraternity_member_path(f), :class => 'icon icon-edit' %>
+      </td>
+    <% end %>
+  </tr>
+<% end -%>
+  </tbody>
+</table>
+</div>
+
+<span class="pagination"><%= pagination_links_full @member_pages, @member_count, :per_page_links => false %></span>
+
+<% content_for :header_tags do %>
+    <%= stylesheet_link_tag 'directory', :plugin => 'redmine_fraternity_members' %>
+<% end %>
+
+<%= render :partial => 'action_menu' %>

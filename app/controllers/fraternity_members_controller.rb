@@ -1,7 +1,7 @@
 class FraternityMembersController < ApplicationController
   #unloadable
 
-  before_filter :find_project, :authorize, :only => [:export, :export_google_contacts, :edit, :update]
+  before_filter :find_project, :authorize, :only => [:export, :export_google_contacts, :crm, :edit, :update]
 
   helper :sort
   include SortHelper
@@ -46,7 +46,35 @@ class FraternityMembersController < ApplicationController
     @member_pages = Paginator.new @member_count, 100, params['page']
     @offset ||= @member_pages.offset
     @members = scope.offset(@offset).limit(100).order(sort_clause).all
+  end
 
+  def crm
+    sort_init [['chapter', 'asc'], ['active_number', 'asc']]
+    sort_update %w(chapter active_number lastname pledge_name mail phone address graduation_year)
+
+    scope = FraternityMember
+
+    if params[:zip].present? && params[:dist].present?
+      scope = scope.near(params[:zip].to_s, params[:dist].to_i)
+    end
+
+    if params[:chapter].present? || params[:search].present?
+      scope = scope.where(query)
+    end
+
+    if params[:status].present?
+      if params[:status] == 'Actives'
+        scope = scope.where(:active => true)
+      end
+      if params[:status] == 'Alumni'
+        scope = scope.where(:active => false)
+      end
+    end
+
+    @member_count = scope.count(:all)
+    @member_pages = Paginator.new @member_count, 100, params['page']
+    @offset ||= @member_pages.offset
+    @members = scope.offset(@offset).limit(100).order(sort_clause).all
   end
 
   def edit
@@ -63,6 +91,22 @@ class FraternityMembersController < ApplicationController
     @fraternity_member.chapter = params[:fraternity_member][:chapter]
     @fraternity_member.active_number = params[:fraternity_member][:active_number]
     @fraternity_member.pledge_name = params[:fraternity_member][:pledge_name]
+    @fraternity_member.big_bro = params[:fraternity_member][:big_bro]
+    @fraternity_member.phone = params[:fraternity_member][:phone]
+    @fraternity_member.address = params[:fraternity_member][:address]
+    @fraternity_member.graduation_year = params[:fraternity_member][:graduation_year]
+    @fraternity_member.bio = params[:fraternity_member][:bio]
+    @fraternity_member.facebook = params[:fraternity_member][:facebook]
+    @fraternity_member.linkedin = params[:fraternity_member][:linkedin]
+    @fraternity_member.name_suffix = params[:fraternity_member][:name_suffix]
+    @fraternity_member.pledge_class = params[:fraternity_member][:pledge_class]
+    @fraternity_member.little_bros = params[:fraternity_member][:little_bros]
+    @fraternity_member.job_title = params[:fraternity_member][:job_title]
+    @fraternity_member.employer = params[:fraternity_member][:employer]
+    @fraternity_member.giving_history = params[:fraternity_member][:giving_history]
+    @fraternity_member.alumni_involvement = params[:fraternity_member][:alumni_involvement]
+    @fraternity_member.email_interaction = params[:fraternity_member][:email_interaction]
+    @fraternity_member.notes = params[:fraternity_member][:notes]
 
     if @fraternity_member.save
       flash[:notice] = l(:notice_successful_update)

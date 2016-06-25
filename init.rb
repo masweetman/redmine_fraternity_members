@@ -26,6 +26,7 @@ Redmine::Plugin.register :redmine_fraternity_members do
 
   settings :default => {'empty' => true}, :partial => 'shared/settings'
 
+  permission :view_crm, :fraternity_members => [:crm]
   permission :export_member_directory, :fraternity_members => [:export, :export_google_contacts]
   permission :edit_fraternity_members, :fraternity_members => [:edit, :update]
 

@@ -65,6 +65,11 @@ module UserPatch
 				member.linkedin = custom_field_value(58)
 				member.redmine_user_id = id
 				member.active = projects.where(parent_id: 6).any?
+				member.name_suffix = custom_field_value(110)
+				member.pledge_class = custom_field_value(130)
+				member.little_bros = custom_field_value(133)
+				member.job_title = custom_field_value(131)
+				member.employer = custom_field_value(132)
 				member.save
 			end
 		end
