@@ -1,41 +1,50 @@
-<h1>Editing fraternity_member</h1>
+<h3>
+  <%= @fraternity_member.firstname %> 
+  <%= @fraternity_member.middlename unless @fraternity_member.middlename.empty? %>
+  <%= @fraternity_member.lastname if @fraternity_member.name_suffix.empty? %>
+  <%= @fraternity_member.lastname + ', ' + @fraternity_member.name_suffix unless @fraternity_member.name_suffix.empty? %>
+  <%= '(' + @fraternity_member.chapter %>
+  <%= @fraternity_member.active_number.to_s + ')' %>
+</h3>
  
 <%= form_for :fraternity_member, :url => { :action => 'update', :id => @fraternity_member }, method: :patch do |f| %>
 
 <table>
-  <tr>
-    <td><%= f.label 'First name:' %></td>
-    <td><%= f.text_field :firstname %></td>
-  </tr>
-  
-  <tr>
-    <td><%= f.label 'Middle name:' %></td>
-    <td><%= f.text_field :middlename %></td>
-  </tr>
-  
-  <tr>
-    <td><%= f.label 'Last name (DO NOT EDIT!):' %></td>
-    <td><%= f.text_field :lastname %></td>
-  </tr>
+  <% if User.current.id == 3 %>
+    <tr>
+      <td><%= f.label 'First name:' %></td>
+      <td><%= f.text_field :firstname %></td>
+    </tr>
+    
+    <tr>
+      <td><%= f.label 'Middle name:' %></td>
+      <td><%= f.text_field :middlename %></td>
+    </tr>
+    
+    <tr>
+      <td><%= f.label 'Last name (DO NOT EDIT!):' %></td>
+      <td><%= f.text_field :lastname %></td>
+    </tr>
 
-  <tr>
-    <td><%= f.label 'Suffix (Jr, Sr):' %></td>
-    <td><%= f.text_field :name_suffix %></td>
-  </tr>
+    <tr>
+      <td><%= f.label 'Suffix (Jr, Sr):' %></td>
+      <td><%= f.text_field :name_suffix %></td>
+    </tr>
+
+    <tr>
+      <td><%= f.label 'Chapter (DO NOT EDIT!):' %></td>
+      <td><%= f.text_field :chapter %></td>
+    </tr>
+    
+    <tr>
+      <td><%= f.label 'Active number (DO NOT EDIT!):' %></td>
+      <td><%= f.text_field :active_number %></td>
+    </tr>
+  <% end %>
 
   <tr>
     <td><%= f.label 'Pledge name:' %></td>
     <td><%= f.text_field :pledge_name %></td>
-  </tr>
-
-  <tr>
-    <td><%= f.label 'Chapter (DO NOT EDIT!):' %></td>
-    <td><%= f.text_field :chapter %></td>
-  </tr>
-  
-  <tr>
-    <td><%= f.label 'Active number (DO NOT EDIT!):' %></td>
-    <td><%= f.text_field :active_number %></td>
   </tr>
 
   <tr>
