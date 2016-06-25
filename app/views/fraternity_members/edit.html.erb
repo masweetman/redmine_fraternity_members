@@ -1,8 +1,8 @@
 <h3>
   <%= @fraternity_member.firstname %> 
-  <%= @fraternity_member.middlename unless @fraternity_member.middlename.empty? %>
-  <%= @fraternity_member.lastname if @fraternity_member.name_suffix.empty? %>
-  <%= @fraternity_member.lastname + ', ' + @fraternity_member.name_suffix unless @fraternity_member.name_suffix.empty? %>
+  <%= @fraternity_member.middlename unless @fraternity_member.middlename.to_s == '' %>
+  <%= @fraternity_member.lastname if @fraternity_member.name_suffix.to_s == '' %>
+  <%= @fraternity_member.lastname + ', ' + @fraternity_member.name_suffix unless @fraternity_member.name_suffix.to_s == '' %>
   <%= '(' + @fraternity_member.chapter %>
   <%= @fraternity_member.active_number.to_s + ')' %>
 </h3>
