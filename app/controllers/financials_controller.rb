@@ -14,7 +14,7 @@ class FinancialsController < ApplicationController
         @project = Project.find(params[:id])
         
         if @project.parent_id == 6
-            @mint_value = mint_value(@project.name)
+            @mint_value = "Mint.com not available" #mint_value(@project.name)
         end
 
         if Date.today.month >= 7

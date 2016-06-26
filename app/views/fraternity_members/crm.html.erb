@@ -73,13 +73,8 @@
   	<td class="fraternity_members_col_1"><%= h(f.chapter) %></td>
   	<td class="fraternity_members_col_2"><%= h(f.active_number) %></td>
   	<td class="fraternity_members_col_3">
-      <% uname = f.firstname.to_s + " " + f.lastname.to_s -%>
-      <% if f.redmine_user_id.to_i > 0 -%>
-        <% ulink = user_path(User.find(f.redmine_user_id.to_i)) -%>
-        <%= link_to uname, ulink if f.redmine_user_id > 0 %>
-      <% else -%>
-        <%= uname %>
-      <% end -%>
+          <% uname = f.firstname.to_s + " " + f.lastname.to_s -%>
+          <%= link_to uname, edit_fraternity_member_path(f) %>
   	</td>
   	<td class="fraternity_members_col_4"><%= h(f.pledge_name.to_s.truncate(18)) %></td>
   	<td class="fraternity_members_col_5"><%= mail_to(h(f.mail)) %></td>
