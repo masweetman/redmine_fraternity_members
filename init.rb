@@ -23,6 +23,7 @@ Redmine::Plugin.register :redmine_fraternity_members do
 
   redmine_root = Redmine::Utils.relative_url_root
   directory_path = redmine_root + '/directory'
+  crm_path = redmine_root + '/crm'
 
   settings :default => {'empty' => true}, :partial => 'shared/settings'
 

@@ -2,7 +2,7 @@
 
 <h2>CRM (Customer Relationship Management)</h2>
 
-<%= form_tag(directory_path, :method => :get) do %>
+<%= form_tag(crm_path, :method => :get) do %>
 <fieldset>
 <% chapters = [""] + FraternityMember.all.map(&:chapter).uniq.sort -%>
 <table>
@@ -45,7 +45,7 @@
       <%= submit_tag l(:button_apply), :class => "small", :search => nil %>
     </td>
     <td>
-      <%= link_to l(:button_clear), directory_path, :class => 'icon icon-reload' %>
+      <%= link_to l(:button_clear), crm_path, :class => 'icon icon-reload' %>
     </td>
   </tr>
 </table>
