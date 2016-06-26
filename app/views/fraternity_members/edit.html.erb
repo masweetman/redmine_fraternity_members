@@ -9,128 +9,124 @@
  
 <%= form_for :fraternity_member, :url => { :action => 'update', :id => @fraternity_member }, method: :patch do |f| %>
 
-<table>
   <% if User.current.id == 3 %>
-    <tr>
-      <td><%= f.label 'First name:' %></td>
-      <td><%= f.text_field :firstname %></td>
-    </tr>
-    
-    <tr>
-      <td><%= f.label 'Middle name:' %></td>
-      <td><%= f.text_field :middlename %></td>
-    </tr>
-    
-    <tr>
-      <td><%= f.label 'Last name (DO NOT EDIT!):' %></td>
-      <td><%= f.text_field :lastname %></td>
-    </tr>
-
-    <tr>
-      <td><%= f.label 'Suffix (Jr, Sr):' %></td>
-      <td><%= f.text_field :name_suffix %></td>
-    </tr>
-
-    <tr>
-      <td><%= f.label 'Chapter (DO NOT EDIT!):' %></td>
-      <td><%= f.text_field :chapter %></td>
-    </tr>
-    
-    <tr>
-      <td><%= f.label 'Active number (DO NOT EDIT!):' %></td>
-      <td><%= f.text_field :active_number %></td>
-    </tr>
+    <div class='box tabular'>
+      <div class='splitcontent'>
+        <div class='splitcontentleft'>
+          <p>
+            <%= f.label 'First:' %>
+            <%= f.text_field :firstname, :width=> '10', :class => 'crm_textfield' %>
+          </p>
+          <p>
+            <%= f.label 'Middle:' %>
+            <%= f.text_field :middlename %>
+          </p>
+          <p>
+            <%= f.label 'Last:' %>
+            <%= f.text_field :lastname %>
+          </p>
+          <p>
+            <%= f.label 'Suffix (Jr, Sr):' %>
+            <%= f.text_field :name_suffix %>
+          </p>
+        </div>
+        <div class='splitcontentright'>
+          <p>
+            <%= f.label 'Chapter:' %>
+            <%= f.text_field :chapter %>
+          </p>
+          <p>
+            <%= f.label 'Active number:' %>
+            <%= f.text_field :active_number %>
+          </p>
+        </div>
+      </div>
+    </div>
   <% end %>
 
-  <tr>
-    <td><%= f.label 'Pledge name:' %></td>
-    <td><%= f.text_field :pledge_name %></td>
-  </tr>
+  <div class='box tabular'>
+    <div class='splitcontent'>
+      <div class='splitcontentleft'>
+        <p>
+          <%= f.label 'Email:' %>
+          <%= f.text_field :mail %>
+        </p>
+        <p>
+          <%= f.label 'Phone:' %>
+          <%= f.text_field :phone %>
+        </p>
+        <p>
+          <%= f.label 'Address:' %>
+          <%= f.text_area :address %>
+        </p>
+        <p>
+          <%= f.label 'Facebook:' %>
+          <%= f.text_field :facebook %>
+        </p>
+        <p>
+          <%= f.label 'LinkedIn:' %>
+          <%= f.text_field :linkedin %>
+        </p>
+        <p>
+          <%= f.label 'Job Title:' %>
+          <%= f.text_field :job_title %>
+        </p>
+        <p>
+          <%= f.label 'Employer:' %>
+          <%= f.text_field :employer %>
+        </p>
+      </div>
+      <div class='splitcontentright'>
+        <p>
+          <%= f.label 'Pledge name:' %>
+          <%= f.text_field :pledge_name %>
+        </p>
+        <p>
+          <%= f.label 'Pledge Class:' %>
+          <%= f.text_field :pledge_class %>
+        </p>
+        <p>
+          <%= f.label 'Graduation Year:' %>
+          <%= f.text_field :graduation_year %>
+        </p>
+        <p>
+          <%= f.label 'Big Bro:' %>
+          <%= f.text_field :big_bro %>
+        </p>
+        <p>
+          <%= f.label 'Little Bros:' %>
+          <%= f.text_area :little_bros %>
+        </p>
+      </div>
+    </div>
+  </div>
 
-  <tr>
-    <td><%= f.label 'Pledge Class:' %></td>
-    <td><%= f.text_field :pledge_class %></td>
-  </tr>
+  <div class='box tabular'>
+    <p>
+      <%= f.label 'Giving History:' %>
+      <%= f.text_area :giving_history, :class => 'crm_textarea' %>
+    </p>
+    <p>
+      <%= f.label 'Alumni Involvement:' %>
+      <%= f.text_area :alumni_involvement %>
+    </p>
+    <p>
+      <%= f.label 'Email Interaction:' %>
+      <%= f.text_area :email_interaction %>
+    </p>
+    <p>
+      <%= f.label 'Notes:' %>
+      <%= f.text_area :notes %>
+    </p>
+    <p>
+      <%= f.label 'Bio:' %>
+      <%= f.text_area :bio %>
+    </p>
+  </div>
 
-  <tr>
-    <td><%= f.label 'Graduation Year:' %></td>
-    <td><%= f.text_field :graduation_year %></td>
-  </tr>
-  
-  <tr>
-    <td><%= f.label 'Email:' %></td>
-    <td><%= f.text_field :mail %></td>
-  </tr>
-
-  <tr>
-    <td><%= f.label 'Phone:' %></td>
-    <td><%= f.text_field :phone %></td>
-  </tr>
-
-  <tr>
-    <td><%= f.label 'Address:' %></td>
-    <td><%= f.text_field :address %></td>
-  </tr>
-
-  <tr>
-    <td><%= f.label 'Job Title:' %></td>
-    <td><%= f.text_field :job_title %></td>
-  </tr>
-
-  <tr>
-    <td><%= f.label 'Employer:' %></td>
-    <td><%= f.text_field :employer %></td>
-  </tr>
-
-  <tr>
-    <td><%= f.label 'Giving History:' %></td>
-    <td><%= f.text_area :giving_history %></td>
-  </tr>
-
-  <tr>
-    <td><%= f.label 'Alumni Involvement:' %></td>
-    <td><%= f.text_area :alumni_involvement %></td>
-  </tr>
-
-  <tr>
-    <td><%= f.label 'Email Interaction:' %></td>
-    <td><%= f.text_area :email_interaction %></td>
-  </tr>
-
-  <tr>
-    <td><%= f.label 'Notes:' %></td>
-    <td><%= f.text_area :notes %></td>
-  </tr>
-
-  <tr>
-    <td><%= f.label 'Big Bro:' %></td>
-    <td><%= f.text_field :big_bro %></td>
-  </tr>
-
-  <tr>
-    <td><%= f.label 'Little Bros:' %></td>
-    <td><%= f.text_area :little_bros %></td>
-  </tr>
-
-  <tr>
-    <td><%= f.label 'Facebook:' %></td>
-    <td><%= f.text_field :facebook %></td>
-  </tr>
-
-  <tr>
-    <td><%= f.label 'LinkedIn:' %></td>
-    <td><%= f.text_field :linkedin %></td>
-  </tr>
-
-  <tr>
-    <td><%= f.label 'Bio:' %></td>
-    <td><%= f.text_area :bio %></td>
-  </tr>
-</table>
- 
-  <p>
-    <%= f.submit %>
-  </p>
+<p>
+  <%= f.submit %>
+</p>
  
 <% end %>
  
