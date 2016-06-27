@@ -1,7 +1,7 @@
 class FraternityMembersController < ApplicationController
   #unloadable
 
-  before_filter :find_project, :authorize, :only => [:export, :export_google_contacts, :crm, :edit, :update]
+  before_filter :find_project, :authorize, :only => [:export, :export_google_contacts, :export_crm, :crm, :edit, :update]
 
   helper :sort
   include SortHelper
@@ -195,6 +195,10 @@ class FraternityMembersController < ApplicationController
     send_data(export_csv.encode('us-ascii',:fallback => fallback),
       :type => 'text/csv; charset=utf-8; header=present',
       :filename => "google_contacts.csv")
+  end
+
+  def export_crm
+    flash[:notice] = 'Database export is currently under development.'
   end
 
   def join_group

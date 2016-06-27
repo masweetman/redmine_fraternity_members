@@ -1,6 +1,6 @@
-<%= render :partial => 'action_menu' %>
+<%= render :partial => 'crm_action_menu' %>
 
-<h2>CRM (Customer Relationship Management)</h2>
+<h2>Customer Relationship Management</h2>
 
 <%= form_tag(crm_path, :method => :get) do %>
 <fieldset>
@@ -80,12 +80,10 @@
   	<td class="fraternity_members_col_5"><%= mail_to(h(f.mail)) %></td>
   	<td class="fraternity_members_col_6"><%= h(f.phone) %></td>
   	<td class="fraternity_members_col_7"><%= h(f.address.last 5) %></td>
-	<td class="fraternity_members_col_7"><%= h(f.graduation_year.to_s) %></td>
-    <% if User.current.admin? %>
-      <td class="fraternity_members_col_8">
-        <%= link_to l(:button_edit), edit_fraternity_member_path(f), :class => 'icon icon-edit' %>
-      </td>
-    <% end %>
+    <td class="fraternity_members_col_7"><%= h(f.graduation_year.to_s) %></td>
+    <td class="fraternity_members_col_8">
+      <%= link_to l(:button_edit), edit_fraternity_member_path(f), :class => 'icon icon-edit' %>
+    </td>
   </tr>
 <% end -%>
   </tbody>
@@ -98,4 +96,4 @@
     <%= stylesheet_link_tag 'directory', :plugin => 'redmine_fraternity_members' %>
 <% end %>
 
-<%= render :partial => 'action_menu' %>
+<%= render :partial => 'crm_action_menu' %>

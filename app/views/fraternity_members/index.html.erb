@@ -1,6 +1,6 @@
 <%= render :partial => 'action_menu' %>
 
-<h2>Alpha Gamma Omega Fraternity Directory</h2>
+<h2>Fraternity Directory</h2>
 
 <%= form_tag(directory_path, :method => :get) do %>
 <fieldset>
@@ -85,7 +85,7 @@
   	<td class="fraternity_members_col_5"><%= mail_to(h(f.mail)) %></td>
   	<td class="fraternity_members_col_6"><%= h(f.phone) %></td>
   	<td class="fraternity_members_col_7"><%= h(f.address.last 5) %></td>
-	<td class="fraternity_members_col_7"><%= h(f.graduation_year.to_s) %></td>
+    <td class="fraternity_members_col_7"><%= h(f.graduation_year.to_s) %></td>
     <% if User.current.admin? %>
       <td class="fraternity_members_col_8">
         <%= link_to l(:button_edit), edit_fraternity_member_path(f), :class => 'icon icon-edit' %>

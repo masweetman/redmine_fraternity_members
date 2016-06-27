@@ -5,7 +5,6 @@ resources :fraternity_members
 get 'directory', :to => 'fraternity_members#index'
 get 'directory/export', :to => 'fraternity_members#export'
 get 'directory/export_google_contacts', :to => 'fraternity_members#export_google_contacts'
-get 'crm', :to => 'fraternity_members#crm'
 get 'join_group', :to => 'fraternity_members#join_group'
 
 get '/shingles_pdf', :to => 'shingle#shingles_export_pdf'
@@ -16,6 +15,9 @@ get '/projects/:id/financials', :to => 'financials#index'
 get '/projects/:id/financials/account', :to => 'financials#account'
 get '/projects/:id/financials/export', :to => 'financials#export'
 get '/projects/:id/recent_transactions', :to => 'financials#recent_transactions'
+
+get 'crm', :to => 'fraternity_members#crm'
+get 'crm/export', :to => 'fraternity_members#export_crm'
 
 get '/projects/:id/deposits', :to => 'deposits#index'
 

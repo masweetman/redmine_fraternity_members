@@ -27,18 +27,24 @@ Redmine::Plugin.register :redmine_fraternity_members do
 
   settings :default => {'empty' => true}, :partial => 'shared/settings'
 
-  permission :view_crm, :fraternity_members => [:crm]
-  permission :export_member_directory, :fraternity_members => [:export, :export_google_contacts]
-  permission :edit_fraternity_members, :fraternity_members => [:edit, :update]
-
   project_module :financials do
     permission :view_financials, { :financials => :index }
   end
 
+  project_module :directory do
+    permission :export_member_directory, :fraternity_members => [:export, :export_google_contacts]
+  end
+
+  project_module :crm do
+    permission :view_crm, :fraternity_members => [:crm]
+    permission :edit_crm, :fraternity_members => [:edit, :update]
+    permission :export_crm, :fraternity_members => [:export_crm]
+  end
+
   menu :top_menu, :fraternity_members, directory_path, :caption => 'Member Directory'
-  menu :top_menu, :fraternity_members_crm, crm_path, :caption => 'CRM'
   menu :top_menu, :email_groups, { :controller => 'email_groups', :action => 'index' }, :caption => 'Email Groups'
   menu :top_menu, :wiki, { :controller => 'wiki', :action => 'show', :project_id => 'national', :id => 'wiki' }, :caption => 'Manuals'
+  menu :project_menu, :fraternity_members_crm, { :controller => 'fraternity_members', :action => 'crm'}, :caption => 'CRM', :before => :issues
   menu :project_menu, :financials, { :controller => 'financials', :action => 'index' }, :caption => 'Financials', :after => :activity
 
 end
