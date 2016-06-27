@@ -79,7 +79,7 @@ class FraternityMembersController < ApplicationController
 
   def edit
     @fraternity_member = FraternityMember.find(params[:id])
-    session[:return_to] ||= request.referer
+    session[:return_to] = request.referer
   end
 
   def update
@@ -110,8 +110,8 @@ class FraternityMembersController < ApplicationController
     @fraternity_member.notes = params[:fraternity_member][:notes]
 
     if @fraternity_member.save
-      flash[:notice] = l(:notice_successful_update)
       redirect_to session.delete(:return_to)
+      flash[:notice] = l(:notice_successful_update)
     else
       render :action => 'edit'
     end
