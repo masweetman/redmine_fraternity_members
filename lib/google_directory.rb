@@ -68,15 +68,15 @@ class GoogleDirectory
 			end
 		end
 
-                for c in Project.where(:parent_id => 6)
-                        email_addresses = Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses']
-			email_addresses.delete_if{ |g, e| e.empty? }
-                	for e in email_addresses do
-                    	  unless google_groups.include?(e[1])
-                       	    create_group(e[1], c.name + e[0])
-                       	  end
-                	end
-                end
+    for c in Project.where(:parent_id => 6)
+      email_addresses = Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses']
+      email_addresses.delete_if{ |g, e| e.empty? }
+      for e in email_addresses do
+  	    unless google_groups.include?(e[1])
+     	    create_group(e[1], c.name + ' ' + e[0])
+     	  end
+    	end
+    end
 
 	end
 
