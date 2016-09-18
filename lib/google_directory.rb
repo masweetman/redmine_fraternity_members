@@ -47,6 +47,7 @@ class GoogleDirectory
 	end
 
 	def update_groups
+		sleep 5 
 		google_groups = list_groups
 
 		email_addresses = Setting.plugin_redmine_fraternity_members['email_addresses']
@@ -120,6 +121,7 @@ class GoogleDirectory
 	end
 
 	def list_members(groupEmailAddress)
+		sleep 3 
 		results = client.execute(
 			:api_method => google_directory_api.members.list,
 			:parameters => {:groupKey => groupEmailAddress},
@@ -135,6 +137,7 @@ class GoogleDirectory
 	end
 
 	def update_members(groupEmailAddress, new_emails)
+		sleep 5 
 		unless groupEmailAddress.nil? or groupEmailAddress.empty? or new_emails.nil?
 
 			new_emails.delete("")
