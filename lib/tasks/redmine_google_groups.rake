@@ -199,7 +199,7 @@ namespace :redmine do
             national['All Alumni Leaders'] << Setting.plugin_redmine_fraternity_members['ao_email_addresses'][a.identifier] unless Setting.plugin_redmine_fraternity_members['ao_email_addresses'][a.identifier].empty?
         end
 
-        alumni_orgs['AGO Beta Alumni Housing Board'] << Setting.plugin_redmine_fraternity_members['beta_email_addresses']['Beta Exec']
+        alumni_orgs['aba'] << Setting.plugin_redmine_fraternity_members['beta_email_addresses']['Exec'] unless alumni_orgs['aba'].nil? || Setting.plugin_redmine_fraternity_members['beta_email_addresses']['Exec'].nil?
 
 		#add new google groups
 		google_directory = GoogleDirectory.new

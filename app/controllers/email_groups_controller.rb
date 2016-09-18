@@ -18,9 +18,9 @@ class EmailGroupsController < ApplicationController
 		if @chapter.nil? || @chapter.empty?
 			@email = Setting.plugin_redmine_fraternity_members['email_addresses'][@group]
 		elsif Project.find(@chapter).parent_id == 50
-			@email = Setting.plugin_redmine_fraternity_members['ac_email_addresses'][@group]
+			@email = Setting.plugin_redmine_fraternity_members['ac_email_addresses'][@chapter]
 		elsif Project.find(@chapter).parent_id == 36
-			@email = Setting.plugin_redmine_fraternity_members['ao_email_addresses'][@group]
+			@email = Setting.plugin_redmine_fraternity_members['ao_email_addresses'][@chapter]
 		elsif Project.find(@chapter).parent_id == 6
 			@email = Setting.plugin_redmine_fraternity_members[@chapter + '_email_addresses'][@group]
 		end
