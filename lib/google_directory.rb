@@ -47,20 +47,30 @@ class GoogleDirectory
 	end
 
 	def update_groups
+		google_groups = list_groups
+
 		email_addresses = Setting.plugin_redmine_fraternity_members['email_addresses']
-		for c in Project.where(:parent_id => 6)
-			email_addresses = email_addresses.merge(Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'])
-		end
-		email_addresses = email_addresses.merge(Setting.plugin_redmine_fraternity_members['ac_email_addresses'])
-		email_addresses = email_addresses.merge(Setting.plugin_redmine_fraternity_members['ao_email_addresses'])
 		
 		email_addresses.delete_if{ |g, e| e.empty? }
-		google_groups = list_groups
 		for e in email_addresses do
 			unless google_groups.include?(e[1])
 				create_group(e[1], e[0])
 			end
 		end
+
+		email_addresses = Setting.plugin_redmine_fraternity_members['ac_email_addresses']
+		email_addresses = email_addresses.merge(Setting.plugin_redmine_fraternity_members['ao_email_addresses'])
+		for c in Project.where(:parent_id => 6)
+			email_addresses = email_addresses.merge(Setting.plugin_redmine_fraternity_members[c.identifier + '_email_addresses'])
+		end
+
+		email_addresses.delete_if{ |g, e| e.empty? }
+		for e in email_addresses do
+			unless google_groups.include?(e[1])
+				create_group(e[1], Project.find(e[0]).name)
+			end
+		end
+
 	end
 
 	def create_group(groupEmailAddress, groupName)

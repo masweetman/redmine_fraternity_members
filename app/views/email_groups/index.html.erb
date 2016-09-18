@@ -35,7 +35,7 @@
 			<%= link_to c.name, :controller => 'email_groups', :action => 'show', :chapter => c, :group => c.name %>
 		</td>
 		<td style="text-align: left">
-			<%= mail_to(Setting.plugin_redmine_fraternity_members['ao_email_addresses'][c.name], Setting.plugin_redmine_fraternity_members['ao_email_addresses'][c.name], :encode => 'javascript') %>
+			<%= mail_to(Setting.plugin_redmine_fraternity_members['ao_email_addresses'][c.identifier], Setting.plugin_redmine_fraternity_members['ao_email_addresses'][c.identifier], :encode => 'javascript') %>
 		</td>
 	</tr>
 <% end %>
@@ -83,7 +83,7 @@
 			<%= link_to c.name, :controller => 'email_groups', :action => 'show', :chapter => c, :group => c.name %>
 		</td>
 		<td style="text-align: left">
-			<%= mail_to(Setting.plugin_redmine_fraternity_members['ac_email_addresses'][c.name], Setting.plugin_redmine_fraternity_members['ac_email_addresses'][c.name], :encode => 'javascript') %>
+			<%= mail_to(Setting.plugin_redmine_fraternity_members['ac_email_addresses'][c.identifier], Setting.plugin_redmine_fraternity_members['ac_email_addresses'][c.identifier], :encode => 'javascript') %>
 		</td>
 	</tr>
 <% end %>
