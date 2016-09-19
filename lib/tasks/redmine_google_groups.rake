@@ -158,7 +158,8 @@ namespace :redmine do
           chapters[c.identifier]['Actives'] << user.mail
           chapters[c.identifier]['Social Media Manager'] << user.mail
         end
-        if user.roles_for_project(c).include?(Role.find_by_name("Active"))
+        if user.roles_for_project(c).include?(Role.find_by_name("Active")) ||
+           user.roles_for_project(c).include?(Role.find_by_name("Colony Member"))
           chapters[c.identifier]['Actives'] << user.mail
         end
       end
