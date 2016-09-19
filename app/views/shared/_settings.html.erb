@@ -30,26 +30,26 @@
 
 <% chapters = Project.where(:parent_id => 6).sort %>
 <% for c in chapters %>
-	<% settings[c.identifier + '_email_addresses'] = {} if settings[c.identifier + '_email_addresses'].nil? %>
+  <% settings[c.identifier + '_email_addresses'] = {} if settings[c.identifier + '_email_addresses'].nil? %>
 
-	<% settings[c.identifier + '_email_addresses']['Actives'] = '' if settings[c.identifier + '_email_addresses']['Actives'].nil? %>
-	<% settings[c.identifier + '_email_addresses']['Exec'] = '' if settings[c.identifier + '_email_addresses']['Exec'].nil? %>
-	<% settings[c.identifier + '_email_addresses']['Advisors'] = '' if settings[c.identifier + '_email_addresses']['Advisors'].nil? %>
-	<% settings[c.identifier + '_email_addresses']['President'] = '' if settings[c.identifier + '_email_addresses']['President'].nil? %>
-	<% settings[c.identifier + '_email_addresses']['Vice President'] = '' if settings[c.identifier + '_email_addresses']['Vice President'].nil? %>
-	<% settings[c.identifier + '_email_addresses']['Chaplain'] = '' if settings[c.identifier + '_email_addresses']['Chaplain'].nil? %>
-	<% settings[c.identifier + '_email_addresses']['Pledgemaster'] = '' if settings[c.identifier + '_email_addresses']['Pledgemaster'].nil? %>
-	<% settings[c.identifier + '_email_addresses']['Treasurer'] = '' if settings[c.identifier + '_email_addresses']['Treasurer'].nil? %>
-	<% settings[c.identifier + '_email_addresses']['House Manager'] = '' if settings[c.identifier + '_email_addresses']['House Manager'].nil? %>
-	<% settings[c.identifier + '_email_addresses']['Secretary'] = '' if settings[c.identifier + '_email_addresses']['Secretary'].nil? %>
-	<% settings[c.identifier + '_email_addresses']['Social Media'] = '' if settings[c.identifier + '_email_addresses']['Social Media'].nil? %>
+  <% settings[c.identifier + '_email_addresses']['Actives'] = '' if settings[c.identifier + '_email_addresses']['Actives'].nil? %>
+  <% settings[c.identifier + '_email_addresses']['Exec'] = '' if settings[c.identifier + '_email_addresses']['Exec'].nil? %>
+  <% settings[c.identifier + '_email_addresses']['Advisors'] = '' if settings[c.identifier + '_email_addresses']['Advisors'].nil? %>
+  <% settings[c.identifier + '_email_addresses']['President'] = '' if settings[c.identifier + '_email_addresses']['President'].nil? %>
+  <% settings[c.identifier + '_email_addresses']['Vice President'] = '' if settings[c.identifier + '_email_addresses']['Vice President'].nil? %>
+  <% settings[c.identifier + '_email_addresses']['Chaplain'] = '' if settings[c.identifier + '_email_addresses']['Chaplain'].nil? %>
+  <% settings[c.identifier + '_email_addresses']['Pledgemaster'] = '' if settings[c.identifier + '_email_addresses']['Pledgemaster'].nil? %>
+  <% settings[c.identifier + '_email_addresses']['Treasurer'] = '' if settings[c.identifier + '_email_addresses']['Treasurer'].nil? %>
+  <% settings[c.identifier + '_email_addresses']['House Manager'] = '' if settings[c.identifier + '_email_addresses']['House Manager'].nil? %>
+  <% settings[c.identifier + '_email_addresses']['Secretary'] = '' if settings[c.identifier + '_email_addresses']['Secretary'].nil? %>
+  <% settings[c.identifier + '_email_addresses']['Social Media'] = '' if settings[c.identifier + '_email_addresses']['Social Media'].nil? %>
 <% end %>
 
 <% settings['ac_email_addresses'] = {} if settings['ac_email_addresses'].nil? %>
 
 <% alumni_chapters = Project.where(:parent_id => 50).sort %>
 <% for c in alumni_chapters %>
-	<% settings['ac_email_addresses'][c.identifier] = '' if settings['ac_email_addresses'][c.identifier].nil? %>
+  <% settings['ac_email_addresses'][c.identifier] = '' if settings['ac_email_addresses'][c.identifier].nil? %>
 <% end %>
 
 
@@ -57,7 +57,7 @@
 
 <% alumni_orgs = Project.where(:parent_id => 36).sort %>
 <% for a in alumni_orgs %>
-	<% settings['ao_email_addresses'][a.identifier] = '' if settings['ao_email_addresses'][a.identifier].nil? %>
+  <% settings['ao_email_addresses'][a.identifier] = '' if settings['ao_email_addresses'][a.identifier].nil? %>
 <% end %>
 
 <h3>General</h3>
@@ -67,28 +67,34 @@
     <tr>
       <td><strong>Fraternity Password:</strong></td>
       <td>
-      	<%= text_field_tag "settings[fraternity_password]", settings['fraternity_password'] %>
+        <%= text_field_tag "settings[fraternity_password]", settings['fraternity_password'] %>
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Colony Password:</strong></td>
+      <td>
+        <%= text_field_tag "settings[colony_password]", settings['colony_password'] %>
       </td>
     </tr>
     <tr>
       <td><strong>Google Apps Admin:</strong><br>
-      	Enter the ago.org email address<br>
-      	of a Google Apps Super Admin:
+        Enter the ago.org email address<br>
+        of a Google Apps Super Admin:
       </td>
       <td>
-      	<%= text_field_tag "settings[google_admin_email]", settings['google_admin_email'] %>
+        <%= text_field_tag "settings[google_admin_email]", settings['google_admin_email'] %>
       </td>
     </tr>
     <tr>
       <td><strong>Mint.com username:</strong></td>
       <td>
-      	<%= text_field_tag "settings[mint_user]", settings['mint_user'] %>
+        <%= text_field_tag "settings[mint_user]", settings['mint_user'] %>
       </td>
     </tr>
     <tr>
       <td><strong>Mint.com password:</strong></td>
       <td>
-      	<%= text_field_tag "settings[mint_pw]", settings['mint_pw'] %>
+        <%= text_field_tag "settings[mint_pw]", settings['mint_pw'] %>
       </td>
     </tr>
   </tbody>
@@ -97,20 +103,20 @@
 <h3>Google Apps Email Groups</h3>
 
 <table style="width: 400px" class="list">
-	<thead><tr>
-	<th>Group</th>
-	<th>Email Address</th>
-	</tr></thead>
-	<tbody>
+  <thead><tr>
+  <th>Group</th>
+  <th>Email Address</th>
+  </tr></thead>
+  <tbody>
 <% for e in settings['email_addresses'] %>
-	<tr class="<%= cycle("odd", "even") %>">
-		<td style="text-align: left">
-			<%= e[0] %>
-		</td>
-		<td style="text-align: left">
-			<%= text_field_tag "settings[email_addresses["+e[0]+"]", settings['email_addresses'][e[0]] %>
-		</td>
-	</tr>
+  <tr class="<%= cycle("odd", "even") %>">
+    <td style="text-align: left">
+      <%= e[0] %>
+    </td>
+    <td style="text-align: left">
+      <%= text_field_tag "settings[email_addresses["+e[0]+"]", settings['email_addresses'][e[0]] %>
+    </td>
+  </tr>
 <% end %>
   </tbody>
 </table>
@@ -118,64 +124,64 @@
 <h4>Alumni Organizations</h4>
 
 <table style="width: 400px" class="list">
-	<thead><tr>
-	<th>Group</th>
-	<th>Email Address</th>
-	</tr></thead>
-	<tbody>
+  <thead><tr>
+  <th>Group</th>
+  <th>Email Address</th>
+  </tr></thead>
+  <tbody>
 <% for e in settings['ao_email_addresses'] %>
-	<tr class="<%= cycle("odd", "even") %>">
-		<td style="text-align: left">
-			<%= Project.find(e[0]).name %>
-		</td>
-		<td style="text-align: left">
-			<%= text_field_tag "settings[ao_email_addresses["+e[0]+"]", settings['ao_email_addresses'][e[0]] %>
-		</td>
-	</tr>
+  <tr class="<%= cycle("odd", "even") %>">
+    <td style="text-align: left">
+      <%= Project.find(e[0]).name %>
+    </td>
+    <td style="text-align: left">
+      <%= text_field_tag "settings[ao_email_addresses["+e[0]+"]", settings['ao_email_addresses'][e[0]] %>
+    </td>
+  </tr>
 <% end %>
   </tbody>
 </table>
 
 <% for c in chapters %>
-	<h4><%= c.name %></h4>
+  <h4><%= c.name %></h4>
 
-	<table style="width: 400px" class="list">
-		<thead><tr>
-		<th>Group</th>
-		<th>Email Address</th>
-		</tr></thead>
-		<tbody>
-	<% for e in settings[c.identifier + '_email_addresses'] %>
-		<tr class="<%= cycle("odd", "even") %>">
-			<td style="text-align: left">
-				<%= c.name + ' ' + e[0] %>
-			</td>
-			<td style="text-align: left">
-				<%= text_field_tag "settings["+c.identifier+"_email_addresses["+e[0]+"]", settings[c.identifier + '_email_addresses'][e[0]] %>
-			</td>
-		</tr>
-	<% end %>
-	  </tbody>
-	</table>
+  <table style="width: 400px" class="list">
+    <thead><tr>
+    <th>Group</th>
+    <th>Email Address</th>
+    </tr></thead>
+    <tbody>
+  <% for e in settings[c.identifier + '_email_addresses'] %>
+    <tr class="<%= cycle("odd", "even") %>">
+      <td style="text-align: left">
+        <%= c.name + ' ' + e[0] %>
+      </td>
+      <td style="text-align: left">
+        <%= text_field_tag "settings["+c.identifier+"_email_addresses["+e[0]+"]", settings[c.identifier + '_email_addresses'][e[0]] %>
+      </td>
+    </tr>
+  <% end %>
+    </tbody>
+  </table>
 <% end %>
 
 <h4>Alumni Chapters</h4>
 
 <table style="width: 400px" class="list">
-	<thead><tr>
-	<th>Group</th>
-	<th>Email Address</th>
-	</tr></thead>
-	<tbody>
+  <thead><tr>
+  <th>Group</th>
+  <th>Email Address</th>
+  </tr></thead>
+  <tbody>
 <% for e in settings['ac_email_addresses'] %>
-	<tr class="<%= cycle("odd", "even") %>">
-		<td style="text-align: left">
-			<%= Project.find(e[0]) %>
-		</td>
-		<td style="text-align: left">
-			<%= text_field_tag "settings[ac_email_addresses["+e[0]+"]", settings['ac_email_addresses'][e[0]] %>
-		</td>
-	</tr>
+  <tr class="<%= cycle("odd", "even") %>">
+    <td style="text-align: left">
+      <%= Project.find(e[0]) %>
+    </td>
+    <td style="text-align: left">
+      <%= text_field_tag "settings[ac_email_addresses["+e[0]+"]", settings['ac_email_addresses'][e[0]] %>
+    </td>
+  </tr>
 <% end %>
   </tbody>
 </table>
