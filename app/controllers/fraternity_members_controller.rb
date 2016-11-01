@@ -1,7 +1,7 @@
 class FraternityMembersController < ApplicationController
   #unloadable
 
-  before_filter :find_project, :authorize, :only => [:export, :export_google_contacts, :export_crm, :crm, :edit, :update]
+  before_filter :authorize_global, :only => [:export, :export_google_contacts, :export_crm, :crm, :edit, :update]
 
   helper :sort
   include SortHelper
@@ -210,18 +210,6 @@ class FraternityMembersController < ApplicationController
   end
   
   private
-
-  def find_project
-    if User.current.admin?
-      @project = Project.find(6)
-    else
-      Project.where(parent_id: 6).each do |project|
-        if User.current.member_of? project
-          @project = project
-        end
-      end
-    end
-  end
 
   def fraternity_member_params
     params.require(:fraternity_member).permit(:chapter)
