@@ -4,7 +4,7 @@
 
 <%= form_tag(directory_path, :method => :get) do %>
 <fieldset>
-<% chapters = [""] + FraternityMember.all.map(&:chapter).uniq.sort -%>
+<% chapters = [""] + FraternityMember.all.map(&:chapter).uniq.compact.sort -%>
 <table>
   <tr>
     <td>
