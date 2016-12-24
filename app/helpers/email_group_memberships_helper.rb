@@ -1,4 +1,4 @@
-module EmailGroupsHelper
+module EmailGroupMembershipsHelper
 
   def projects_list
     list = {}
@@ -17,5 +17,6 @@ module EmailGroupsHelper
     EmailGroup.all.order(:address).map{ |g| list[g.address] = g.id }
     return list
   end
+
 
 end

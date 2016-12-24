@@ -7,3 +7,10 @@ en:
   field_active_number: Active number
   field_pledge_name: Pledge name
   label_issue_view_all: View all open issues
+  field_organization: Organization
+  field_include_project: Include project
+  field_include_project_children: Inlude project children
+  field_include_role: Include role
+  field_include_email_group: Include email group
+  field_exclude_project: Exclude project
+  field_exclude_role: Exclude role

@@ -2,6 +2,10 @@
 # See: http://guides.rubyonrails.org/routing.html
 resources :fraternity_members
 
+resources :email_groups do
+  resources :email_group_memberships
+end
+
 get 'directory', :to => 'fraternity_members#index'
 get 'directory/export', :to => 'fraternity_members#export'
 get 'directory/export_google_contacts', :to => 'fraternity_members#export_google_contacts'
@@ -20,12 +24,6 @@ get 'crm', :to => 'fraternity_members#crm'
 get 'crm/export', :to => 'fraternity_members#export_crm'
 
 get '/projects/:id/deposits', :to => 'deposits#index'
-
-get 'email_groups', :to => 'email_groups#index'
-get 'email_groups/:group', :to => 'email_groups#show'
-get 'email-groups', :to => 'email_groups#index'
-get 'email-groups/:group', :to => 'email_groups#show'
-
 
 get '/budgets', :to => 'shortcuts#budgets'
 get '/chapter-reports', :to => 'shortcuts#chapter_reports'

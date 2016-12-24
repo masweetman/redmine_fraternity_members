@@ -1,0 +1,25 @@
+<h2>Edit @email_group.address</h2>
+
+<%= labelled_form_for @email_group do |f| %>
+  <%= error_messages_for 'email_group' %>
+
+<div class='box tabular'>
+  <p>
+    <%= f.text_field :organization, required: false, value: @email_group.organization %>
+  </p>
+  <p>
+    <%= f.text_field :name, required: false, value: @email_group.name %>
+  </p>
+  <p>
+    <%= f.text_field :address, required: false, value: @email_group.address %>
+  </p>
+  <p>
+    <%= f.text_field :description, required: false, value: @email_group.description %>
+  </p>
+</div>
+  
+  <p>
+    <%= f.submit l(:button_submit) %>
+  </p>
+<% end %>
+

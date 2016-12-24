@@ -1,0 +1,24 @@
+<h2>New Email Group</h2>
+
+<%= labelled_form_for @email_group do |f| %>
+  <%= error_messages_for 'email_group' %>
+
+<div class='box tabular'>
+  <p>
+    <%= f.text_field :organization, required: false %>
+  </p>
+  <p>
+    <%= f.text_field :name, required: false %>
+  </p>
+  <p>
+    <%= f.text_field :address, required: false %>
+  </p>
+  <p>
+    <%= f.text_field :description, required: false %>
+  </p>
+</div>
+  
+  <p>
+    <%= f.submit l(:button_submit) %>
+  </p>
+<% end %>

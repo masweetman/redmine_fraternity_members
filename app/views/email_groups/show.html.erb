@@ -1,27 +1,84 @@
-<h2>Google Group Members: <%= @group %></h2>
-<h3>
-	<%= mail_to(@email, @email, :encode => 'javascript') %>
-</h3>
+<%= render :partial => 'email_group_menu' %>
 
-<table class="email_groups">
-	<thead><tr>
-	<th>User</th>
-	<th>Email</th>
-	</tr></thead>
-	<tbody>
-<% for m in @members %>
-	<tr class="<%= cycle("odd", "even") %>">
-		<td style="text-align: left">
-			<%= link_to_user User.find_by_mail(m) %>
-		</td>
-		<td style="text-align: left">
-			<%= mail_to(m, m, :encode => 'javascript') %>
-		</td>
-	</tr>
-<% end %>
+<h2><%= mail_to(@email_group.address, @email_group.address, :encode => 'javascript') %></h2>
+
+<div class="autoscroll">
+<table class="list">
+  <thead><tr>
+    <th>Name</th>
+    <th>Email</th>
+  </tr></thead>
+  <tbody>
+  <% for member in @email_group.members %>
+    <tr class="<%= cycle('odd', 'even') %>">
+      <td>
+        <% if member['user_id'].to_i > 0 %>
+          <%= link_to member['name'], User.find(member['user_id']) %>
+        <% else %>
+          <%= member['name'] %>
+        <% end %>
+      </td>
+      <td><%= mail_to(member['mail'], member['mail'], :encode => 'javascript') %></td>
+    </tr>
+  <% end %>
   </tbody>
 </table>
+</div>
 
-<% content_for :header_tags do %>
-    <%= stylesheet_link_tag 'email_groups', :plugin => 'redmine_fraternity_members' %>
+<h3>Membership Rules</h3>
+
+<% if User.current.admin? %>
+  <%= labelled_form_for([@email_group, @email_group.email_group_memberships.build]) do |f| %>
+    <%= error_messages_for 'email_group_membership' %>
+  <% project = nil %>
+  <% project ||= @email_group.email_group_memberships.first.include_project_id %>
+
+  <div class='box tabular'>
+    <p>
+      <%= f.select :include_project_id, projects_list, { required: false, selected: project, include_blank: true } unless projects_list.empty? %>
+    </p>
+    <p>
+      <%= f.select :include_project_children, {'Yes' => true, 'No' => false}, { required: false, selected: false, include_blank: false } %>
+    </p>
+    <p>
+      <%= f.select :include_role_id, { 'All Roles' => 0 }.merge(roles_list), { required: false, selected: nil, include_blank: true } unless roles_list.empty? %>
+    </p>
+    <p>
+      <%= f.select :exclude_role_id, roles_list, { required: false, selected: nil, include_blank: true } unless roles_list.empty? %>
+    </p>
+    <p>
+      <% list = email_groups_list %>
+      <% list.delete(@email_group.address) %>
+      <%= f.select :include_email_group_id, list, { required: false, selected: nil, include_blank: true } if list.count > 0 %> (if selecting an email group, leave all other fields blank)
+    </p>
+    <p>
+      <%= f.submit l(:button_submit) %>
+    </p>
+  </div>
+  
+  <% end %>
+<% end %>
+
+<% for email_group_membership in @email_group_memberships %>
+
+  <div class='box tabular'>
+    <% if User.current.admin? %>
+      <div class="contextual">
+        <%= link_to l(:button_edit), edit_email_group_email_group_membership_path(@email_group, email_group_membership), :class => 'icon icon-edit' %>
+        <%= link_to l(:button_delete), email_group_email_group_membership_path(@email_group, email_group_membership), :method => :delete, :data => {:confirm => l(:text_are_you_sure)} ,:class => 'icon icon-del' %>
+      </div>
+    <% end %>
+
+    <% if email_group_membership.include_email_group_id.to_i > 0 %>
+      <strong>Email Group:</strong> <%= EmailGroup.find(email_group_membership.include_email_group_id).name %>
+    <% else %>
+      <% unless Project.find(email_group_membership.include_project_id).nil? %>
+        <strong>Project:</strong> <%= link_to Project.find(email_group_membership.include_project_id), Project.find(email_group_membership.include_project_id) %>
+      <% end %>
+      <strong>Role:</strong>
+      <%= Role.find(email_group_membership.include_role_id) unless email_group_membership.include_role_id.to_i == 0 %>
+      <%= 'All roles' if email_group_membership.include_role_id == 0 && email_group_membership.exclude_role_id.to_i == 0 %>
+      <%= 'All roles except ' + Role.find(email_group_membership.exclude_role_id).name.to_s if email_group_membership.include_role_id == 0 && email_group_membership.exclude_role_id.to_i > 0 %>
+    <% end %>
+  </div>
 <% end %>
