@@ -24,7 +24,7 @@ class GoogleDirectory
   end
 
   def list_groups_from_google
-    response = directory.list_groups(customer: google_customer_id, max_results: 200){ |result, err| } #200 is currentle the absolute maximum
+    response = directory.list_groups(customer: google_customer_id, max_results: 1000){ |result, err| } #200 might be the current absolute maximum?
     if response.nil?
       raise 'Error getting groups from Google.'
     end
