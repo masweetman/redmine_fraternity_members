@@ -24,15 +24,21 @@ class GoogleDirectory
   end
 
   def list_groups_from_google
-    list = []
-    list += directory.list_groups(customer: google_customer_id).groups.map{ |g| g.email }.sort unless directory.list_groups(customer: google_customer_id).groups.nil?
+    response = directory.list_groups(customer: google_customer_id)
+    if response.groups.nil?
+      raise 'Error getting groups from Google.'
+    else
+      return response.groups.map{ |g| g.email }.sort
     return list
   end
 
   def list_members(email_group)
-    list = []
-    list += directory.list_members(email_group.address).members.map{ |m| m.email }.sort unless directory.list_members(email_group.address).members.nil?
-    return list
+    response = directory.list_members(email_group.address)
+    if response.members.nil?
+      raise 'Error getting members from Google Group: ' + email_group.address
+    else
+      return response.members.map{ |m| m.email }.sort
+    end
   end
 
   def update_groups
@@ -42,15 +48,17 @@ class GoogleDirectory
     groups_to_add = redmine_groups - google_groups
     groups_to_delete = google_groups - redmine_groups
 
-    for g in groups_to_delete
-      directory.delete_group(g)
-    end
+    unless google_groups.nil?
+      for g in groups_to_delete
+        directory.delete_group(g)
+      end
 
-    for g in groups_to_add
-      group = Google::Apis::AdminDirectoryV1::Group.new
-      group.email = g
-      group.name = EmailGroup.find_by_address(g).name
-      directory.insert_group(group)
+      for g in groups_to_add
+        group = Google::Apis::AdminDirectoryV1::Group.new
+        group.email = g
+        group.name = EmailGroup.find_by_address(g).name
+        directory.insert_group(group)
+      end
     end
   end
 
@@ -61,14 +69,16 @@ class GoogleDirectory
     members_to_add = redmine_members - google_members
     members_to_delete = google_members - redmine_members
 
-    for m in members_to_delete
-      directory.delete_member(email_group.address, m)
-    end
+    unless google_members.nil?
+      for m in members_to_delete
+        directory.delete_member(email_group.address, m)
+      end
 
-    for m in members_to_add
-      member = Google::Apis::AdminDirectoryV1::Member.new
-      member.email = m
-      directory.insert_member(email_group.address, member)
+      for m in members_to_add
+        member = Google::Apis::AdminDirectoryV1::Member.new
+        member.email = m
+        directory.insert_member(email_group.address, member)
+      end
     end
   end
 
