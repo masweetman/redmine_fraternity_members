@@ -37,7 +37,7 @@ class GoogleDirectory
 
   def update_groups
     google_groups = list_groups_from_google
-    redmine_groups = EmailGroup.all.map{ |g| g.address }.sort
+    redmine_groups = EmailGroup.all.map{ |g| g.address.downcase }.sort
 
     groups_to_add = redmine_groups - google_groups
     groups_to_delete = google_groups - redmine_groups

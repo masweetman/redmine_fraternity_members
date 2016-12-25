@@ -6,7 +6,7 @@ class EmailGroup < ActiveRecord::Base
     email_group_memberships.each do |email_group_membership|
       list += email_group_membership.members
     end
-    return list.uniq
+    return list.uniq.sort_by{ |h| h['mail'] }
   end
 
 end

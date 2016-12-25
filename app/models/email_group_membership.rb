@@ -12,14 +12,14 @@ class EmailGroupMembership < ActiveRecord::Base
           Role.all.each do |role|
             unless exclude_role_id == role.id
               role.members.where(project_id: project).map { |m|
-                list << { 'user_id' => m.user.id, 'name' => m.user.name, 'mail' => m.user.mail} unless m.user.nil?
+                list << { 'user_id' => m.user.id, 'name' => m.user.name, 'mail' => m.user.mail.downcase} unless m.user.nil?
               }
             end
           end
         else
           role = Role.find(include_role_id)
           role.members.where(project_id: project).map { |m|
-            list << { 'user_id' => m.user.id, 'name' => m.user.name, 'mail' => m.user.mail} unless m.user.nil?
+            list << { 'user_id' => m.user.id, 'name' => m.user.name, 'mail' => m.user.mail.downcase} unless m.user.nil?
           }
         end
       end
@@ -30,14 +30,14 @@ class EmailGroupMembership < ActiveRecord::Base
         Role.all.each do |role|
           unless exclude_role_id == role.id
             role.members.where(project_id: include_project_id).map { |m|
-              list << { 'user_id' => m.user.id, 'name' => m.user.name, 'mail' => m.user.mail} unless m.user.nil?
+              list << { 'user_id' => m.user.id, 'name' => m.user.name, 'mail' => m.user.mail.downcase} unless m.user.nil?
             }
           end
         end
       else
         role = Role.find(include_role_id)
         role.members.where(project_id: include_project_id).map { |m|
-          list << { 'user_id' => m.user.id, 'name' => m.user.name, 'mail' => m.user.mail} unless m.user.nil?
+          list << { 'user_id' => m.user.id, 'name' => m.user.name, 'mail' => m.user.mail.downcase} unless m.user.nil?
         }
       end
     end
@@ -45,7 +45,7 @@ class EmailGroupMembership < ActiveRecord::Base
     if include_email_group_id.to_i > 0
       list = []
       email_group = EmailGroup.find(include_email_group_id)
-      list << { 'user_id' => nil, 'name' => email_group.name, 'mail' => email_group.address}
+      list << { 'user_id' => nil, 'name' => email_group.name, 'mail' => email_group.address.downcase}
     end
     
     return list.uniq
