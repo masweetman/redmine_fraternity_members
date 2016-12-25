@@ -1,8 +1,6 @@
-require 'google/api_client'
-require 'google/api_client/service'
-require 'google/api_client/client_secrets'
-require 'google/api_client/auth/file_storage'
-require 'google/api_client/auth/installed_app'
+require 'googleauth'
+require 'google/apis/admin_directory_v1'
+
 require 'httparty'
 require 'json'
 #require 'minty'

@@ -1,4 +1,4 @@
-gem 'google-api-client', '0.8.6'
+gem 'google-api-client'
 #gem 'httparty'
 #gem 'minty', :git => 'https://github.com/mattdbridges/minty.git'
 gem 'geocoder'
