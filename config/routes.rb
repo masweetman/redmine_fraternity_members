@@ -6,6 +6,9 @@ resources :email_groups do
   resources :email_group_memberships
 end
 
+get '/copy_organization', :to => 'email_groups#copy'
+get '/create_organization', :to => 'email_groups#create_org'
+
 get 'directory', :to => 'fraternity_members#index'
 get 'directory/export', :to => 'fraternity_members#export'
 get 'directory/export_google_contacts', :to => 'fraternity_members#export_google_contacts'

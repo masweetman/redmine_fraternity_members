@@ -1,5 +1,8 @@
 class EmailGroupMembershipsController < ApplicationController
   #unloadable
+
+  before_filter :authorize_global, :only => [:new, :create, :edit, :update, :destroy]
+  
   helper :sort
   include SortHelper
 

@@ -1,0 +1,20 @@
+<h2>Copy Email Groups</h2>
+
+<%= form_tag('/create_organization', method: :get) do %>
+
+<div class='box tabular'>
+  <p>
+    Organization to copy: <%= select_tag 'organization', options_for_select(@organizations) %>
+  </p>
+  <p>
+    New project: <%= select_tag 'new_project', options_for_select(@projects) %>
+  </p>
+  <p>
+    New domain (example.com): <%= text_field_tag 'new_domain' %>
+  </p>
+</div>
+  
+  <p>
+    <%= submit_tag 'Submit' %>
+  </p>
+<% end %>

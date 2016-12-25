@@ -1,5 +1,8 @@
 class EmailGroupsController < ApplicationController
 	#unloadable
+
+  before_filter :authorize_global, :only => [:new, :create, :copy, :create_org, :edit, :update, :destroy]
+
 	helper :sort
 	include SortHelper
 
@@ -8,11 +11,6 @@ class EmailGroupsController < ApplicationController
     sort_update %w(organization name address)
 
 		@email_groups = EmailGroup.all.order(sort_clause)
-
-		#this stuff will be deleted eventually
-		@chapters = Project.where(:parent_id => 6).sort
-		@alumni_orgs = Project.where(:parent_id => 36).sort
-		@alumni_chapters = Project.where(:parent_id => 50).sort
 	end
 
 	def new
@@ -28,6 +26,21 @@ class EmailGroupsController < ApplicationController
 			render 'new'
 		end
 	end
+
+  def copy
+    @organizations = EmailGroup.all.map{ |g| g.organization }.compact.uniq.sort
+    @projects = Project.find(6).children.map{ |p| p.identifier }.sort
+  end
+
+  def create_org
+    organization = params['organization']
+    new_project_id = Project.find(params['new_project']).id
+    new_domain = params['new_domain']
+
+    copy_organization_groups(organization, new_project_id, new_domain)
+
+    redirect_to '/email_groups'
+  end
 
 	def edit
 		@email_group = EmailGroup.find(params[:id])
@@ -64,6 +77,25 @@ class EmailGroupsController < ApplicationController
   end
 
 	private
+
+    def copy_organization_groups(organization, new_project_id, new_domain)
+      email_groups_to_copy = EmailGroup.where(organization: organization)
+      old_domain = email_groups_to_copy.first.address.split("@").last
+
+      email_groups_to_copy.each do |email_group|
+        new_email_group = email_group.dup
+        new_email_group.organization = Project.find(new_project_id).name
+        new_email_group.address = email_group.address.gsub(old_domain, new_domain)
+        new_email_group.save
+
+        email_group.email_group_memberships.each do |rule|
+          new_rule = rule.dup
+          new_rule.include_project_id = new_project_id
+          new_rule.save
+          new_email_group.email_group_memberships << new_rule
+        end
+      end
+    end
 
 		def email_group_params
 			params.require(:email_group).permit!
