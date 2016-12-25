@@ -75,15 +75,23 @@ class GoogleDirectory
     members_to_add = redmine_members - google_members
     members_to_delete = google_members - redmine_members
 
-    unless google_members.nil?
-      for m in members_to_delete
-        directory.delete_member(email_group.address, m)
-      end
+    callback = lambda { |member, err| }
 
-      for m in members_to_add
-        member = Google::Apis::AdminDirectoryV1::Member.new
-        member.email = m
-        directory.insert_member(email_group.address, member)
+    unless members_to_delete.empty?
+      directory.batch do |directory|
+        for m in members_to_delete
+          directory.delete_member(email_group.address, m)
+        end
+      end
+    end
+    
+    unless members_to_add.empty?
+      directory.batch do |directory|
+        for m in members_to_add
+          member = Google::Apis::AdminDirectoryV1::Member.new
+          member.email = m
+          directory.insert_member(email_group.address, member)
+        end
       end
     end
   end

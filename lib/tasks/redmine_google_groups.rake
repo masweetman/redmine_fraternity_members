@@ -6,7 +6,7 @@ namespace :redmine do
       directory = GoogleDirectory.new
 
       #add new groups and delete old groups
-      #directory.update_groups
+      directory.update_groups
 
       #update google group members
       EmailGroup.all.each do |g|
