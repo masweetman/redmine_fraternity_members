@@ -25,13 +25,13 @@ class GoogleDirectory
 
   def list_groups_from_google
     list = []
-    list ||= directory.list_groups(customer: google_customer_id).groups.map{ |g| g.email }.sort
+    list += directory.list_groups(customer: google_customer_id).groups.map{ |g| g.email }.sort unless directory.list_groups(customer: google_customer_id).groups.nil?
     return list
   end
 
   def list_members(email_group)
     list = []
-    list ||= directory.list_members(email_group.address).members.map{ |m| m.email }.sort
+    list += directory.list_members(email_group.address).members.map{ |m| m.email }.sort unless directory.list_members(email_group.address).members.nil?
     return list
   end
 
