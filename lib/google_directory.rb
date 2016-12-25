@@ -24,20 +24,26 @@ class GoogleDirectory
   end
 
   def list_groups_from_google
-    response = directory.list_groups(customer: google_customer_id)
-    if response.groups.nil?
+    response = directory.list_groups(customer: google_customer_id, max_results: 200){ |result, err| } #200 is currentle the absolute maximum
+    if response.nil?
       raise 'Error getting groups from Google.'
+    end
+    if response.groups.nil?
+      return []
     else
-      return response.groups.map{ |g| g.email }.sort
-    return list
+      return response.groups.map{ |g| g.email.downcase }.sort
+    end
   end
 
   def list_members(email_group)
-    response = directory.list_members(email_group.address)
-    if response.members.nil?
+    response = directory.list_members(email_group.address.downcase, max_results: 200){ |result, err| } #200 is currently the absolute maximum
+    if response.nil?
       raise 'Error getting members from Google Group: ' + email_group.address
+    end
+    if response.members.nil?
+      return []
     else
-      return response.members.map{ |m| m.email }.sort
+      return response.members.map{ |m| m.email.downcase }.sort
     end
   end
 
