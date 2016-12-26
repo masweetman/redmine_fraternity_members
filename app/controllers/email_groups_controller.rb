@@ -41,8 +41,8 @@ class EmailGroupsController < ApplicationController
 	end
 
   def copy
-    @organizations = EmailGroup.all.map{ |g| g.organization }.compact.uniq.sort
-    @projects = Project.find(6).children.map{ |p| p.identifier }.sort
+    @organizations = (Project.find(6).children.map(&:name) and EmailGroup.all.map(&:organization)).compact.uniq.sort
+    @projects = Project.find(6).children.map(&:identifier).sort
   end
 
   def create_org

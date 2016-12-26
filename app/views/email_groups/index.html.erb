@@ -1,4 +1,7 @@
 <%= render :partial => 'action_menu' %>
+
+<h2>Email Groups</h2>
+
 <fieldset>
 <% organizations = [''] + EmailGroup.all.map(&:organization).uniq.compact.sort -%>
 <%= form_tag(email_groups_path, :method => :get) do %>

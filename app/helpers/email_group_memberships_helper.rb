@@ -18,5 +18,4 @@ module EmailGroupMembershipsHelper
     return list
   end
 
-
 end
