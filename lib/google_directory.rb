@@ -24,32 +24,38 @@ class GoogleDirectory
   end
 
   def list_groups_from_google
-    response = directory.list_groups(customer: google_customer_id, max_results: 1000){ |result, err| } #200 might be the current absolute maximum?
-    if response.nil?
-      raise 'Error getting groups from Google.'
+    groups = []
+    next_page_token = ''
+    callback = lambda { |result, err| }
+    while !next_page_token.nil?
+      response = directory.list_groups(customer: google_customer_id, max_results: 200, page_token: next_page_token, &callback)
+      groups += response.groups.map{ |g| g.email.downcase } unless response.nil? || response.groups.nil?
+      next_page_token = response.next_page_token unless response.nil?
+      if response.nil? || response.groups.nil?
+        next_page_token = nil
+      end
     end
-    if response.groups.nil?
-      return []
-    else
-      return response.groups.map{ |g| g.email.downcase }.sort
-    end
+    return groups.uniq.sort
   end
 
   def list_members(email_group)
-    response = directory.list_members(email_group.address.downcase, max_results: 200){ |result, err| } #200 is currently the absolute maximum
-    if response.nil?
-      raise 'Error getting members from Google Group: ' + email_group.address
+    members = []
+    next_page_token = ''
+    callback = lambda { |result, err| }
+    while !next_page_token.nil?
+      response = directory.list_members(email_group.address.downcase, max_results: 200, page_token: next_page_token, &callback)
+      members += response.members.map{ |m| m.email.downcase }.sort
+      next_page_token = response.next_page_token unless response.nil?
+      if response.nil? || response.members.nil?
+        next_page_token = nil
+      end
     end
-    if response.members.nil?
-      return []
-    else
-      return response.members.map{ |m| m.email.downcase }.sort
-    end
+    return members.uniq.sort
   end
 
   def update_groups
     google_groups = list_groups_from_google
-    redmine_groups = EmailGroup.all.map{ |g| g.address.downcase }.sort
+    redmine_groups = EmailGroup.all.map{ |g| g.address.downcase }.uniq.sort
 
     groups_to_add = redmine_groups - google_groups
     groups_to_delete = google_groups - redmine_groups
@@ -70,7 +76,7 @@ class GoogleDirectory
 
   def update_members(email_group)
     google_members = list_members(email_group)
-    redmine_members = email_group.members.map{ |m| m['mail'] }.sort
+    redmine_members = email_group.members.map{ |m| m['mail'] }.uniq.sort
 
     members_to_add = redmine_members - google_members
     members_to_delete = google_members - redmine_members
