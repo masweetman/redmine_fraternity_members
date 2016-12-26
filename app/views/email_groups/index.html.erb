@@ -1,4 +1,15 @@
 <%= render :partial => 'action_menu' %>
+<fieldset>
+<% organizations = [''] + EmailGroup.all.map(&:organization).uniq.compact.sort -%>
+<%= form_tag(email_groups_path, :method => :get) do %>
+    <strong>Organization:</strong>
+    <%= select_tag('organization', options_for_select(organizations, params[:organization]), :onchange => params[:organization]) %>
+    <strong>Search:</strong>
+    <%= text_field_tag 'search', params[:search], :size => 23 %>
+    <%= submit_tag l(:button_apply), :class => "small", :search => nil %>
+    <%= link_to l(:button_clear), email_groups_path, :class => 'icon icon-reload' %>
+<% end %>
+</fieldset>
 
 <p>
   Click a group name to view the current members of the group. To change email group memberships,

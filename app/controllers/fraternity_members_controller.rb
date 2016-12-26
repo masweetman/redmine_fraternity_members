@@ -9,37 +9,30 @@ class FraternityMembersController < ApplicationController
   include CustomFieldsHelper
 
   def query
-    search = params[:search].split
-    if !params[:search].present?
-      query = "chapter LIKE '#{params[:chapter]}%'"
-    else
-      query = "chapter LIKE '#{params[:chapter]}%' AND "
-      query += search.map{ |word| "(active_number LIKE '#{word}' OR firstname LIKE '#{word}%' OR lastname LIKE '#{word}%' OR pledge_name LIKE '%#{word}%')" }.join(" AND ")
+    query = []
+    if params[:chapter].present?
+      query << "chapter LIKE '#{params[:chapter]}%'"
     end
-    return query
+    if params[:search].present?
+      search = params[:search].split
+      query << search.map{ |word| "(active_number LIKE '#{word}' OR firstname LIKE '#{word}%' OR lastname LIKE '#{word}%' OR pledge_name LIKE '%#{word}%')" }.join(" AND ")
+    end
+    if params[:status].present?
+      active = 1 if params[:status] == 'Actives'
+      active = 0 if params[:status] == 'Alumni'
+      query << "active = '#{active}'" unless active.nil?
+    end
+    return query.join(' AND ')
   end
 
   def index
     sort_init [['chapter', 'asc'], ['active_number', 'asc']]
     sort_update %w(chapter active_number lastname pledge_name mail phone address graduation_year)
 
-    scope = FraternityMember
+    scope = FraternityMember.where(query)
 
     if params[:zip].present? && params[:dist].present?
       scope = scope.near(params[:zip].to_s, params[:dist].to_i)
-    end
-
-    if params[:chapter].present? || params[:search].present?
-      scope = scope.where(query)
-    end
-
-    if params[:status].present?
-      if params[:status] == 'Actives'
-        scope = scope.where(:active => true)
-      end
-      if params[:status] == 'Alumni'
-        scope = scope.where(:active => false)
-      end
     end
 
     @member_count = scope.count(:all)

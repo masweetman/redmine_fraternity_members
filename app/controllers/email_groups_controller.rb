@@ -6,11 +6,24 @@ class EmailGroupsController < ApplicationController
 	helper :sort
 	include SortHelper
 
+  def query
+    query = []
+    if params[:organization].present?
+      query << "organization LIKE '#{params[:organization]}'"
+    end
+    search_query = ''
+    if params[:search].present?
+      search = params[:search].split
+      query << search.map{ |word| "(organization LIKE '%#{word}%' OR name LIKE '%#{word}%' OR address LIKE '%#{word}%' OR description LIKE '%#{word}%')" }.join(' AND ')
+    end
+    return query.join(' AND ')
+  end
+
 	def index
     sort_init [['organization', 'asc'], ['name', 'asc'], ['address', 'asc']]
     sort_update %w(organization name address)
 
-		@email_groups = EmailGroup.all.order(sort_clause)
+		@email_groups = EmailGroup.where(query).order(sort_clause)
 	end
 
 	def new
