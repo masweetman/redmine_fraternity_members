@@ -44,7 +44,7 @@ class GoogleDirectory
     callback = lambda { |result, err| }
     while !next_page_token.nil?
       response = directory.list_members(email_group.address.downcase, max_results: 200, page_token: next_page_token, &callback)
-      members += response.members.map{ |m| m.email.downcase }.sort
+      members += response.members.map{ |m| m.email.downcase }.sort unless response.nil? || response.members.nil?
       next_page_token = response.next_page_token unless response.nil?
       if response.nil? || response.members.nil?
         next_page_token = nil
