@@ -41,7 +41,7 @@
   	<td><%= link_to email_group.description, email_group %></td>
     <% if User.current.admin? %>
       <td>
-        <%= link_to l(:button_edit), edit_email_group_path(email_group), :class => 'icon icon-edit' %>
+        <%= link_to l(:button_edit), email_group, :class => 'icon icon-edit' %>
       </td>
       <td>
         <%= link_to l(:button_delete), email_group_path(email_group), :method => :delete, :data => {:confirm => l(:text_are_you_sure)} ,:class => 'icon icon-del' %>

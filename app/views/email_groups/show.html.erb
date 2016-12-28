@@ -2,6 +2,35 @@
 
 <h2><%= mail_to(@email_group.address, @email_group.address, :encode => 'javascript') %></h2>
 
+<% if User.current.admin? %>
+  <div class='box tabular'>
+  <%= labelled_form_for @email_group do |f| %>
+    <%= error_messages_for 'email_group' %>
+    <div class='splitcontent'>
+    <div class="splitcontentleft">
+      <p>
+        <%= f.text_field :organization, required: false, value: @email_group.organization %>
+      </p>
+      <p>
+        <%= f.text_field :name, required: false, value: @email_group.name %>
+      </p>
+    </div>
+    <div class="splitcontentright">
+      <p>
+        <%= f.text_field :address, required: false, value: @email_group.address %>
+      </p>
+      <p>
+        <%= f.text_field :description, required: false, value: @email_group.description %>
+      </p>
+    </div>
+    </div>
+    <p>
+      <%= f.submit 'Edit email group' %>
+    </p>
+  </div>
+  <% end %>
+<% end %>
+
 <div class="autoscroll">
 <table class="list">
   <thead><tr>
@@ -52,7 +81,7 @@
       <%= f.select :include_email_group_id, list, { required: false, selected: nil, include_blank: true } if list.count > 0 %> (if selecting an email group, leave all other fields blank)
     </p>
     <p>
-      <%= f.submit l(:button_submit) %>
+      <%= f.submit 'Add membership rule' %>
     </p>
   </div>
   
