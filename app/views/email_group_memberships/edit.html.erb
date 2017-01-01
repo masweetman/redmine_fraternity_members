@@ -22,7 +22,7 @@
     <%= f.select :exclude_project_id, projects_list, { required: false, selected: @email_group_membership.exclude_project_id, include_blank: true } unless projects_list.empty? %>
   </p>
   <p>
-    <%= f.select :exclude_role_id, roles_list, { required: false, selected: @email_group_membership.exclude_project_id, include_blank: true } unless roles_list.empty? %>
+    <%= f.select :exclude_role_id, roles_list, { required: false, selected: @email_group_membership.exclude_role_id, include_blank: true } unless roles_list.empty? %>
   </p>
 
 </div>

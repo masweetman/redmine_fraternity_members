@@ -108,6 +108,7 @@
       <%= Role.find(email_group_membership.include_role_id) unless email_group_membership.include_role_id.to_i == 0 %>
       <%= 'All roles' if email_group_membership.include_role_id == 0 && email_group_membership.exclude_role_id.to_i == 0 %>
       <%= 'All roles except ' + Role.find(email_group_membership.exclude_role_id).name.to_s if email_group_membership.include_role_id == 0 && email_group_membership.exclude_role_id.to_i > 0 %>
+      <%= '(including project children)' if email_group_membership.include_project_children %>
     <% end %>
   </div>
 <% end %>
