@@ -1,6 +1,6 @@
 <%= render :partial => 'email_group_menu' %>
 
-<h2><%= mail_to(@email_group.address, @email_group.address, :encode => 'javascript') %> (<%= @members.count %>members)</h2>
+<h2><%= mail_to(@email_group.address, @email_group.address, :encode => 'javascript') %> (<%= @members.count %> members)</h2>
 
 <% if User.current.admin? %>
   <div class='box tabular'>

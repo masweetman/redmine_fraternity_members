@@ -1,10 +1,10 @@
 class EmailGroupsController < ApplicationController
-	#unloadable
+  #unloadable
 
   before_filter :authorize_global, :only => [:new, :create, :copy, :create_org, :edit, :update, :destroy]
 
-	helper :sort
-	include SortHelper
+  helper :sort
+  include SortHelper
 
   def query
     query = []
@@ -19,27 +19,26 @@ class EmailGroupsController < ApplicationController
     return query.join(' AND ')
   end
 
-	def index
+  def index
     sort_init [['organization', 'asc'], ['name', 'asc'], ['address', 'asc']]
     sort_update %w(organization name address)
 
-		@email_groups = EmailGroup.where(query).order(sort_clause)
-    @members = @email_groups.members
-	end
+    @email_groups = EmailGroup.where(query).order(sort_clause)
+  end
 
-	def new
-		@email_group = EmailGroup.new
-	end
+  def new
+    @email_group = EmailGroup.new
+  end
 
-	def create
-		@email_group = EmailGroup.new(email_group_params)
+  def create
+    @email_group = EmailGroup.new(email_group_params)
 
-		if @email_group.save
-			redirect_to @email_group
-		else
-			render 'new'
-		end
-	end
+    if @email_group.save
+      redirect_to @email_group
+    else
+      render 'new'
+    end
+  end
 
   def copy
     @organizations = (Project.find(6).children.map(&:name) and EmailGroup.all.map(&:organization)).compact.uniq.sort
@@ -56,41 +55,42 @@ class EmailGroupsController < ApplicationController
     redirect_to '/email_groups'
   end
 
-	def edit
-		@email_group = EmailGroup.find(params[:id])
-	end
+  def edit
+    @email_group = EmailGroup.find(params[:id])
+  end
 
-	def update
-		@email_group = EmailGroup.find(params[:id])
+  def update
+    @email_group = EmailGroup.find(params[:id])
 
-		if @email_group.update(email_group_params)
-			redirect_to @email_group
-		else
-			render 'edit'
-		end
-	end
+    if @email_group.update(email_group_params)
+      redirect_to @email_group
+    else
+      render 'edit'
+    end
+  end
 
-	def show
+  def show
     sort_init [['include_project_id', 'asc'], ['include_role_id', 'asc']]
     sort_update %w(project role)
 
-		@email_group = EmailGroup.find(params[:id])
+    @email_group = EmailGroup.find(params[:id])
+    @members = @email_group.members
     @email_group_membership = EmailGroupMembership.new
-		@email_group_memberships = @email_group.email_group_memberships.order(sort_clause)
-	end
+    @email_group_memberships = @email_group.email_group_memberships.order(sort_clause)
+  end
 
   def destroy
     @email_group = EmailGroup.find(params[:id])
 
     @email_group.email_group_memberships.each do |membership|
-    	membership.destroy
+      membership.destroy
     end
     @email_group.destroy
     redirect_to '/email_groups'
     flash[:notice] = l(:notice_successful_delete)
   end
 
-	private
+  private
 
     def copy_organization_groups(organization, new_project_id, new_domain)
       email_groups_to_copy = EmailGroup.where(organization: organization)
@@ -111,8 +111,8 @@ class EmailGroupsController < ApplicationController
       end
     end
 
-		def email_group_params
-			params.require(:email_group).permit!
-		end
+    def email_group_params
+      params.require(:email_group).permit!
+    end
 
 end
