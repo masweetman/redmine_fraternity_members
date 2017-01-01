@@ -24,6 +24,7 @@ class EmailGroupsController < ApplicationController
     sort_update %w(organization name address)
 
 		@email_groups = EmailGroup.where(query).order(sort_clause)
+    @members = @email_groups.members
 	end
 
 	def new
