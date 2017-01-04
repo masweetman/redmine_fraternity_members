@@ -76,11 +76,6 @@
       <%= f.select :exclude_role_id, roles_list, { required: false, selected: nil, include_blank: true } unless roles_list.empty? %>
     </p>
     <p>
-      <% list = email_groups_list %>
-      <% list.delete(@email_group.address) %>
-      <%= f.select :include_email_group_id, list, { required: false, selected: nil, include_blank: true } if list.count > 0 %> (if selecting an email group, leave all other fields blank)
-    </p>
-    <p>
       <%= f.submit 'Add membership rule' %>
     </p>
   </div>

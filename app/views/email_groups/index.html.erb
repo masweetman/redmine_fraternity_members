@@ -38,7 +38,7 @@
   	<td><%= email_group.organization %></td>
   	<td><%= link_to email_group.name, email_group %></td>
     <td><%= mail_to(email_group.address, email_group.address, :encode => 'javascript') %></td>
-  	<td><%= link_to email_group.description, email_group %></td>
+  	<td><%= email_group.description %></td>
     <% if User.current.admin? %>
       <td>
         <%= link_to l(:button_edit), email_group, :class => 'icon icon-edit' %>
