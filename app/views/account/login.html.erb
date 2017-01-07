@@ -35,8 +35,13 @@
         <input type="submit" name="login" value="<%=l(:button_login)%> &#187;" tabindex="5"/>
     </td>
 </tr>
-<tr><td colspan='2'>
-    Members: <%= link_to 'Register for an account', :controller => 'account', :action => 'register' %>
+<tr><td colspan="2">
+    <p>
+      Members: <%= link_to 'Register for an account', :controller => 'account', :action => 'register' %>
+    </p>
+    <p><% address = EmailGroup.find_by_name('Server Admin').address %>
+      Help: <a href=<%= "mailto:" + address %>><%= address %></a>
+    </p>
 </td></tr>
 </table>
 <% end %>

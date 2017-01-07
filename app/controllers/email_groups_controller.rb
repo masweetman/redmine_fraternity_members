@@ -95,6 +95,7 @@ class EmailGroupsController < ApplicationController
     def copy_organization_groups(organization, new_project_id, new_domain)
       email_groups_to_copy = EmailGroup.where(organization: organization)
       old_domain = email_groups_to_copy.first.address.split("@").last
+      old_project_id = Project.find_by_name(organization).id
 
       email_groups_to_copy.each do |email_group|
         new_email_group = email_group.dup
@@ -104,7 +105,7 @@ class EmailGroupsController < ApplicationController
 
         email_group.email_group_memberships.each do |rule|
           new_rule = rule.dup
-          new_rule.include_project_id = new_project_id
+          new_rule.include_project_id = new_project_id unless new_rule.include_project_id != old_project_id
           new_rule.save
           new_email_group.email_group_memberships << new_rule
         end
