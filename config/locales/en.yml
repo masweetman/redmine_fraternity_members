@@ -1,6 +1,5 @@
 # English strings go here for Rails i18n
 en:
-  # my_label: "My label"
   field_password_confirmation: Confirm Password
   field_middlename: Middle name
   field_chapter: Chapter
@@ -14,3 +13,5 @@ en:
   field_include_email_group: Include email group
   field_exclude_project: Exclude project
   field_exclude_role: Exclude role
+  label_password_lost: Lost username or password
+  field_login: Username
