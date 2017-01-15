@@ -13,5 +13,4 @@ en:
   field_include_email_group: Include email group
   field_exclude_project: Exclude project
   field_exclude_role: Exclude role
-  label_password_lost: Lost username or password
   field_login: Username

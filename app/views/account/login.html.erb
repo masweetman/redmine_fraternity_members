@@ -27,9 +27,6 @@
 </tr>
 <tr>
     <td style="text-align:left;">
-        <% if Setting.lost_password? %>
-            <%= link_to l(:label_password_lost), lost_password_path %>
-        <% end %>
     </td>
     <td style="text-align:right;">
         <input type="submit" name="login" value="<%=l(:button_login)%> &#187;" tabindex="5"/>
@@ -40,7 +37,11 @@
       Members: <%= link_to 'Register for an account', :controller => 'account', :action => 'register' %>
     </p>
     <p><% address = EmailGroup.find_by_name('Server Admin').address %>
-      Help: <a href=<%= "mailto:" + address %>><%= address %></a>
+      Help:
+        <% if Setting.lost_password? %>
+            <%= link_to l(:label_password_lost), lost_password_path %>
+        <% end %> |
+        <a href=<%= "mailto:" + address %>><%= address %></a>
     </p>
 </td></tr>
 </table>
