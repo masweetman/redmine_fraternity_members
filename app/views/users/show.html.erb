@@ -78,16 +78,21 @@
 <%= call_hook :view_account_right_bottom, :user => @user %>
 
 <% user = @user %>
+<% phone = user.custom_field_value(18).gsub(/\D/, '').last(10).to_s %>
 <% mail1 = user.mails.first %>
 <% mail2 = user.mails.second %>
 <% mail2 ||= 'empty' %>
 
 <% scope = Issue.where(tracker_id: 10) %>
+
+<% sofs = [] %>
+<% scope.map{ |i| sofs << i if i.custom_field_value(122).to_s.gsub(/\D/, '').last(10) == phone } unless phone.empty? %>
+
 <% scope = scope.joins("INNER JOIN custom_values ON (issues.id = custom_values.customized_id)") %>
 <% firstnames = scope.where("custom_values.custom_field_id = 59 AND custom_values.value LIKE '#{user.firstname}'") %>
 <% lastnames = scope.where("custom_values.custom_field_id = 60 AND custom_values.value LIKE '#{user.lastname}'") %>
 
-<% sofs = (firstnames & lastnames).to_a %>
+<% sofs += (firstnames & lastnames).to_a %>
 <% sofs += scope.where("custom_values.custom_field_id = 119 AND (custom_values.value LIKE '#{mail1}' OR custom_values.value LIKE '#{mail2}')").to_a %>
 
 <h3>SOFs</h3>
