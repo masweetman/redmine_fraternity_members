@@ -15,7 +15,7 @@ class FraternityMembersController < ApplicationController
     end
     if params[:search].present?
       search = params[:search].split
-      query << search.map{ |word| "(active_number LIKE '#{word}' OR firstname LIKE '#{word}%' OR lastname LIKE '#{word}%' OR pledge_name LIKE '%#{word}%')" }.join(" AND ")
+      query << search.map{ |word| "(active_number LIKE '#{word}' OR firstname LIKE '#{word}%' OR lastname LIKE '#{word}%' OR pledge_name LIKE '%#{word}%' OR mail LIKE '#{word}%')" }.join(" AND ")
     end
     if params[:status].present?
       active = 1 if params[:status] == 'Actives'
