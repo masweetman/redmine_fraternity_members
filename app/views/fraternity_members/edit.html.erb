@@ -9,40 +9,38 @@
  
 <%= form_for :fraternity_member, :url => { :action => 'update', :id => @fraternity_member }, method: :patch do |f| %>
 
-  <% if User.current.id == 3 %>
-    <div class='box tabular'>
-      <div class='splitcontent'>
-        <div class='splitcontentleft'>
-          <p>
-            <%= f.label 'First:' %>
-            <%= f.text_field :firstname, :width=> '10', :class => 'crm_textfield' %>
-          </p>
-          <p>
-            <%= f.label 'Middle:' %>
-            <%= f.text_field :middlename %>
-          </p>
-          <p>
-            <%= f.label 'Last:' %>
-            <%= f.text_field :lastname %>
-          </p>
-          <p>
-            <%= f.label 'Suffix (Jr, Sr):' %>
-            <%= f.text_field :name_suffix %>
-          </p>
-        </div>
-        <div class='splitcontentright'>
-          <p>
-            <%= f.label 'Chapter:' %>
-            <%= f.text_field :chapter %>
-          </p>
-          <p>
-            <%= f.label 'Active number:' %>
-            <%= f.text_field :active_number %>
-          </p>
-        </div>
+  <div class='box tabular'>
+    <div class='splitcontent'>
+      <div class='splitcontentleft'>
+        <p>
+          <%= f.label 'First:' %>
+          <%= f.text_field :firstname, :width=> '10', :class => 'crm_textfield' %>
+        </p>
+        <p>
+          <%= f.label 'Middle:' %>
+          <%= f.text_field :middlename %>
+        </p>
+        <p>
+          <%= f.label 'Last:' %>
+          <%= f.text_field :lastname %>
+        </p>
+        <p>
+          <%= f.label 'Suffix (Jr, Sr):' %>
+          <%= f.text_field :name_suffix %>
+        </p>
+      </div>
+      <div class='splitcontentright'>
+        <p>
+          <%= f.label 'Chapter:' %>
+          <%= f.text_field :chapter %>
+        </p>
+        <p>
+          <%= f.label 'Active number:' %>
+          <%= f.text_field :active_number %>
+        </p>
       </div>
     </div>
-  <% end %>
+  </div>
 
   <div class='box tabular'>
     <div class='splitcontent'>
