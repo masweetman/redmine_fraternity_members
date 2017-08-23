@@ -26,6 +26,10 @@ Redmine::Plugin.register :redmine_fraternity_members do
 
   settings :default => {'empty' => true}, :partial => 'shared/settings'
 
+  project_module :shingles do
+    permission :can_ship_shingles, :shingle => [:mark_as_shipped, :mark_all_as_shipped]
+  end
+
   project_module :financials do
     permission :view_financials, { :financials => :index }
   end

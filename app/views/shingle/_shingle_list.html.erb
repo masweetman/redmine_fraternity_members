@@ -24,7 +24,9 @@
       <td>
         <%= link_to 'Print', { :controller => 'shingle', :action => 'shingle_export_pdf', :id => issue.id }, :class => 'icon icon-copy' %>
       </td>
-      <td>Mark as shipped</td>
+      <td>
+        <%= link_to 'Mark as shipped', { :controller => 'shingle', :action => 'mark_as_shipped', :shingle => issue.id }, :class => 'icon icon-copy' %>
+     </td>
     </tr>
     <% end %>
     </tbody>
