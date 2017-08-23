@@ -3,6 +3,12 @@
 <table>
   <tbody>
     <tr>
+      <td><strong>Address:</strong></td>
+      <td>
+        <%= text_area_tag "settings[address]", settings['address'] %>
+      </td>
+    </tr>
+    <tr>
       <td><strong>Fraternity Password:</strong></td>
       <td>
         <%= text_field_tag "settings[fraternity_password]", settings['fraternity_password'] %>

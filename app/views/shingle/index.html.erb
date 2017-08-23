@@ -1,0 +1,13 @@
+<h2>Shingles</h2>
+
+
+<p>
+<%= button_to 'Print all open shingle orders', { :controller => 'shingle', :action => 'shingles_export_pdf' }, :method => 'get' %>
+</p>
+
+<p>
+<%= button_to 'Print packing lists', { :controller => 'shingle', :action => 'invoices_export_pdf' }, :method => 'get' %>
+</p>
+
+<h3>Open shingle orders</h3>
+<%= render :partial => 'shingle_list', :locals => { :issues => @shingles } %>

@@ -3,6 +3,15 @@ include Redmine::Export::PDF::ShinglePdfHelper
 class ShingleController < ApplicationController
 	#unloadable
 
+	def index
+	  @shingles = Issue.where("tracker_id = 7 AND status_id <> 9").order("project_id")
+	end
+
+	def invoices_export_pdf
+		send_data(shingles_invoices_pdf, :type => 'application/pdf',
+                :filename => 'Unshipped_Shingles_Invoices.pdf')
+	end
+
         def shingle_export_pdf
     		shingle = Issue.find(params[:id])
 			send_data(shingle_to_pdf(shingle), :type => 'application/pdf',

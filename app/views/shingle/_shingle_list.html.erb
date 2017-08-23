@@ -1,0 +1,35 @@
+<% if issues && issues.any? %>
+<%= form_tag({}) do %>
+  <table class="list issues">
+    <thead><tr>
+    <th>#</th>
+    <th><%=l(:field_project)%></th>
+    <th><%=l(:field_subject)%></th>
+    <th>Shipping address<th>
+    <th></th>
+    <th></th>
+    </tr></thead>
+    <tbody>
+    <% for issue in issues %>
+    <tr id="issue-<%= h(issue.id) %>" class="hascontextmenu <%= cycle('odd', 'even') %> <%= issue.css_classes %>">
+      <td class="id">
+        <%= check_box_tag("ids[]", issue.id, false, :style => 'display:none;', :id => nil) %>
+        <%= link_to(issue.id, issue_path(issue)) %>
+      </td>
+      <td class="project"><%= link_to_project(issue.project) %></td>
+      <td class="subject">
+        <%= link_to(issue.subject.truncate(60), issue_path(issue)) %> (<%= issue.status %>)
+      </td>
+      <td><%= issue.custom_field_value(121) %></td>
+      <td>
+        <%= link_to 'Print', { :controller => 'shingle', :action => 'shingle_export_pdf', :id => issue.id }, :class => 'icon icon-copy' %>
+      </td>
+      <td>Mark as shipped</td>
+    </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>
+<% else %>
+  <p class="nodata"><%= l(:label_no_data) %></p>
+<% end %>
