@@ -14,8 +14,10 @@ module RegistrationPatch
     def register_manually_by_administrator_with_auto(user)
       #user.pref.no_self_notified = true
       auto_register = false
-        if (user.custom_field_value(54).downcase == Setting.plugin_redmine_fraternity_members[:fraternity_password].downcase) ||
-           (user.custom_field_value(54).downcase == Setting.plugin_redmine_fraternity_members[:colony_password].downcase)
+      password = user.custom_field_value(54).downcase
+      fp = Setting.plugin_redmine_fraternity_members["fraternity_password"].downcase
+      cp = Setting.plugin_redmine_fraternity_members["colony_password"].downcase
+      if (password == fp) || (password == cp)
         member = FraternityMember.where(chapter: user.custom_field_value(2), active_number: user.custom_field_value(3)).first
         if member.nil?
               auto_register = true
@@ -25,13 +27,13 @@ module RegistrationPatch
                 auto_register = true
           end
         end
-        end
+      end
 
-        if auto_register
-          register_automatically(user)
-        else
-          register_manually_by_administrator_without_auto(user)
-        end
+      if auto_register
+        register_automatically(user)
+      else
+        register_manually_by_administrator_without_auto(user)
+      end
 
     end
   end

@@ -4,7 +4,7 @@ module NewUserActionsPlugin
     def controller_user_created_or_updated(context={})
       user = context[:user]
       if (user.active? && user.custom_field_value(56).to_i >= Date.current.year && user.projects.empty?)
-        if user.custom_field_value(54).downcase == Setting.plugin_redmine_fraternity_members[:colony_password].downcase
+        if user.custom_field_value(54).downcase == Setting.plugin_redmine_fraternity_members["colony_password"].downcase
           m = Member.new(:user => user, :roles => [Role.find_by_name('Colony Member')])
         else
           m = Member.new(:user => user, :roles => [Role.find_by_name('Active')])
