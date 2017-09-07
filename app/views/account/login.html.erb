@@ -13,11 +13,10 @@
 </tr>
 <tr>
     <td style="text-align:right;" colspan="2">
-      <% address = EmailGroup.find_by_name('Server Admin').address %>
        <% if Setting.lost_password? %>
           <%= link_to l(:label_password_lost), lost_password_path %>?
       <% end %> |
-      Get help: <a href=<%= "mailto:" + address %>><%= address %></a>
+      <a href="https://ago.org/contact">Contact us</a>
    </td>
 </tr>
 <% if Setting.openid? %>
