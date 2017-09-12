@@ -13,4 +13,5 @@ en:
   field_include_email_group: Include email group
   field_exclude_project: Exclude project
   field_exclude_role: Exclude role
-  field_login: Username/email
+  field_login: Username
+  field_login_ue: Username/email
