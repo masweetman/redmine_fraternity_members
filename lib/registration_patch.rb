@@ -17,7 +17,7 @@ module RegistrationPatch
       password = user.custom_field_value(54).downcase
       fp = Setting.plugin_redmine_fraternity_members["fraternity_password"].downcase
       cp = Setting.plugin_redmine_fraternity_members["colony_password"].downcase
-      if (password == fp) || (password == cp)
+      if (password == fp || password == cp) && (user.custom_field_value(3).to_i > 0)
         member = FraternityMember.where(chapter: user.custom_field_value(2), active_number: user.custom_field_value(3)).first
         if member.nil?
               auto_register = true
