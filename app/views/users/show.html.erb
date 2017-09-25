@@ -86,8 +86,8 @@
 <% scope = Issue.where(tracker_id: 10) %>
 <% scope = scope.joins("INNER JOIN custom_values ON (issues.id = custom_values.customized_id)") %>
 
-<% firstnames = scope.where("custom_values.custom_field_id = 59 AND custom_values.value LIKE '#{user.firstname}'") %>
-<% lastnames = scope.where("custom_values.custom_field_id = 60 AND custom_values.value LIKE '#{user.lastname}'") %>
+<% firstnames = scope.where("custom_values.custom_field_id = 59 AND custom_values.value LIKE '#{user.firstname.gsub(/[']/,"\\\\\'")}'") %>
+<% lastnames = scope.where("custom_values.custom_field_id = 60 AND custom_values.value LIKE '#{user.lastname.gsub(/[']/,"\\\\\'")}'") %>
 
 <% sofs = [] %>
 <% sofs += (firstnames & lastnames).to_a %>
