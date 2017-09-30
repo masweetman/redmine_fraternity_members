@@ -75,15 +75,21 @@ module Redmine
 
           issues = Issue.where("tracker_id = 30 AND status_id <> 9")
           issues = issues.joins('INNER JOIN custom_values ON (issues.id = custom_values.customized_id)').where('custom_values.custom_field_id = 121')
+          street_addresses = issues.map { |i| i.custom_field_value(121).split(";").first.downcase.strip }.uniq
           
-          issues.group('custom_values.value').count.each do |ship_address|
-            invoice_shingles = issues.where('custom_values.value = ?', ship_address[0])
+          street_addresses.each do |street_address|
+            invoice_shingles = []
+            issues.each do |i|
+              if i.custom_field_value(121).split(";").first.downcase.strip == street_address
+                invoice_shingles << i
+              end
+            end
+
             chapter = invoice_shingles.last.custom_field_value(134).to_s
             address = Setting.plugin_redmine_fraternity_members['address'].to_s
-            ship_to = ship_address[0].split ("; ")
-            ship_to.delete ""
-            ship_to_name = ship_to.shift
-            ship_to_address = ship_to.join("\r\n")
+            ship_to_name = invoice_shingles.last.custom_field_value(138).to_s
+            ship_to_address = invoice_shingles.last.custom_field_value(121).split (";")
+            ship_to_address = ship_to_address.join("\r\n")
             date = Date.today.strftime('%B %-d, %Y')
 
             members = []
