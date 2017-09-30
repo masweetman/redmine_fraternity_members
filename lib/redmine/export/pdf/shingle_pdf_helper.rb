@@ -21,8 +21,8 @@ module Redmine
             initiation_date = Date.strptime(shingle.custom_field_value(136).to_s, "%m/%d/%Y").strftime('%B %-d, %Y')
 
             members.each do |member|
-              member_name = member[0].gsub('&quot;', "\"")
-              member_number = member[1].gsub(/[^0-9]/, '')
+              member_name = member[0].gsub('&quot;', "\"").strip
+              member_number = member[1].gsub(/[^0-9]/, '').strip
               shingle_page(pdf, member_name, member_number, chapter, initiation_date, university)
             end
           end
