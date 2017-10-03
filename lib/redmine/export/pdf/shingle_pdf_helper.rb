@@ -62,8 +62,8 @@ module Redmine
           pdf.set_font(font_gothic,'', font_size * 2.5 )
           pdf.write(5, 'Alpha Gamma Omega', '', 0, 'C', true)
 
-          crest = Rails.root.join('files', 'shingles', 'crest.jpg').to_s
-          pdf.image(crest, 0.0, 55.0, '', 45.0, 'jpg', nil, '', false, 600, 'C')
+          crest = Rails.root.join('files', 'shingles', 'crest24.png').to_s
+          pdf.image(crest, 0.0, 55.0, '', 45.0, 'png', nil, '', false, 600, 'C')
 
           pdf.ln(65)
           pdf.set_font(font_gothic,'', font_size)
