@@ -1,16 +1,16 @@
 include Redmine::Export::PDF::ShinglePdfHelper
 
 class ShingleController < ApplicationController
-	#unloadable
-	before_filter :authorize_global, :only => [:mark_as_shipped, :mark_all_as_shipped]
+  #unloadable
+  before_filter :authorize_global, :only => [:mark_as_shipped, :mark_all_as_shipped]
 
-	def index
-	  @project = Project.find(6)
-	  @shingles = Issue.where("tracker_id = 30 AND status_id <> 9")
-	end
+  def index
+    @project = Project.find(6)
+    @shingles = Issue.where("tracker_id = 30 AND status_id <> 9")
+  end
 
-	def mark_all_as_shipped
-	  @project = Project.find(6)
+  def mark_all_as_shipped
+    @project = Project.find(6)
     shingles = Issue.where("tracker_id = 30 AND status_id <> 9")
     shingles.each do |shingle|
       shingle.status_id = 9
@@ -21,18 +21,18 @@ class ShingleController < ApplicationController
   end
 
   def mark_as_shipped
-	  @project = Project.find(6)
-	  shingle = Issue.find(params[:shingle])
+    @project = Project.find(6)
+    shingle = Issue.find(params[:shingle])
     shingle.status_id = 9
     shingle.save
     redirect_to controller: "shingle", action: "index"
     flash[:notice] = l(:notice_successful_update)
   end
 
-	def invoices_export_pdf
-		send_data(shingles_invoices_pdf, :type => 'application/pdf',
+  def invoices_export_pdf
+    send_data(shingles_invoices_pdf, :type => 'application/pdf',
       :filename => 'Unshipped_Shingles_Invoices.pdf')
-	end
+  end
 
   def shingle_export_pdf
     shingle = Issue.find(params[:id])
