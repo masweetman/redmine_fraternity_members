@@ -7,7 +7,7 @@ module Redmine
           pdf = RBPDF.new
           pdf.set_print_header(false)
           pdf.set_print_footer(false)
-          pdf.set_margins(10, 20, 10)
+          pdf.set_margins(10, 30, 10)
 
           Issue.where("tracker_id = 30 AND status_id <> 9").each do |shingle|
             names = shingle.description.split /[\r\n]+/
@@ -34,7 +34,7 @@ module Redmine
           pdf = RBPDF.new
           pdf.set_print_header(false)
           pdf.set_print_footer(false)
-          pdf.set_margins(10, 20, 10)
+          pdf.set_margins(10, 30, 10)
 
           names = shingle.description.split /[\r\n]+/
           names.shift if names.first == ""
@@ -58,10 +58,13 @@ module Redmine
         def new_shingle_page(pdf, member_name, member_number, chapter, initiation_date, university)
           font = 'canterbury'
           pdf.add_page('P','LETTER',true,false)
-          pdf.set_font(font,'', 48)
+          pdf.set_font(font,'', 40)
           pdf.write(5, 'Alpha Gamma Omega', '', 0, 'C', true)
-          crest = Rails.root.join('files', 'shingles', 'crest.png').to_s
-          pdf.image(crest)
+
+          crest = Rails.root.join('files', 'shingles', 'crest.jpg').to_s
+          pdf.image(crest, 0.0, 50.0, '', 40.0, 'jpg', nil, '', false, 300, 'C')
+
+          pdf.ln(45)
           pdf.set_font(font,'', 34)
           pdf.write(5, 'Fraternity', '', 0, 'C', true)
 
