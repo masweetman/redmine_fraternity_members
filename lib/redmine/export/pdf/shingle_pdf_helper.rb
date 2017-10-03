@@ -57,24 +57,24 @@ module Redmine
 
         def new_shingle_page(pdf, member_name, member_number, chapter, initiation_date, university)
           font_gothic = 'canterbury'
-          font_script = 'ak'
+          font_size = 16
           pdf.add_page('P','LETTER',true,false)
-          pdf.set_font(font_gothic,'', 40)
+          pdf.set_font(font_gothic,'', font_size * 2.5 )
           pdf.write(5, 'Alpha Gamma Omega', '', 0, 'C', true)
 
           crest = Rails.root.join('files', 'shingles', 'crest.jpg').to_s
-          pdf.image(crest, 0.0, 55.0, '', 45.0, 'jpg', nil, '', false, 300, 'C')
+          pdf.image(crest, 0.0, 55.0, '', 45.0, 'jpg', nil, '', false, 600, 'C')
 
           pdf.ln(65)
-          pdf.set_font(font_gothic,'', 16)
+          pdf.set_font(font_gothic,'', font_size)
           pdf.write(5, 'This is to certify that', '', 0, 'C', true)
           pdf.ln(2)
-          pdf.set_font(font_gothic,'', 26)
+          pdf.set_font(font_gothic,'', font_size * 1.5)
           pdf.write(5, member_name, '', 0, 'C', true)
-          pdf.set_font(font_gothic,'', 20)
+          pdf.set_font(font_gothic,'', font_size * 1.25)
           pdf.write(5, chapter + " " + member_number, '', 0, 'C', true)
           pdf.ln(2)
-          pdf.set_font(font_gothic,'', 16)
+          pdf.set_font(font_gothic,'', font_size)
           pdf.write(5, 'is a member of Alpha Gamma Omega Fraternity', '', 0, 'C', true)
           pdf.write(5, 'and is entitled to all the rights and privileges', '', 0, 'C', true)
           pdf.write(5, 'of the Fraternity for Eternity', '', 0, 'C', true)
@@ -82,6 +82,15 @@ module Redmine
           pdf.ln(10)
           pdf.write(5, "Initiated " + initiation_date, '', 0, 'C', true)
           pdf.write(5, university, '', 0, 'C', true)
+          
+          pdf.set_font(font_gothic,'', font_size * 0.75)
+          pdf.line(115.0, 215.0, 190.0, 215.0)
+          pdf.text(100.0, 215.0, 'Collegiate Chapter President', false, false, true, 0, 0, 'C')
+          
+          signature = Rails.root.join('files', 'shingles', 'signature24.png').to_s
+          pdf.image(signature, 115.0, 223.0, '', 12.0, 'png', nil, '', false, 600, '')
+          pdf.line(115.0, 235.0, 190.0, 235.0)
+          pdf.text(100.0, 235.0, 'National President', false, false, true, 0, 0, 'C')
 
         end
 
