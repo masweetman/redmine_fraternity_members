@@ -22,7 +22,8 @@
       </td>
       <td><%= issue.custom_field_value(121) %></td>
       <td>
-        <%= link_to 'Print', { :controller => 'shingle', :action => 'new_shingle_export_pdf', :id => issue.id }, :class => 'icon icon-copy' %>
+        <%= link_to 'Print Old', { :controller => 'shingle', :action => 'shingle_export_pdf', :id => issue.id }, :class => 'icon icon-copy' %>
+        <%= link_to 'Print New', { :controller => 'shingle', :action => 'new_shingle_export_pdf', :id => issue.id }, :class => 'icon icon-copy' %>
       </td>
       <td>
         <%= link_to 'Mark as shipped', { :controller => 'shingle', :action => 'mark_as_shipped', :shingle => issue.id }, :class => 'icon icon-copy' %>

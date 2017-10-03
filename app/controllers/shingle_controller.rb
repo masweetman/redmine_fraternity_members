@@ -34,13 +34,24 @@ class ShingleController < ApplicationController
       :filename => 'Unshipped_Shingles_Invoices.pdf')
 	end
 
+  def shingle_export_pdf
+    shingle = Issue.find(params[:id])
+    send_data(shingle_to_pdf(shingle), :type => 'application/pdf',
+      :filename => shingle.custom_field_value(134).to_s + '_' + shingle.custom_field_value(136).to_s.gsub('/', '-') + '_shingles.pdf')
+  end
+
+  def shingles_export_pdf
+    send_data(shingles_to_pdf, :type => 'application/pdf',
+      :filename => 'Unshipped_Shingles.pdf')
+  end
+
   def new_shingle_export_pdf
     shingle = Issue.find(params[:id])
     send_data(new_shingle_to_pdf(shingle), :type => 'application/pdf',
       :filename => shingle.custom_field_value(134).to_s + '_' + shingle.custom_field_value(136).to_s.gsub('/', '-') + '_shingles.pdf')
   end
 
-  def shingles_export_pdf
+  def new_shingles_export_pdf
     send_data(new_shingles_to_pdf, :type => 'application/pdf',
       :filename => 'Unshipped_Shingles.pdf')
   end

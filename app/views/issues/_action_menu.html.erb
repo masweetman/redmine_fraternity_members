@@ -1,6 +1,7 @@
 <div class="contextual">
 <%= link_to l(:button_edit), edit_issue_path(@issue), :onclick => 'showAndScrollTo("update", "issue_notes"); return false;', :class => 'icon icon-edit', :accesskey => accesskey(:edit) if @issue.editable? %>
-<%= link_to 'Proof Shingle', { :controller => 'shingle', :action => 'new_shingle_export_pdf', :id => @issue.id }, :class => 'icon icon-copy' if @issue.tracker_id == 30 %>
+<%= link_to 'Proof Shingle (Old)', { :controller => 'shingle', :action => 'shingle_export_pdf', :id => @issue.id }, :class => 'icon icon-copy' if @issue.tracker_id == 30 %>
+<%= link_to 'Proof Shingle (New)', { :controller => 'shingle', :action => 'new_shingle_export_pdf', :id => @issue.id }, :class => 'icon icon-copy' if @issue.tracker_id == 30 %>
 <%= link_to 'Print Shingles', { :controller => 'shingle', :action => 'index' }, :class => 'icon icon-copy' if @issue.tracker_id == 30 %>
 <%= link_to l(:button_log_time), new_issue_time_entry_path(@issue), :class => 'icon icon-time-add' if User.current.allowed_to?(:log_time, @project) %>
 <%= watcher_link(@issue, User.current) %>

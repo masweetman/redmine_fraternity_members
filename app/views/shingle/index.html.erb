@@ -2,7 +2,11 @@
 
 
 <p>
-<%= button_to 'Print all open shingle orders', { :controller => 'shingle', :action => 'shingles_export_pdf' }, :method => 'get' %>
+<%= button_to 'Print all open shingle orders (old)', { :controller => 'shingle', :action => 'shingles_export_pdf' }, :method => 'get' %>
+</p>
+
+<p>
+<%= button_to 'Print all open shingle orders (new)', { :controller => 'shingle', :action => 'new_shingles_export_pdf' }, :method => 'get' %>
 </p>
 
 <p>
