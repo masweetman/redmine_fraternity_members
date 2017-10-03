@@ -56,32 +56,33 @@ module Redmine
         end
 
         def new_shingle_page(pdf, member_name, member_number, chapter, initiation_date, university)
-          font = 'canterbury'
+          font_gothic = 'canterbury'
+          font_script = 'ak'
           pdf.add_page('P','LETTER',true,false)
-          pdf.set_font(font,'', 40)
+          pdf.set_font(font_gothic,'', 40)
           pdf.write(5, 'Alpha Gamma Omega', '', 0, 'C', true)
 
           crest = Rails.root.join('files', 'shingles', 'crest.jpg').to_s
-          pdf.image(crest, 0.0, 50.0, '', 40.0, 'jpg', nil, '', false, 300, 'C')
+          pdf.image(crest, 0.0, 55.0, '', 45.0, 'jpg', nil, '', false, 300, 'C')
 
-          pdf.ln(45)
-          pdf.set_font(font,'', 34)
-          pdf.write(5, 'Fraternity', '', 0, 'C', true)
-
-          pdf.ln(10)
-          pdf.set_font(font,'I', 16)
+          pdf.ln(65)
+          pdf.set_font(font_gothic,'', 16)
           pdf.write(5, 'This is to certify that', '', 0, 'C', true)
-          pdf.set_font(font,'', 34)
+          pdf.ln(2)
+          pdf.set_font(font_gothic,'', 26)
           pdf.write(5, member_name, '', 0, 'C', true)
-          pdf.set_font(font,'I', 16)
+          pdf.set_font(font_gothic,'', 20)
+          pdf.write(5, chapter + " " + member_number, '', 0, 'C', true)
+          pdf.ln(2)
+          pdf.set_font(font_gothic,'', 16)
           pdf.write(5, 'is a member of Alpha Gamma Omega Fraternity', '', 0, 'C', true)
-          pdf.write(5, 'and is entitled to all the rights and privileges of the', '', 0, 'C', true)
-          pdf.write(5, "\"Fraternity for Eternity\"", '', 0, 'C', true)
+          pdf.write(5, 'and is entitled to all the rights and privileges', '', 0, 'C', true)
+          pdf.write(5, 'of the Fraternity for Eternity', '', 0, 'C', true)
 
           pdf.ln(10)
-          pdf.write(5, "Member Number " + member_number + ", " + chapter + " Chapter", '', 0, 'C', true)
-          pdf.write(5, "Initiated on " + initiation_date  + " at", '', 0, 'C', true)
+          pdf.write(5, "Initiated " + initiation_date, '', 0, 'C', true)
           pdf.write(5, university, '', 0, 'C', true)
+
         end
 
         def shingles_to_pdf
