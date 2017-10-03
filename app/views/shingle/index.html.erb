@@ -2,11 +2,16 @@
 
 
 <p>
-<%= button_to 'Print all open shingle orders (old)', { :controller => 'shingle', :action => 'shingles_export_pdf' }, :method => 'get' %>
+<%= button_to 'Print all open shingle orders - OLD', { :controller => 'shingle', :action => 'shingles_export_pdf' }, :method => 'get' %>
 </p>
 
 <p>
-<%= button_to 'Print all open shingle orders (new)', { :controller => 'shingle', :action => 'new_shingles_export_pdf' }, :method => 'get' %>
+<%= form_tag("/new_shingles_pdf", method: "get") do %>
+  Remove seal: <%= check_box_tag("remove_seal") %>
+  Remove signature: <%= check_box_tag("remove_signature") %>
+  Safe font: <%= check_box_tag("safe_font") %>
+  <%= submit_tag("Print all open shingle orders - NEW") %>
+<% end %>
 </p>
 
 <p>

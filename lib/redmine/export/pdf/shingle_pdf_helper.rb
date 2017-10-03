@@ -3,11 +3,11 @@ module Redmine
     module PDF
       module ShinglePdfHelper
 
-        def new_shingles_to_pdf
+        def new_shingles_to_pdf(options)
           pdf = RBPDF.new
           pdf.set_print_header(false)
           pdf.set_print_footer(false)
-          pdf.set_margins(10, 30, 10)
+          pdf.set_margins(10, 25, 10)
 
           Issue.where("tracker_id = 30 AND status_id <> 9").each do |shingle|
             names = shingle.description.split /[\r\n]+/
@@ -23,18 +23,18 @@ module Redmine
             members.each do |member|
               member_name = member[0].gsub('&quot;', "\"").strip
               member_number = member[1].gsub(/[^0-9]/, '').strip
-              new_shingle_page(pdf, member_name, member_number, chapter, initiation_date, university)
+              new_shingle_page(pdf, member_name, member_number, chapter, initiation_date, university, options)
             end
           end
 
           pdf.output
         end
         
-        def new_shingle_to_pdf(shingle)
+        def new_shingle_to_pdf(shingle, options)
           pdf = RBPDF.new
           pdf.set_print_header(false)
           pdf.set_print_footer(false)
-          pdf.set_margins(10, 30, 10)
+          pdf.set_margins(10, 25, 10)
 
           names = shingle.description.split /[\r\n]+/
           names.shift if names.first == ""
@@ -49,29 +49,35 @@ module Redmine
           members.each do |member|
             member_name = member[0].gsub('&quot;', "\"")
             member_number = member[1].gsub(/[^0-9]/, '')
-            new_shingle_page(pdf, member_name, member_number, chapter, initiation_date, university)
+            new_shingle_page(pdf, member_name, member_number, chapter, initiation_date, university, options)
           end
 
           pdf.output
         end
 
-        def new_shingle_page(pdf, member_name, member_number, chapter, initiation_date, university)
+        def new_shingle_page(pdf, member_name, member_number, chapter, initiation_date, university, options)
+          include_seal = true
+          include_seal = false  if options['remove_seal'].to_s == "1"
+          include_signature = true
+          include_signature = false if options['remove_signature'].to_s == "1"
           font_gothic = 'canterbury'
+          font_safe = font_gothic
+          font_safe = 'times' if options['safe_font'].to_s == "1"
           font_size = 16
           pdf.add_page('P','LETTER',true,false)
           pdf.set_font(font_gothic,'', font_size * 2.5 )
           pdf.write(5, 'Alpha Gamma Omega', '', 0, 'C', true)
 
           crest = Rails.root.join('files', 'shingles', 'crest24.png').to_s
-          pdf.image(crest, 0.0, 55.0, '', 45.0, 'png', nil, '', false, 600, 'C')
+          pdf.image(crest, 0.0, 55.0, '', 45.0, '', nil, '', false, 600, 'C')
 
           pdf.ln(65)
           pdf.set_font(font_gothic,'', font_size)
           pdf.write(5, 'This is to certify that', '', 0, 'C', true)
           pdf.ln(2)
-          pdf.set_font(font_gothic,'', font_size * 1.5)
+          pdf.set_font(font_safe,'', font_size * 1.5)
           pdf.write(5, member_name, '', 0, 'C', true)
-          pdf.set_font(font_gothic,'', font_size * 1.25)
+          pdf.set_font(font_safe,'', font_size * 1.25)
           pdf.write(5, chapter + " " + member_number, '', 0, 'C', true)
           pdf.ln(2)
           pdf.set_font(font_gothic,'', font_size)
@@ -84,14 +90,16 @@ module Redmine
           pdf.write(5, university, '', 0, 'C', true)
           
           pdf.set_font(font_gothic,'', font_size * 0.75)
-          pdf.line(115.0, 215.0, 190.0, 215.0)
-          pdf.text(100.0, 215.0, 'Collegiate Chapter President', false, false, true, 0, 0, 'C')
+          pdf.line(115.0, 220.0, 190.0, 220.0)
+          pdf.text(100.0, 220.0, 'Collegiate Chapter President', false, false, true, 0, 0, 'C')
           
           signature = Rails.root.join('files', 'shingles', 'signature24.png').to_s
-          pdf.image(signature, 115.0, 223.0, '', 12.0, 'png', nil, '', false, 600, '')
-          pdf.line(115.0, 235.0, 190.0, 235.0)
-          pdf.text(100.0, 235.0, 'National President', false, false, true, 0, 0, 'C')
+          pdf.image(signature, 115.0, 228.0, '', 12.0, '', nil, '', false, 600, '') if include_signature
+          pdf.line(115.0, 240.0, 190.0, 240.0)
+          pdf.text(100.0, 240.0, 'National President', false, false, true, 0, 0, 'C')
 
+          seal = Rails.root.join('files', 'shingles', 'seal24.png').to_s
+          pdf.image(seal, 35.0, 200.0, '', 50.0, '', nil, '', false, 600, '') if include_seal
         end
 
         def shingles_to_pdf

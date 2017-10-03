@@ -47,12 +47,12 @@ class ShingleController < ApplicationController
 
   def new_shingle_export_pdf
     shingle = Issue.find(params[:id])
-    send_data(new_shingle_to_pdf(shingle), :type => 'application/pdf',
+    send_data(new_shingle_to_pdf(shingle, params), :type => 'application/pdf',
       :filename => shingle.custom_field_value(134).to_s + '_' + shingle.custom_field_value(136).to_s.gsub('/', '-') + '_shingles.pdf')
   end
 
   def new_shingles_export_pdf
-    send_data(new_shingles_to_pdf, :type => 'application/pdf',
+    send_data(new_shingles_to_pdf(params), :type => 'application/pdf',
       :filename => 'Unshipped_Shingles.pdf')
   end
 
