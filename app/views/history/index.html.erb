@@ -1,0 +1,24 @@
+<h2>History</h2>
+
+<h3>Officers</h3>
+
+<div class="autoscroll">
+<table class="list fraternity_members">
+  <thead><tr>
+  <%= sort_header_tag('added_on', :caption => 'From') %>
+  <%= sort_header_tag('removed_on', :caption => 'To') %>
+  <%= sort_header_tag('role', :caption => 'Role') %>
+  <%= sort_header_tag('user', :caption => 'User') %>
+  </tr></thead>
+  <tbody>
+<% for hr in @historical_roles -%>
+  <tr class="<%= cycle('odd', 'even') %>">
+    <td><%= h(hr.added_on) %></td>
+    <td><%= h(hr.removed_on) %></td>
+    <td><%= h(Role.find(hr.role_id)) %></td>
+    <td><%= h(link_to User.find(hr.user_id), User.find(hr.user_id)) %></td>
+  </tr>
+<% end -%>
+  </tbody>
+</table>
+</div>

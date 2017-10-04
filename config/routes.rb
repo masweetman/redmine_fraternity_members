@@ -29,6 +29,8 @@ get '/projects/:id/financials/account', :to => 'financials#account'
 get '/projects/:id/financials/export', :to => 'financials#export'
 get '/projects/:id/recent_transactions', :to => 'financials#recent_transactions'
 
+get '/projects/:id/history', :to => 'history#index'
+
 get 'crm', :to => 'fraternity_members#crm'
 get 'crm/export', :to => 'fraternity_members#export_crm'
 

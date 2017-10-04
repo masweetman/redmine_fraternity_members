@@ -11,6 +11,7 @@ require_dependency 'registration_patch'
 require_dependency 'user_patch'
 require_dependency 'user_login_patch'
 require_dependency 'mailer_patch'
+require_dependency 'member_role_patch'
 
 Redmine::Plugin.register :redmine_fraternity_members do
   name 'Redmine Fraternity Members'
@@ -44,6 +45,10 @@ Redmine::Plugin.register :redmine_fraternity_members do
     permission :export_crm, :fraternity_members => [:export_crm]
   end
 
+  project_module :history do
+    permission :view_history, { :history => :index }
+  end
+
   menu :top_menu, :fraternity_members, directory_path, :caption => 'Member Directory'
   menu :top_menu, :email_groups, { :controller => 'email_groups', :action => 'index' }, :caption => 'Email Groups'
   menu :top_menu, :wiki, { :controller => 'wiki', :action => 'show', :project_id => 'national', :id => 'wiki' }, :caption => 'Manuals'
@@ -51,5 +56,5 @@ Redmine::Plugin.register :redmine_fraternity_members do
   menu :top_menu, :downloads, { :controller => 'wiki', :action => 'show', :project_id => 'national', :id => 'Downloads' }, :caption => 'Downloads'
   menu :project_menu, :fraternity_members_crm, { :controller => 'fraternity_members', :action => 'crm'}, :caption => 'CRM', :before => :issues
   menu :project_menu, :financials, { :controller => 'financials', :action => 'index' }, :caption => 'Financials', :after => :activity
-
+  menu :project_menu, :history, { :controller => 'history', :action => 'index' }, :caption => 'History', :after => :wiki
 end
