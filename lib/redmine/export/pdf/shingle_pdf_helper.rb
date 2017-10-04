@@ -72,9 +72,10 @@ module Redmine
           pdf.add_page('P','LETTER',true,false)
           pdf.set_font(font,'', font_size * 2.5 )
           pdf.write(5, 'Alpha Gamma Omega', '', 0, 'C', true)
-
+          
+          dpi = 1200
           crest = Rails.root.join('files', 'shingles', 'crest24.png').to_s
-          pdf.image(crest, 0.0, 55.0, '', 45.0, '', nil, '', false, 600, 'C')
+          pdf.image(crest, 0.0, 55.0, '', 45.0, '', nil, '', false, dpi, 'C')
 
           pdf.ln(65)
           pdf.set_font(font,'', font_size)
@@ -99,12 +100,12 @@ module Redmine
           pdf.text(100.0, 220.0, 'Collegiate Chapter President', false, false, true, 0, 0, 'C')
           
           signature = Rails.root.join('files', 'shingles', 'signature.png').to_s
-          pdf.image(signature, signature_x, signature_y, '', signature_size, '', nil, 'N', false, 600, '') if include_signature
+          pdf.image(signature, signature_x, signature_y, '', signature_size, '', nil, 'N', false, dpi, '') if include_signature
           pdf.line(115.0, 240.0, 190.0, 240.0)
           pdf.text(100.0, 240.0, 'National President', false, false, true, 0, 0, 'C')
 
           seal = Rails.root.join('files', 'shingles', 'seal24.png').to_s
-          pdf.image(seal, 35.0, 200.0, '', 50.0, '', nil, '', false, 600, '') if include_seal
+          pdf.image(seal, 35.0, 200.0, '', 50.0, '', nil, '', false, dpi, '') if include_seal
         end
 
         def shingles_to_pdf
