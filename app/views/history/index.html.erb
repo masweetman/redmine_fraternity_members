@@ -2,13 +2,21 @@
 
 <h3>Officers</h3>
 
+<%= form_tag({ controller: 'history', action: 'index', id: @project }, method: 'get') do %>
+<fieldset>
+Filter: <%= select_tag "role", options_from_collection_for_select(@roles, "id", "name", @selected_role), include_blank: true -%>
+<%= submit_tag l(:button_apply), :class => "small", :search => nil %>
+<%= link_to l(:button_clear), { controller: 'history', action: 'index', id: @project }, :class => 'icon icon-reload' %>
+</fieldset>
+<% end %>
+
 <div class="autoscroll">
 <table class="list fraternity_members">
   <thead><tr>
   <%= sort_header_tag('added_on', :caption => 'From') %>
   <%= sort_header_tag('removed_on', :caption => 'To') %>
-  <%= sort_header_tag('role', :caption => 'Role') %>
-  <%= sort_header_tag('user', :caption => 'User') %>
+  <%= sort_header_tag('role_id', :caption => 'Role') %>
+  <%= sort_header_tag('user_id', :caption => 'User') %>
   </tr></thead>
   <tbody>
 <% for hr in @historical_roles -%>
@@ -22,3 +30,4 @@
   </tbody>
 </table>
 </div>
+<span class="pagination"><%= pagination_links_full @role_pages, @role_count, :per_page_links => false %></span>
