@@ -1,17 +1,51 @@
 <h2>Shingles</h2>
 
+<div class="box tabular">
+<h3>Configuration</h3>
+<%= form_tag("/shingles", method: "post") do %>
+<p>
+  <%= check_box_tag("include_seal", 1, !!Setting.plugin_redmine_fraternity_members["shingle_settings"]["include_seal"]) %> Include seal
+</p>
+<p>
+  <%= check_box_tag("include_signature", 1, !!Setting.plugin_redmine_fraternity_members["shingle_settings"]["include_signature"]) %> Include signature
+</p>
+<p>
+  <%= check_box_tag("safe_font", 1, !!Setting.plugin_redmine_fraternity_members["shingle_settings"]["safe_font"]) %> Safe font (check this box if a member's name contains special characters that won't print correctly using the default font).
+</p>
+<p>
+  <%= text_field_tag("signature_size", Setting.plugin_redmine_fraternity_members["shingle_settings"]["signature_size"]) %> Signature size
+</p>
+<p>
+  <%= text_field_tag("signature_x", Setting.plugin_redmine_fraternity_members["shingle_settings"]["signature_x"]) %> Signature X position
+</p>
+<p>
+  <%= text_field_tag("signature_y", Setting.plugin_redmine_fraternity_members["shingle_settings"]["signature_y"]) %> Signature Y position
+</p>
+<p>
+  <%= submit_tag("Save") %>
+</p>
+<% end %>
+</div>
 
+<div class="box tabular">
+<h3>Upload a new signature</h3>
+Note: Signature file must be 24-bit PNG.
+  <%= form_tag({ :controller => 'shingle', :action => 'signature_upload' }, multipart: true) do %>
+  <p>
+    <label>File:</label>
+    <%= file_field_tag :signature %>
+  </p>
+  <p>
+    <%= submit_tag 'Upload' %>
+  </p>
+  <% end %>
+</div>
 <p>
 <%= button_to 'Print all open shingle orders - OLD', { :controller => 'shingle', :action => 'shingles_export_pdf' }, :method => 'get' %>
 </p>
 
 <p>
-<%= form_tag("/new_shingles_pdf", method: "get") do %>
-  Remove seal: <%= check_box_tag("remove_seal") %>
-  Remove signature: <%= check_box_tag("remove_signature") %>
-  Safe font: <%= check_box_tag("safe_font") %>
-  <%= submit_tag("Print all open shingle orders - NEW") %>
-<% end %>
+<%= button_to 'Print all open shingle orders - NEW', { :controller => 'shingle', :action => 'new_shingles_export_pdf' }, :method => 'get' %>
 </p>
 
 <p>

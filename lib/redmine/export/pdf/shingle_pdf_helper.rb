@@ -3,7 +3,7 @@ module Redmine
     module PDF
       module ShinglePdfHelper
 
-        def new_shingles_to_pdf(options)
+        def new_shingles_to_pdf
           pdf = RBPDF.new
           pdf.set_print_header(false)
           pdf.set_print_footer(false)
@@ -23,14 +23,14 @@ module Redmine
             members.each do |member|
               member_name = member[0].gsub('&quot;', "\"").strip
               member_number = member[1].gsub(/[^0-9]/, '').strip
-              new_shingle_page(pdf, member_name, member_number, chapter, initiation_date, university, options)
+              new_shingle_page(pdf, member_name, member_number, chapter, initiation_date, university, "0")
             end
           end
 
           pdf.output
         end
         
-        def new_shingle_to_pdf(shingle, options)
+        def new_shingle_to_pdf(shingle, proof)
           pdf = RBPDF.new
           pdf.set_print_header(false)
           pdf.set_print_footer(false)
@@ -49,30 +49,35 @@ module Redmine
           members.each do |member|
             member_name = member[0].gsub('&quot;', "\"")
             member_number = member[1].gsub(/[^0-9]/, '')
-            new_shingle_page(pdf, member_name, member_number, chapter, initiation_date, university, options)
+            new_shingle_page(pdf, member_name, member_number, chapter, initiation_date, university, proof)
           end
 
           pdf.output
         end
 
-        def new_shingle_page(pdf, member_name, member_number, chapter, initiation_date, university, options)
-          include_seal = true
-          include_seal = false  if options['remove_seal'].to_s == "1"
-          include_signature = true
-          include_signature = false if options['remove_signature'].to_s == "1"
-          font_gothic = 'canterbury'
-          font_safe = font_gothic
-          font_safe = 'times' if options['safe_font'].to_s == "1"
+        def new_shingle_page(pdf, member_name, member_number, chapter, initiation_date, university, proof)
+          include_seal = false
+          include_seal = true if Setting.plugin_redmine_fraternity_members["shingle_settings"]["include_seal"].to_s == "1"
+          include_signature = false
+          include_signature = true if Setting.plugin_redmine_fraternity_members["shingle_settings"]["include_signature"].to_s == "1" && proof.to_s != "1"
+          font = 'canterbury'
+          font_safe = font
+          font_safe = 'times' if Setting.plugin_redmine_fraternity_members["shingle_settings"]["safe_font"].to_s == "1"
+
+          signature_size = Setting.plugin_redmine_fraternity_members["shingle_settings"]["signature_size"].to_f
+          signature_x = Setting.plugin_redmine_fraternity_members["shingle_settings"]["signature_x"].to_f
+          signature_y = Setting.plugin_redmine_fraternity_members["shingle_settings"]["signature_y"].to_f
+
           font_size = 16
           pdf.add_page('P','LETTER',true,false)
-          pdf.set_font(font_gothic,'', font_size * 2.5 )
+          pdf.set_font(font,'', font_size * 2.5 )
           pdf.write(5, 'Alpha Gamma Omega', '', 0, 'C', true)
 
           crest = Rails.root.join('files', 'shingles', 'crest24.png').to_s
           pdf.image(crest, 0.0, 55.0, '', 45.0, '', nil, '', false, 600, 'C')
 
           pdf.ln(65)
-          pdf.set_font(font_gothic,'', font_size)
+          pdf.set_font(font,'', font_size)
           pdf.write(5, 'This is to certify that', '', 0, 'C', true)
           pdf.ln(2)
           pdf.set_font(font_safe,'', font_size * 1.5)
@@ -80,7 +85,7 @@ module Redmine
           pdf.set_font(font_safe,'', font_size * 1.25)
           pdf.write(5, chapter + " " + member_number, '', 0, 'C', true)
           pdf.ln(2)
-          pdf.set_font(font_gothic,'', font_size)
+          pdf.set_font(font,'', font_size)
           pdf.write(5, 'is a member of Alpha Gamma Omega Fraternity', '', 0, 'C', true)
           pdf.write(5, 'and is entitled to all the rights and privileges', '', 0, 'C', true)
           pdf.write(5, 'of the Fraternity for Eternity', '', 0, 'C', true)
@@ -89,12 +94,12 @@ module Redmine
           pdf.write(5, "Initiated " + initiation_date, '', 0, 'C', true)
           pdf.write(5, university, '', 0, 'C', true)
           
-          pdf.set_font(font_gothic,'', font_size * 0.75)
+          pdf.set_font(font,'', font_size * 0.75)
           pdf.line(115.0, 220.0, 190.0, 220.0)
           pdf.text(100.0, 220.0, 'Collegiate Chapter President', false, false, true, 0, 0, 'C')
           
-          signature = Rails.root.join('files', 'shingles', 'signature24.png').to_s
-          pdf.image(signature, 115.0, 228.0, '', 12.0, '', nil, '', false, 600, '') if include_signature
+          signature = Rails.root.join('files', 'shingles', 'signature.png').to_s
+          pdf.image(signature, signature_x, signature_y, '', signature_size, '', nil, 'N', false, 600, '') if include_signature
           pdf.line(115.0, 240.0, 190.0, 240.0)
           pdf.text(100.0, 240.0, 'National President', false, false, true, 0, 0, 'C')
 

@@ -14,7 +14,8 @@ get 'directory/export', :to => 'fraternity_members#export'
 get 'directory/export_google_contacts', :to => 'fraternity_members#export_google_contacts'
 get 'join_group', :to => 'fraternity_members#join_group'
 
-get '/shingles', :to => 'shingle#index'
+match '/shingles', :to => 'shingle#index', via: [:get, :post]
+post '/shingles/upload', :to => 'shingle#signature_upload'
 get '/mark_all_as_shipped', :to => 'shingle#mark_all_as_shipped'
 get '/mark_as_shipped', :to => 'shingle#mark_as_shipped'
 get '/shingles_invoices', :to => 'shingle#invoices_export_pdf'
