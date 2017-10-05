@@ -2,11 +2,19 @@ include Redmine::Export::PDF::ShinglePdfHelper
 
 class ShingleController < ApplicationController
   #unloadable
-  before_filter :authorize_global, :only => [:index, :mark_as_shipped, :mark_all_as_shipped]
+  before_filter :authorize_global, :only => [:index, :mark_as_shipped, :mark_all_as_shipped, :new_shingle_export_pdf, :new_shingles_export_pdf, :signature_upload]
 
   def index
-    @project = Project.find(6)
-    @shingles = Issue.where("tracker_id = 30 AND status_id <> 9")
+    if User.current.member_of? Project.find(6)
+      @project = Project.find(6)
+      @shingles = Issue.where("tracker_id = 30 AND status_id <> 9")
+      @national = true
+    else
+      @project = Project.find(params[:id])
+      @shingles = Issue.where("tracker_id = 30 AND status_id <> 9 AND project_id = ?", @project.id)
+      @national = false
+    end
+
     @setting = Setting.plugin_redmine_fraternity_members
     if @setting['shingle_settings'].nil?
       @setting['shingle_settings'] = {}

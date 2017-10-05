@@ -27,8 +27,12 @@ Redmine::Plugin.register :redmine_fraternity_members do
 
   settings :default => {'empty' => true}, :partial => 'shared/settings'
 
-  project_module :shingles do
-    permission :can_ship_shingles, :shingle => [:mark_as_shipped, :mark_all_as_shipped]
+  project_module :shingle do
+    permission :view_shingles, { :shingle => :index }
+    permission :print_shingles, { :shingle => [:new_shingle_export_pdf, :new_shingles_export_pdf] }
+    permission :ship_shingles, { :shingle => :mark_as_shipped }
+    permission :ship_all_shingles, { :shingle => :mark_all_as_shipped }
+    permission :modify_signature, { :shingle => :signature_upload }
   end
 
   project_module :financials do
@@ -57,4 +61,5 @@ Redmine::Plugin.register :redmine_fraternity_members do
   menu :project_menu, :fraternity_members_crm, { :controller => 'fraternity_members', :action => 'crm'}, :caption => 'CRM', :before => :issues
   menu :project_menu, :financials, { :controller => 'financials', :action => 'index' }, :caption => 'Financials', :after => :activity
   menu :project_menu, :history, { :controller => 'history', :action => 'index' }, :caption => 'History', :after => :wiki
+  menu :project_menu, :shingle, { :controller => 'shingle', :action => 'index' }, :caption => 'Shingles', :after => :history
 end

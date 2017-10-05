@@ -2,12 +2,18 @@
 
 <h3>Officers</h3>
 
+<% if @cr %>
+<p>
+For older records, check your <%= link_to @cr.name, project_issues_path(@project, :query_id => @cr.id) %>
+</p>
+<% end %>
+
 <%= form_tag({ controller: 'history', action: 'index', id: @project }, method: 'get') do %>
-<fieldset>
+<p>
 Filter: <%= select_tag "role", options_from_collection_for_select(@roles, "id", "name", @selected_role), include_blank: true -%>
 <%= submit_tag l(:button_apply), :class => "small", :search => nil %>
 <%= link_to l(:button_clear), { controller: 'history', action: 'index', id: @project }, :class => 'icon icon-reload' %>
-</fieldset>
+</p>
 <% end %>
 
 <div class="autoscroll">

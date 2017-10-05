@@ -16,7 +16,7 @@ module Redmine
             names.shift if names.first == "Active Number (integer only)"
             members = names.each_slice(2).to_a
 
-            chapter = shingle.custom_field_value(134).to_s
+            chapter = shingle.project.name
             university = shingle.custom_field_value(135).to_s
             initiation_date = Date.strptime(shingle.custom_field_value(136).to_s, "%m/%d/%Y").strftime('%B %-d, %Y')
 
@@ -42,7 +42,7 @@ module Redmine
           names.shift if names.first == "Active Number (integer only)"
           members = names.each_slice(2).to_a
 
-          chapter = shingle.custom_field_value(134).to_s
+          chapter = shingle.project.name
           university = shingle.custom_field_value(135).to_s
           initiation_date = Date.strptime(shingle.custom_field_value(136).to_s, "%m/%d/%Y").strftime('%B %-d, %Y')
 
@@ -121,7 +121,7 @@ module Redmine
             names.shift if names.first == "Active Number (integer only)"
             members = names.each_slice(2).to_a
 
-            chapter = shingle.custom_field_value(134).to_s
+            chapter = shingle.project.name
             university = shingle.custom_field_value(135).to_s
             initiation_date = Date.strptime(shingle.custom_field_value(136).to_s, "%m/%d/%Y").strftime('%B %-d, %Y')
 
@@ -147,7 +147,7 @@ module Redmine
           names.shift if names.first == "Active Number (integer only)"
           members = names.each_slice(2).to_a
 
-          chapter = shingle.custom_field_value(134).to_s
+          chapter = shingle.project.name
           university = shingle.custom_field_value(135).to_s
           initiation_date = Date.strptime(shingle.custom_field_value(136).to_s, "%m/%d/%Y").strftime('%B %-d, %Y')
 
@@ -190,7 +190,7 @@ module Redmine
               end
             end
 
-            chapter = invoice_shingles.last.custom_field_value(134).to_s
+            chapter = invoice_shingles.last.project.name
             address = Setting.plugin_redmine_fraternity_members['address'].to_s
             ship_to_name = invoice_shingles.last.custom_field_value(138).to_s
             ship_to_address = invoice_shingles.last.custom_field_value(121).split (";")

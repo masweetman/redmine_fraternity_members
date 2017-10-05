@@ -14,15 +14,16 @@ get 'directory/export', :to => 'fraternity_members#export'
 get 'directory/export_google_contacts', :to => 'fraternity_members#export_google_contacts'
 get 'join_group', :to => 'fraternity_members#join_group'
 
-match '/shingles', :to => 'shingle#index', via: [:get, :post]
-post '/shingles/upload', :to => 'shingle#signature_upload'
-get '/mark_all_as_shipped', :to => 'shingle#mark_all_as_shipped'
-get '/mark_as_shipped', :to => 'shingle#mark_as_shipped'
-get '/shingles_invoices', :to => 'shingle#invoices_export_pdf'
-get '/issues/:id/shingle_pdf', :to => 'shingle#shingle_export_pdf'
-get '/shingles_pdf', :to => 'shingle#shingles_export_pdf'
-get '/issues/:id/new_shingle_pdf', :to => 'shingle#new_shingle_export_pdf'
-get '/new_shingles_pdf', :to => 'shingle#new_shingles_export_pdf'
+match '/projects/:id/shingles', :to => 'shingle#index', via: [:get, :post]
+post '/projects/:id/shingles/upload', :to => 'shingle#signature_upload'
+get '/projects/:id/shingles_pdf', :to => 'shingle#shingles_export_pdf'
+get '/projects/:id/new_shingles_pdf', :to => 'shingle#new_shingles_export_pdf'
+get '/projects/:id/shingles_invoices', :to => 'shingle#invoices_export_pdf'
+get '/projects/:id/mark_all_as_shipped', :to => 'shingle#mark_all_as_shipped'
+
+get '/projects/issues/:id/shingle_pdf', :to => 'shingle#shingle_export_pdf'
+get '/projects/issues/:id/new_shingle_pdf', :to => 'shingle#new_shingle_export_pdf'
+get '/projects/issues/:id/mark_as_shipped', :to => 'shingle#mark_as_shipped'
 
 get '/projects/:id/financials', :to => 'financials#index'
 get '/projects/:id/financials/account', :to => 'financials#account'

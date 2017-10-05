@@ -1,7 +1,33 @@
 <h2>Shingles</h2>
 
-<div class="box tabular">
+<fieldset>
+<p>
+<%= button_to 'Print all open shingle orders - OLD', { :controller => 'shingle', :action => 'shingles_export_pdf' }, :method => 'get' %>
+</p>
+
+<p>
+<%= button_to 'Print all open shingle orders - NEW', { :controller => 'shingle', :action => 'new_shingles_export_pdf' }, :method => 'get' %>
+</p>
+
+<p>
+<%= button_to 'Print packing lists', { :controller => 'shingle', :action => 'invoices_export_pdf' }, :method => 'get' %>
+</p>
+
+<p>
+<%= button_to 'Mark all as shipped', { :controller => 'shingle', :action => 'mark_all_as_shipped' }, :method => 'get' %>
+</p>
+
+<p>
+<%= link_to 'View shipped shingles', project_issues_path(@project, :set_filter => 1, :tracker_id => 30, :status_id => 'c') %>
+</p>
+</fieldset>
+
+<h3>Open shingle orders</h3>
+<%= render :partial => 'shingle_list', :locals => { :issues => @shingles } %>
+
+<% if @national %>
 <h3>Configuration</h3>
+<div class="box tabular">
 <%= form_tag("/shingles", method: "post") do %>
 <p>
   <%= check_box_tag("include_seal", 1, !!Setting.plugin_redmine_fraternity_members["shingle_settings"]["include_seal"]) %> Include seal
@@ -40,25 +66,5 @@ Note: Signature file must be 24-bit PNG.
   </p>
   <% end %>
 </div>
-<p>
-<%= button_to 'Print all open shingle orders - OLD', { :controller => 'shingle', :action => 'shingles_export_pdf' }, :method => 'get' %>
-</p>
 
-<p>
-<%= button_to 'Print all open shingle orders - NEW', { :controller => 'shingle', :action => 'new_shingles_export_pdf' }, :method => 'get' %>
-</p>
-
-<p>
-<%= button_to 'Print packing lists', { :controller => 'shingle', :action => 'invoices_export_pdf' }, :method => 'get' %>
-</p>
-
-<p>
-<%= button_to 'Mark all as shipped', { :controller => 'shingle', :action => 'mark_all_as_shipped' }, :method => 'get' %>
-</p>
-
-<p>
-<%= link_to 'View shipped shingles', project_issues_path(Project.find(6), :set_filter => 1, :tracker_id => 30, :status_id => 'c') %>
-</p>
-
-<h3>Open shingle orders</h3>
-<%= render :partial => 'shingle_list', :locals => { :issues => @shingles } %>
+<% end %>

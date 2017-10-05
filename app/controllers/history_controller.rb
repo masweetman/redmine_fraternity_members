@@ -8,6 +8,10 @@ class HistoryController < ApplicationController
     sort_update %w(added_on removed_on role_id user_id)
 
     @project = Project.find(params[:id])
+    if !@project.parent.nil? && @project.parent.id == 6
+      @cr = Query.find_by_name("Chapter Reports")
+    end
+
     scope = HistoricalRole.where(project_id: @project.id)
     @roles = Role.all.sort_by{ |r| r.name }
     include_role_ids = [] 
