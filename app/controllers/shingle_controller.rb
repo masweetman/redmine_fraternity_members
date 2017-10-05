@@ -5,7 +5,7 @@ class ShingleController < ApplicationController
   before_filter :authorize_global, :only => [:index, :mark_as_shipped, :mark_all_as_shipped, :new_shingle_export_pdf, :new_shingles_export_pdf, :signature_upload]
 
   def index
-    if User.current.member_of? Project.find(6)
+    if User.current.member_of?(Project.find(6)) || User.current.admin?
       @project = Project.find(6)
       @shingles = Issue.where("tracker_id = 30 AND status_id <> 9")
       @national = true
@@ -50,7 +50,6 @@ class ShingleController < ApplicationController
   end
 
   def mark_all_as_shipped
-    @project = Project.find(6)
     shingles = Issue.where("tracker_id = 30 AND status_id <> 9")
     shingles.each do |shingle|
       shingle.status_id = 9
@@ -61,7 +60,6 @@ class ShingleController < ApplicationController
   end
 
   def mark_as_shipped
-    @project = Project.find(6)
     shingle = Issue.find(params[:shingle])
     shingle.status_id = 9
     shingle.save

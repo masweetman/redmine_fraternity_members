@@ -21,9 +21,9 @@ get '/projects/:id/new_shingles_pdf', :to => 'shingle#new_shingles_export_pdf'
 get '/projects/:id/shingles_invoices', :to => 'shingle#invoices_export_pdf'
 get '/projects/:id/mark_all_as_shipped', :to => 'shingle#mark_all_as_shipped'
 
-get '/projects/issues/:id/shingle_pdf', :to => 'shingle#shingle_export_pdf'
-get '/projects/issues/:id/new_shingle_pdf', :to => 'shingle#new_shingle_export_pdf'
-get '/projects/issues/:id/mark_as_shipped', :to => 'shingle#mark_as_shipped'
+get '/issues/:id/shingle_pdf', :to => 'shingle#shingle_export_pdf'
+get '/issues/:id/new_shingle_pdf', :to => 'shingle#new_shingle_export_pdf'
+get '/issues/:id/mark_as_shipped', :to => 'shingle#mark_as_shipped'
 
 get '/projects/:id/financials', :to => 'financials#index'
 get '/projects/:id/financials/account', :to => 'financials#account'

@@ -1,24 +1,22 @@
 <h2>Shingles</h2>
 
 <fieldset>
+<% if @national %>
 <p>
 <%= button_to 'Print all open shingle orders - OLD', { :controller => 'shingle', :action => 'shingles_export_pdf' }, :method => 'get' %>
 </p>
-
 <p>
 <%= button_to 'Print all open shingle orders - NEW', { :controller => 'shingle', :action => 'new_shingles_export_pdf' }, :method => 'get' %>
 </p>
-
 <p>
 <%= button_to 'Print packing lists', { :controller => 'shingle', :action => 'invoices_export_pdf' }, :method => 'get' %>
 </p>
-
 <p>
 <%= button_to 'Mark all as shipped', { :controller => 'shingle', :action => 'mark_all_as_shipped' }, :method => 'get' %>
 </p>
-
+<% end %>
 <p>
-<%= link_to 'View shipped shingles', project_issues_path(@project, :set_filter => 1, :tracker_id => 30, :status_id => 'c') %>
+<%= link_to 'View shipped shingles', issues_path(:set_filter => 1, :tracker_id => 30, :status_id => 'c') %>
 </p>
 </fieldset>
 
@@ -28,7 +26,7 @@
 <% if @national %>
 <h3>Configuration</h3>
 <div class="box tabular">
-<%= form_tag("/shingles", method: "post") do %>
+<%= form_tag({ controller: 'shingle', action: 'index', id: @project }, method: "post") do %>
 <p>
   <%= check_box_tag("include_seal", 1, !!Setting.plugin_redmine_fraternity_members["shingle_settings"]["include_seal"]) %> Include seal
 </p>
@@ -65,6 +63,24 @@ Note: Signature file must be 24-bit PNG.
     <%= submit_tag 'Upload' %>
   </p>
   <% end %>
+</div>
+<% else %>
+
+<h3>Configuration</h3>
+<div class="box tabular">
+<%= form_tag({ controller: 'shingle', action: 'index', id: @project }, method: "post") do %>
+  <%= hidden_field_tag("include_seal", Setting.plugin_redmine_fraternity_members["shingle_settings"]["include_seal"]) %>
+  <%= hidden_field_tag("include_signature", Setting.plugin_redmine_fraternity_members["shingle_settings"]["include_signature"]) %>
+<p>
+  <%= check_box_tag("safe_font", 1, !!Setting.plugin_redmine_fraternity_members["shingle_settings"]["safe_font"]) %> Safe font (check this box if a member's name contains special characters that won't print correctly using the default font).
+</p>
+  <%= hidden_field_tag("signature_size", Setting.plugin_redmine_fraternity_members["shingle_settings"]["signature_size"]) %>
+  <%= hidden_field_tag("signature_x", Setting.plugin_redmine_fraternity_members["shingle_settings"]["signature_x"]) %>
+  <%= hidden_field_tag("signature_y", Setting.plugin_redmine_fraternity_members["shingle_settings"]["signature_y"]) %>
+<p>
+  <%= submit_tag("Save") %>
+</p>
+<% end %>
 </div>
 
 <% end %>
