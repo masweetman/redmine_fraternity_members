@@ -23,6 +23,7 @@ Filter: <%= select_tag "role", options_from_collection_for_select(@roles, "id", 
   <%= sort_header_tag('removed_on', :caption => 'To') %>
   <%= sort_header_tag('role_id', :caption => 'Role') %>
   <%= sort_header_tag('user_id', :caption => 'User') %>
+  <th></th>
   </tr></thead>
   <tbody>
 <% for hr in @historical_roles -%>
@@ -31,6 +32,7 @@ Filter: <%= select_tag "role", options_from_collection_for_select(@roles, "id", 
     <td><%= h(hr.removed_on) %></td>
     <td><%= h(Role.find(hr.role_id)) %></td>
     <td><%= h(link_to User.find(hr.user_id), User.find(hr.user_id)) %></td>
+    <td><%= link_to l(:button_delete), historical_role_path(hr), :data => {:confirm => "Are your sure?"}, :method => :delete, :class => 'icon icon-del' if User.current.allowed_to?(:delete_history_records, @project) %></td>
   </tr>
 <% end -%>
   </tbody>

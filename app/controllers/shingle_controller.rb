@@ -5,7 +5,7 @@ class ShingleController < ApplicationController
   before_filter :authorize_global, :only => [:index, :mark_as_shipped, :mark_all_as_shipped, :new_shingle_export_pdf, :new_shingles_export_pdf, :signature_upload]
 
   def index
-    if User.current.member_of?(Project.find(6)) || User.current.admin?
+    if User.current.allowed_to?(:view_shingles, Project.find(6))
       @project = Project.find(6)
       @shingles = Issue.where("tracker_id = 30 AND status_id <> 9")
       @national = true

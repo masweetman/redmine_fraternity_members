@@ -16,7 +16,7 @@ module MemberRolePatch
   module InstanceMethods
 
   def add_historical_role
-    if self.inherited_from.nil? && ![23, 40, 36].include?(self.role_id)
+    if self.inherited_from.nil? && ![23, 40, 36].include?(self.role_id) && User.find(Member.find(self.member_id).user_id).name != "test user"
       hr = HistoricalRole.new
       hr.member_role_id = self.id
       hr.member_id = self.member_id

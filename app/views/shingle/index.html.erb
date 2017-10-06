@@ -1,7 +1,7 @@
 <h2>Shingles</h2>
 
 <fieldset>
-<% if @national %>
+<% if User.current.allowed_to?(:ship_all_shingles, Project.find(6)) %>
 <p>
 <%= button_to 'Print all open shingle orders - OLD', { :controller => 'shingle', :action => 'shingles_export_pdf' }, :method => 'get' %>
 </p>
@@ -22,8 +22,8 @@
 
 <h3>Open shingle orders</h3>
 <%= render :partial => 'shingle_list', :locals => { :issues => @shingles } %>
-
-<% if @national %>
+<p></p>
+<% if User.current.allowed_to?(:modify_signature, Project.find(6)) %>
 <h3>Configuration</h3>
 <div class="box tabular">
 <%= form_tag({ controller: 'shingle', action: 'index', id: @project }, method: "post") do %>
@@ -53,7 +53,9 @@
 
 <div class="box tabular">
 <h3>Upload a new signature</h3>
-Note: Signature file must be 24-bit PNG.
+  <p>
+    Note: Signature image file must be 24-bit PNG file with no transparency and a white background.
+  </p>
   <%= form_tag({ :controller => 'shingle', :action => 'signature_upload' }, multipart: true) do %>
   <p>
     <label>File:</label>

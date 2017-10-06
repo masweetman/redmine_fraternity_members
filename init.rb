@@ -51,6 +51,7 @@ Redmine::Plugin.register :redmine_fraternity_members do
 
   project_module :history do
     permission :view_history, { :history => :index }
+    permission :delete_history_records, { :history => :destroy }
   end
 
   menu :top_menu, :fraternity_members, directory_path, :caption => 'Member Directory'
