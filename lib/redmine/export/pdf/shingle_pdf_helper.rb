@@ -60,52 +60,57 @@ module Redmine
           include_seal = true if Setting.plugin_redmine_fraternity_members["shingle_settings"]["include_seal"].to_s == "1"
           include_signature = false
           include_signature = true if Setting.plugin_redmine_fraternity_members["shingle_settings"]["include_signature"].to_s == "1" && proof.to_s != "1"
-          font = 'canterbury'
-          font_safe = font
-          font_safe = 'times' if Setting.plugin_redmine_fraternity_members["shingle_settings"]["safe_font"].to_s == "1"
+          font = 'gara'
+          font_safe = true if Setting.plugin_redmine_fraternity_members["shingle_settings"]["safe_font"].to_s == "1"
 
           signature_size = Setting.plugin_redmine_fraternity_members["shingle_settings"]["signature_size"].to_f
           signature_x = Setting.plugin_redmine_fraternity_members["shingle_settings"]["signature_x"].to_f
           signature_y = Setting.plugin_redmine_fraternity_members["shingle_settings"]["signature_y"].to_f
 
-          font_size = 16
+          font_size = 14
           pdf.add_page('P','LETTER',true,false)
-          pdf.set_font(font,'', font_size * 2.5 )
+          pdf.set_font('oldengl','', font_size * 3 )
           pdf.write(5, 'Alpha Gamma Omega', '', 0, 'C', true)
           
           dpi = 1200
           crest = Rails.root.join('files', 'shingles', 'crest24.png').to_s
           pdf.image(crest, 0.0, 55.0, '', 45.0, '', nil, '', false, dpi, 'C')
 
-          pdf.ln(65)
+          pdf.ln(68)
           pdf.set_font(font,'', font_size)
-          pdf.write(5, 'This is to certify that', '', 0, 'C', true)
+          pdf.write(8, 'This is to certify that'.upcase, '', 0, 'C', true)
           pdf.ln(2)
-          pdf.set_font(font_safe,'', font_size * 1.5)
-          pdf.write(5, member_name, '', 0, 'C', true)
-          pdf.set_font(font_safe,'', font_size * 1.25)
-          pdf.write(5, chapter + " " + member_number, '', 0, 'C', true)
+          pdf.set_font(font +'bd', '', font_size * 1.25)
+          if font_safe
+            pdf.write(8, member_name, '', 0, 'C', true)
+            #pdf.set_font(font,'', font_size * 1.25)
+            pdf.write(8, chapter + " " + member_number.upcase, '', 0, 'C', true)
+          else
+           pdf.write(8, member_name.upcase, '', 0, 'C', true)
+           #pdf.set_font(font,'', font_size * 1.25)
+           pdf.write(8, chapter.upcase + " " + member_number.upcase, '', 0, 'C', true)
+          end
           pdf.ln(2)
           pdf.set_font(font,'', font_size)
-          pdf.write(5, 'is a member of Alpha Gamma Omega Fraternity', '', 0, 'C', true)
-          pdf.write(5, 'and is entitled to all the rights and privileges', '', 0, 'C', true)
-          pdf.write(5, 'of the Fraternity for Eternity', '', 0, 'C', true)
+          pdf.write(8, 'is a member of Alpha Gamma Omega Fraternity'.upcase, '', 0, 'C', true)
+          pdf.write(8, 'and is entitled to all the rights and privileges'.upcase, '', 0, 'C', true)
+          pdf.write(8, 'of the Fraternity for Eternity'.upcase, '', 0, 'C', true)
 
           pdf.ln(10)
-          pdf.write(5, "Initiated " + initiation_date, '', 0, 'C', true)
-          pdf.write(5, university, '', 0, 'C', true)
+          pdf.write(8, "Initiated ".upcase + initiation_date.upcase, '', 0, 'C', true)
+          pdf.write(8, university.upcase, '', 0, 'C', true)
           
           pdf.set_font(font,'', font_size * 0.75)
-          pdf.line(115.0, 220.0, 190.0, 220.0)
-          pdf.text(100.0, 220.0, 'Collegiate Chapter President', false, false, true, 0, 0, 'C')
+          #pdf.line(115.0, 220.0, 190.0, 220.0)
+          pdf.text(100.0, 220.0, 'Collegiate Chapter President'.upcase, false, false, true, 0, 0, 'C')
           
           signature = Rails.root.join('files', 'shingles', 'signature.png').to_s
           pdf.image(signature, signature_x, signature_y, '', signature_size, '', nil, 'N', false, dpi, '') if include_signature
-          pdf.line(115.0, 240.0, 190.0, 240.0)
-          pdf.text(100.0, 240.0, 'National President', false, false, true, 0, 0, 'C')
+          #pdf.line(115.0, 240.0, 190.0, 240.0)
+          pdf.text(100.0, 245.0, 'National President'.upcase, false, false, true, 0, 0, 'C')
 
           seal = Rails.root.join('files', 'shingles', 'seal24.png').to_s
-          pdf.image(seal, 35.0, 200.0, '', 50.0, '', nil, '', false, dpi, '') if include_seal
+          pdf.image(seal, 35.0, 205.0, '', 50.0, '', nil, '', false, dpi, '') if include_seal
         end
 
         def shingles_to_pdf
