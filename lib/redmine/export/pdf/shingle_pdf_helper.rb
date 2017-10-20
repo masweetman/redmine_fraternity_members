@@ -102,15 +102,15 @@ module Redmine
           
           pdf.set_font(font,'', font_size * 0.75)
           #pdf.line(115.0, 220.0, 190.0, 220.0)
-          pdf.text(100.0, 220.0, 'Collegiate Chapter President'.upcase, false, false, true, 0, 0, 'C')
+          pdf.text(85.0, 220.0, 'Collegiate Chapter President'.upcase, false, false, true, 0, 0, 'C')
           
           signature = Rails.root.join('files', 'shingles', 'signature.png').to_s
           pdf.image(signature, signature_x, signature_y, '', signature_size, '', nil, 'N', false, dpi, '') if include_signature
           #pdf.line(115.0, 240.0, 190.0, 240.0)
-          pdf.text(100.0, 245.0, 'National President'.upcase, false, false, true, 0, 0, 'C')
+          pdf.text(85.0, 245.0, 'National President'.upcase, false, false, true, 0, 0, 'C')
 
           seal = Rails.root.join('files', 'shingles', 'seal24.png').to_s
-          pdf.image(seal, 35.0, 205.0, '', 50.0, '', nil, '', false, dpi, '') if include_seal
+          pdf.image(seal, 40.0, 205.0, '', 50.0, '', nil, '', false, dpi, '') if include_seal
         end
 
         def shingles_to_pdf
