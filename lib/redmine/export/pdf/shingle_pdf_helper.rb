@@ -38,8 +38,8 @@ module Redmine
 
           names = shingle.description.split /[\r\n]+/
           names.shift if names.first == ""
-          names.shift if names.first == "Full name for shingle (31 character max)"
-          names.shift if names.first == "Active Number (integer only)"
+          names.shift if names.first.downcase.include? "full name for shingle"
+          names.shift if names.first.downcase.include? "active number"
           members = names.each_slice(2).to_a
 
           chapter = shingle.project.name
@@ -70,33 +70,33 @@ module Redmine
           font_size = 14
           pdf.add_page('P','LETTER',true,false)
           pdf.set_font('oldengl','', font_size * 3 )
-          pdf.write(5, 'Alpha Gamma Omega', '', 0, 'C', true)
+          pdf.write(0, 'Alpha Gamma Omega', '', 0, 'C', true)
           
           dpi = 1200
           crest = Rails.root.join('files', 'shingles', 'crest24.png').to_s
-          pdf.image(crest, 0.0, 55.0, '', 45.0, '', nil, '', false, dpi, 'C')
+          pdf.image(crest, 0.0, 53.0, '', 45.0, '', nil, '', false, dpi, 'C')
 
-          pdf.ln(68)
+          pdf.ln(65)
           pdf.set_font(font,'', font_size)
           pdf.write(8, 'This is to certify that'.upcase, '', 0, 'C', true)
-          pdf.ln(2)
-          pdf.set_font(font +'bd', '', font_size * 1.25)
+          pdf.ln(5)
+          pdf.set_font(font, '', font_size * 1.25)
           if font_safe
             pdf.write(8, member_name, '', 0, 'C', true)
-            #pdf.set_font(font,'', font_size * 1.25)
+            pdf.set_font(font,'', font_size)
             pdf.write(8, chapter + " " + member_number.upcase, '', 0, 'C', true)
           else
            pdf.write(8, member_name.upcase, '', 0, 'C', true)
-           #pdf.set_font(font,'', font_size * 1.25)
+           pdf.set_font(font,'', font_size)
            pdf.write(8, chapter.upcase + " " + member_number.upcase, '', 0, 'C', true)
           end
-          pdf.ln(2)
+          pdf.ln(5)
           pdf.set_font(font,'', font_size)
           pdf.write(8, 'is a member of Alpha Gamma Omega Fraternity'.upcase, '', 0, 'C', true)
           pdf.write(8, 'and is entitled to all the rights and privileges'.upcase, '', 0, 'C', true)
           pdf.write(8, 'of the Fraternity for Eternity'.upcase, '', 0, 'C', true)
 
-          pdf.ln(10)
+          pdf.ln(5)
           pdf.write(8, "Initiated ".upcase + initiation_date.upcase, '', 0, 'C', true)
           pdf.write(8, university.upcase, '', 0, 'C', true)
           
