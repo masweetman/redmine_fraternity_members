@@ -12,8 +12,8 @@ module Redmine
           Issue.where("tracker_id = 30 AND status_id <> 9").each do |shingle|
             names = shingle.description.split /[\r\n]+/
             names.shift if names.first == ""
-            names.shift if names.first == "Full name for shingle (31 character max)"
-            names.shift if names.first == "Active Number (integer only)"
+            names.shift if names.first.downcase.include? "full name for shingle"
+            names.shift if names.first.downcase.include? "active number"
             members = names.each_slice(2).to_a
 
             chapter = shingle.project.name
@@ -122,8 +122,8 @@ module Redmine
           Issue.where("tracker_id = 30 AND status_id <> 9").each do |shingle|
             names = shingle.description.split /[\r\n]+/
             names.shift if names.first == ""
-            names.shift if names.first == "Full name for shingle (31 character max)"
-            names.shift if names.first == "Active Number (integer only)"
+            names.shift if names.first.downcase.include? "full name for shingle"
+            names.shift if names.first.downcase.include? "active number"
             members = names.each_slice(2).to_a
 
             chapter = shingle.project.name
