@@ -44,7 +44,7 @@
         <%= link_to l(:button_edit), email_group, :class => 'icon icon-edit' %>
       </td>
       <td>
-        <%= link_to l(:button_delete), email_group_path(email_group), :method => :delete, :data => {:confirm => l(:text_are_you_sure)} ,:class => 'icon icon-del' %>
+        <%= link_to l(:button_delete), email_group_path(email_group, organization: params[:organization], search: params[:search]), :method => :delete, :data => {:confirm => l(:text_are_you_sure)} ,:class => 'icon icon-del' %>
       </td>
     <% end %>
   </tr>

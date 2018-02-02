@@ -81,12 +81,15 @@ class EmailGroupsController < ApplicationController
 
   def destroy
     @email_group = EmailGroup.find(params[:id])
+    org = params[:organization]
+    search = params[:search]
 
     @email_group.email_group_memberships.each do |membership|
       membership.destroy
     end
     @email_group.destroy
-    redirect_to '/email_groups'
+
+    redirect_to controller: 'email_groups', action: 'index', organization: org, search: search
     flash[:notice] = l(:notice_successful_delete)
   end
 
