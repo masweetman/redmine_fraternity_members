@@ -1,5 +1,8 @@
 <div class="contextual">
 
+<% if User.current.admin? %>
+  <%= link_to "New Directory Entry", :controller => 'fraternity_members', :action => 'new' %> |
+<% end %>
 <%= link_to "Export to CSV", :controller => 'fraternity_members', :action => 'export', :chapter => params[:chapter], :search => params[:search] %> |
 <%= link_to "Export Google Contacts", :controller => 'fraternity_members', :action => 'export_google_contacts', :chapter => params[:chapter], :search => params[:search] %>
 

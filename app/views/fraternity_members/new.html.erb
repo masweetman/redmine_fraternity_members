@@ -1,0 +1,126 @@
+<h3>
+  New Member Directory Entry
+</h3>
+ 
+<%= form_for @fraternity_member do |f| %>
+
+  <div class='box tabular'>
+    <div class='splitcontent'>
+      <div class='splitcontentleft'>
+        <p>
+          <%= f.label 'First:' %>
+          <%= f.text_field :firstname, :width=> '10', :class => 'crm_textfield' %>
+        </p>
+        <p>
+          <%= f.label 'Middle:' %>
+          <%= f.text_field :middlename %>
+        </p>
+        <p>
+          <%= f.label 'Last:' %>
+          <%= f.text_field :lastname %>
+        </p>
+        <p>
+          <%= f.label 'Suffix (Jr, Sr):' %>
+          <%= f.text_field :name_suffix %>
+        </p>
+      </div>
+      <div class='splitcontentright'>
+        <p>
+          <%= f.label 'Chapter:' %>
+          <%= f.text_field :chapter %>
+        </p>
+        <p>
+          <%= f.label 'Active number:' %>
+          <%= f.text_field :active_number %>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class='box tabular'>
+    <div class='splitcontent'>
+      <div class='splitcontentleft'>
+        <p>
+          <%= f.label 'Email:' %>
+          <%= f.text_field :mail %>
+        </p>
+        <p>
+          <%= f.label 'Phone:' %>
+          <%= f.text_field :phone %>
+        </p>
+        <p>
+          <%= f.label 'Address:' %>
+          <%= f.text_area :address %>
+        </p>
+        <p>
+          <%= f.label 'Facebook:' %>
+          <%= f.text_field :facebook %>
+        </p>
+        <p>
+          <%= f.label 'LinkedIn:' %>
+          <%= f.text_field :linkedin %>
+        </p>
+        <p>
+          <%= f.label 'Job Title:' %>
+          <%= f.text_field :job_title %>
+        </p>
+        <p>
+          <%= f.label 'Employer:' %>
+          <%= f.text_field :employer %>
+        </p>
+      </div>
+      <div class='splitcontentright'>
+        <p>
+          <%= f.label 'Pledge name:' %>
+          <%= f.text_field :pledge_name %>
+        </p>
+        <p>
+          <%= f.label 'Pledge Class:' %>
+          <%= f.text_field :pledge_class %>
+        </p>
+        <p>
+          <%= f.label 'Graduation Year:' %>
+          <%= f.text_field :graduation_year %>
+        </p>
+        <p>
+          <%= f.label 'Big Bro:' %>
+          <%= f.text_field :big_bro %>
+        </p>
+        <p>
+          <%= f.label 'Little Bros:' %>
+          <%= f.text_area :little_bros %>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class='box tabular'>
+    <p>
+      <%= f.label 'Giving History:' %>
+      <%= f.text_area :giving_history, :class => 'crm_textarea' %>
+    </p>
+    <p>
+      <%= f.label 'Alumni Involvement:' %>
+      <%= f.text_area :alumni_involvement %>
+    </p>
+    <p>
+      <%= f.label 'Email Interaction:' %>
+      <%= f.text_area :email_interaction %>
+    </p>
+    <p>
+      <%= f.label 'Notes:' %>
+      <%= f.text_area :notes %>
+    </p>
+    <p>
+      <%= f.label 'Bio:' %>
+      <%= f.text_area :bio %>
+    </p>
+  </div>
+
+<p>
+  <%= f.submit %>
+</p>
+ 
+<% end %>
+ 
+<%= link_to 'Back', :back %>

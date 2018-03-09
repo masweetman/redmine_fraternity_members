@@ -70,6 +70,46 @@ class FraternityMembersController < ApplicationController
     @members = scope.offset(@offset).limit(100).order(sort_clause).all
   end
 
+  def new
+    @fraternity_member = FraternityMember.new
+    session[:return_to] = request.referer
+  end
+
+  def create
+    @fraternity_member = FraternityMember.new
+
+    @fraternity_member.firstname = params[:fraternity_member][:firstname]
+    @fraternity_member.middlename = params[:fraternity_member][:middlename]
+    @fraternity_member.lastname = params[:fraternity_member][:lastname]
+    @fraternity_member.mail = params[:fraternity_member][:mail]
+    @fraternity_member.chapter = params[:fraternity_member][:chapter]
+    @fraternity_member.active_number = params[:fraternity_member][:active_number]
+    @fraternity_member.pledge_name = params[:fraternity_member][:pledge_name]
+    @fraternity_member.big_bro = params[:fraternity_member][:big_bro]
+    @fraternity_member.phone = params[:fraternity_member][:phone]
+    @fraternity_member.address = params[:fraternity_member][:address]
+    @fraternity_member.graduation_year = params[:fraternity_member][:graduation_year]
+    @fraternity_member.bio = params[:fraternity_member][:bio]
+    @fraternity_member.facebook = params[:fraternity_member][:facebook]
+    @fraternity_member.linkedin = params[:fraternity_member][:linkedin]
+    @fraternity_member.name_suffix = params[:fraternity_member][:name_suffix]
+    @fraternity_member.pledge_class = params[:fraternity_member][:pledge_class]
+    @fraternity_member.little_bros = params[:fraternity_member][:little_bros]
+    @fraternity_member.job_title = params[:fraternity_member][:job_title]
+    @fraternity_member.employer = params[:fraternity_member][:employer]
+    @fraternity_member.giving_history = params[:fraternity_member][:giving_history]
+    @fraternity_member.alumni_involvement = params[:fraternity_member][:alumni_involvement]
+    @fraternity_member.email_interaction = params[:fraternity_member][:email_interaction]
+    @fraternity_member.notes = params[:fraternity_member][:notes]
+
+    if @fraternity_member.save
+      redirect_to session.delete(:return_to)
+      flash[:notice] = l(:notice_successful_update)
+    else
+      render :action => 'edit'
+    end
+  end
+
   def edit
     @fraternity_member = FraternityMember.find(params[:id])
     session[:return_to] = request.referer
