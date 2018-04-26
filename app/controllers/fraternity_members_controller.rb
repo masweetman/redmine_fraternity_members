@@ -26,8 +26,8 @@ class FraternityMembersController < ApplicationController
   end
 
   def index
-    sort_init [['chapter', 'asc'], ['active_number', 'asc']]
-    sort_update %w(chapter active_number lastname pledge_name mail phone address graduation_year)
+    sort_init [['id', 'desc'], ['chapter', 'asc'], ['active_number', 'asc']]
+    sort_update %w(id chapter active_number lastname pledge_name mail phone address graduation_year)
 
     scope = FraternityMember.where(query)
 
