@@ -1,0 +1,26 @@
+<div class="autoscroll">
+<table class="list fraternity_members">
+  <thead><tr>
+  <%= sort_header_tag('colony', :caption => 'Chapter', :class => "fraternity_members_col_1" ) %>
+  <%= sort_header_tag('active_number', :caption => 'Active #', :class => "fraternity_members_col_2") %>
+  <%= sort_header_tag('lastname', :caption => 'Name', :class => "fraternity_members_col_3") %>
+  <%= sort_header_tag('pledge_name', :caption => 'Pledge Name', :class => "fraternity_members_col_4") %>
+  <%= sort_header_tag('mail', :caption => 'Email', :class => "fraternity_members_col_5") %>
+  </tr></thead>
+  <tbody>
+<% for c in @colony_members -%>
+  <tr class="<%= cycle('odd', 'even') %>">
+        <td class="fraternity_members_col_1"><%= h(c.custom_field_value(2)) %></td>
+        <td class="fraternity_members_col_2"><%= h(c.custom_field_value(3)) %></td>
+        <td class="fraternity_members_col_3">
+          <% uname = c.firstname.to_s + " " + c.lastname.to_s -%>
+          <% ulink = user_path(c) -%>
+          <%= link_to uname, ulink %>
+        </td>
+        <td class="fraternity_members_col_4"><%= h(c.custom_field_value(1).to_s.truncate(18)) %></td>
+        <td class="fraternity_members_col_5"><%= mail_to(h(c.mail)) %></td>
+  </tr>
+<% end -%>
+  </tbody>
+</table>
+</div>

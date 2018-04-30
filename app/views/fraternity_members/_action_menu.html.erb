@@ -1,6 +1,7 @@
 <div class="contextual">
 
 <% if User.current.admin? %>
+  <%= link_to "List Colony Members", :controller => 'fraternity_members', :action => 'colony_members' %> |
   <%= link_to "New Directory Entry", :controller => 'fraternity_members', :action => 'new' %> |
 <% end %>
 <%= link_to "Export to CSV", :controller => 'fraternity_members', :action => 'export', :chapter => params[:chapter], :search => params[:search] %> |

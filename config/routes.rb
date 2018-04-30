@@ -12,6 +12,7 @@ get '/create_organization', :to => 'email_groups#create_org'
 get 'directory', :to => 'fraternity_members#index'
 get 'directory/export', :to => 'fraternity_members#export'
 get 'directory/export_google_contacts', :to => 'fraternity_members#export_google_contacts'
+get 'directory/colony_members', :to => 'fraternity_members#colony_members'
 get 'join_group', :to => 'fraternity_members#join_group'
 
 match '/projects/:id/shingles', :to => 'shingle#index', via: [:get, :post]

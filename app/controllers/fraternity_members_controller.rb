@@ -41,6 +41,18 @@ class FraternityMembersController < ApplicationController
     @members = scope.offset(@offset).limit(100).order(sort_clause).all
   end
 
+  def colony_members
+    sort_init [['chapter', 'asc'], ['active_number', 'asc']]
+    sort_update %w(chapter active_number lastname pledge_name mail)
+
+    @colony_members = []
+    User.all.each do |u|
+      if u.active? &&  u.custom_field_value(2).to_s.downcase.include?("colony")
+        @colony_members << u
+      end
+    end
+  end
+
   def crm
     sort_init [['chapter', 'asc'], ['active_number', 'asc']]
     sort_update %w(chapter active_number lastname pledge_name mail phone address graduation_year)
