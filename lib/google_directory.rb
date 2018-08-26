@@ -86,6 +86,7 @@ class GoogleDirectory
     unless members_to_delete.empty?
       directory.batch do |directory|
         for m in members_to_delete
+          puts "- Deleting member: " + m
           directory.delete_member(email_group.address, m)
         end
       end
@@ -96,6 +97,7 @@ class GoogleDirectory
         for m in members_to_add
           member = Google::Apis::AdminDirectoryV1::Member.new
           member.email = m
+          puts "+ Adding member: " + m
           directory.insert_member(email_group.address, member)
         end
       end

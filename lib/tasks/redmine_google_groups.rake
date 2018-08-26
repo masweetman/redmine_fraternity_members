@@ -10,6 +10,7 @@ namespace :redmine do
 
       #update google group members
       EmailGroup.all.each do |g|
+        puts "Updating group: " + g.address
         directory.update_members(g)
       end
 
