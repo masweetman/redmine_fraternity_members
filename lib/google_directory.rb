@@ -62,6 +62,7 @@ class GoogleDirectory
 
     unless google_groups.nil?
       for g in groups_to_delete
+        puts "- Deleting group: " + g
         directory.delete_group(g)
       end
 
@@ -69,6 +70,7 @@ class GoogleDirectory
         group = Google::Apis::AdminDirectoryV1::Group.new
         group.email = g
         group.name = EmailGroup.find_by_address(g).name
+        puts "+ Adding group: " + g
         directory.insert_group(group)
       end
     end
